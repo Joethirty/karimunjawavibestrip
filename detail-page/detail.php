@@ -130,6 +130,228 @@ include_once $base_url . 'header.php';
                     <div class="detail-desc-text" style="font-size: 15px; color: var(--charcoal); line-height: 25px;"><?php echo $penginapan['detail_deskripsi']; ?></div>
                 </div>
 
+                <!-- Rencana Perjalanan (Itinerary) -->
+                <div class="itinerary-section">
+                    <h2>Rencana Perjalanan (Itinerary)</h2>
+                    
+                    <!-- Day Navigation Tabs -->
+                    <div class="itinerary-tabs">
+                        <button class="itinerary-tab-btn active" data-day="1" onclick="switchDay(1)">
+                            <span class="day-num">DAY 1</span>
+                            <span class="day-desc">Land Tour & Sunset</span>
+                        </button>
+                        <button class="itinerary-tab-btn" data-day="2" onclick="switchDay(2)">
+                            <span class="day-num">DAY 2</span>
+                            <span class="day-desc">Snorkeling & Marine Tour</span>
+                        </button>
+                        <button class="itinerary-tab-btn" data-day="3" onclick="switchDay(3)">
+                            <span class="day-num">DAY 3</span>
+                            <span class="day-desc">Acara Bebas & Check Out</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Itinerary Content Panels -->
+                    <div class="itinerary-content">
+                        
+                        <!-- DAY 1 CONTENT -->
+                        <div id="day-1-content" class="day-content active">
+                            <div class="day-header-meta">
+                                <span class="time-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    11.30 - 17.30 WIB
+                                </span>
+                                <span class="session-badge">SIANG</span>
+                            </div>
+                            
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">11.30 - 12.30</div>
+                                        <h4 class="timeline-title">Penjemputan & Makan Siang</h4>
+                                        <p class="timeline-desc">Penjemputan peserta trip di Hotel atau Homestay tempat menginap, dilanjutkan dengan menikmati makan siang bersama.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">12.30 - 13.30</div>
+                                        <h4 class="timeline-title">Persiapan Tour Darat</h4>
+                                        <p class="timeline-desc">Briefing singkat bersama pemandu wisata mengenai rute perjalanan dan persiapan kelengkapan tour darat.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">13.30 - 15.00</div>
+                                        <h4 class="timeline-title">Destinasi Pertama: Pantai Bobi</h4>
+                                        <p class="timeline-desc">Mengunjungi Pantai Bobi, nikmati hamparan pasir putih bersih yang menawan dan pepohonan kelapa yang berjejer rapi di sepanjang pantai.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">15.00 - 16.30</div>
+                                        <h4 class="timeline-title">Lanjut ke Bukit Love</h4>
+                                        <p class="timeline-desc">Perjalanan dilanjutkan ke Bukit Love untuk berfoto ria di spot instagramable berlatar belakang tulisan "LOVE" raksasa dengan panorama laut lepas dari ketinggian.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">16.30 - 17.30</div>
+                                        <h4 class="timeline-title">Sunset di Pantai Tanjung Gelam</h4>
+                                        <p class="timeline-desc">Menikmati momen matahari terbenam yang eksotis di bawah naungan pohon kelapa miring yang sangat ikonik di Pantai Tanjung Gelam.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">17.30 - 19.00</div>
+                                        <h4 class="timeline-title">Kembali ke Penginapan</h4>
+                                        <p class="timeline-desc">Kembali ke penginapan/homestay untuk beristirahat, membersihkan diri, dan bersiap-siap.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">19.00 - 20.00</div>
+                                        <h4 class="timeline-title">Makan Malam</h4>
+                                        <p class="timeline-desc">Menyantap makan malam hangat yang disajikan oleh tim penginapan.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">20.00 - Selesai</div>
+                                        <h4 class="timeline-title">Malam Acara Bebas (Alun-Alun)</h4>
+                                        <p class="timeline-desc">Acara bebas di malam hari. Peserta dapat berjalan-jalan santai ke Alun-Alun Karimunjawa untuk berburu kuliner ikan bakar segar atau membeli suvenir khas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- DAY 2 CONTENT -->
+                        <div id="day-2-content" class="day-content">
+                            <div class="day-header-meta">
+                                <span class="time-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    08.30 - 17.00 WIB
+                                </span>
+                                <span class="session-badge pagi">PAGI</span>
+                            </div>
+                            
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">08.30 - 09.00</div>
+                                        <h4 class="timeline-title">Persiapan Tour Laut</h4>
+                                        <p class="timeline-desc">Persiapan alat snorkeling, pelampung, briefing keselamatan, dan berjalan menuju dermaga perahu wisata.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">09.00 - 12.00</div>
+                                        <h4 class="timeline-title">Spot Snorkeling Pertama & Nemo</h4>
+                                        <p class="timeline-desc">Menuju spot snorkeling pertama untuk melihat terumbu karang indah dan bercengkrama langsung dengan gerombolan ikan badut (Nemo) yang lucu.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">12.00 - 13.30</div>
+                                        <h4 class="timeline-title">Makan Siang di Pulau BBQ</h4>
+                                        <p class="timeline-desc">Merapat ke pulau pasir putih untuk menikmati makan siang lezat prasmanan dengan menu utama BBQ ikan bakar segar khas Karimunjawa.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">13.30 - 15.00</div>
+                                        <h4 class="timeline-title">Spot Snorkeling Kedua & Terumbu Karang</h4>
+                                        <p class="timeline-desc">Melanjutkan perjalanan ke spot snorkeling kedua untuk mengeksplorasi keanekaragaman biota laut dan formasi terumbu karang warna-warni yang sehat.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">15.00 - 16.30</div>
+                                        <h4 class="timeline-title">Mengunjungi Penangkaran Hiu</h4>
+                                        <p class="timeline-desc">Berkunjung ke area penangkaran hiu. Rasakan sensasi menegangkan berfoto di dalam air bersama ikan hiu yang sudah jinak dan bersahabat.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">16.30 - 17.00</div>
+                                        <h4 class="timeline-title">Kembali ke Penginapan</h4>
+                                        <p class="timeline-desc">Meninggalkan penangkaran hiu, kembali berlayar ke pelabuhan, and diantar kembali menuju penginapan untuk beristirahat.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- DAY 3 CONTENT -->
+                        <div id="day-3-content" class="day-content">
+                            <div class="day-header-meta">
+                                <span class="time-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    07.00 - 11.00 WIB
+                                </span>
+                                <span class="session-badge pagi">PAGI</span>
+                            </div>
+                            
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">07.00 - 09.30</div>
+                                        <h4 class="timeline-title">Acara Bebas</h4>
+                                        <p class="timeline-desc">Menikmati sarapan pagi khas Karimunjawa di penginapan. Setelahnya Anda memiliki waktu luang untuk berburu suvenir, kaos khas, atau sekadar berfoto di sekitar area penginapan.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">09.30 - 10.30</div>
+                                        <h4 class="timeline-title">Persiapan Check Out</h4>
+                                        <p class="timeline-desc">Peserta mulai berkemas barang bawaan dan menyelesaikan administrasi check out dengan pihak penginapan.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-info">
+                                        <div class="timeline-time">10.30 - 11.00</div>
+                                        <h4 class="timeline-title">Transfer ke Pelabuhan & Trip Selesai</h4>
+                                        <p class="timeline-desc">Peserta diantar menuju ke Pelabuhan Karimunjawa untuk proses boarding kapal penyeberangan kembali ke Jepara/Semarang. Perjalanan wisata bersama Karimunjawa Vibes Trip resmi selesai!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <script>
+                function switchDay(dayNum) {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.itinerary-tab-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Remove active class from all content panes
+                    document.querySelectorAll('.day-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab and its content pane
+                    document.querySelector(`.itinerary-tab-btn[data-day="${dayNum}"]`).classList.add('active');
+                    document.getElementById(`day-${dayNum}-content`).classList.add('active');
+                }
+                </script>
+
                 <!-- Fasilitas & Aturan Card (Styled like "What's Included") -->
                 <div class="lodging-features-card">
                     <div class="lodging-features-title">Fasilitas & Kebijakan Stay</div>

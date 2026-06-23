@@ -110,11 +110,11 @@ $daftar_penginapan = [
         "lokasi" => "Tepi Pantai, Karimunjawa",
         "detail_deskripsi" => "Blue Laguna Inn menghadirkan suasana penginapan eksotis yang memadukan keindahan alam pantai dengan arsitektur kayu tradisional. Terletak di tepi pantai pasir putih, Anda dapat menikmati suara deburan ombak dan hembusan angin laut langsung dari balkon kamar.",
         "foto_galeri" => [
-            "assets/images/paket-honeymoon.jpg",
-            "assets/images/galeri-2.jpg",
-            "assets/images/galeri-1.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-3.jpg"
+            "assets/images/bluelaguna/5.jpg",
+            "assets/images/bluelaguna/1.jpg",
+            "assets/images/bluelaguna/2.jpg",
+            "assets/images/bluelaguna/3.jpg",
+            "assets/images/bluelaguna/4.jpg"
         ],
         "fasilitas" => [
             "Balkon Privat Menghadap Pantai",
