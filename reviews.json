@@ -1,0 +1,30 @@
+[
+    {
+        "nama": "Andi Wijaya",
+        "asal": "Semarang",
+        "bintang": 5,
+        "ulasan": "Tempatnya sangat bersih dan nyaman sekali. Pelayanan dari host ramah banget, dekat sekali dengan alun-alun!",
+        "tanggal": "2026-06-20"
+    },
+    {
+        "nama": "Siti Rahma",
+        "asal": "Jakarta",
+        "bintang": 5,
+        "ulasan": "Honeymoon di Lighthouse Resort luar biasa berkesan. Kolam renang privatnya menghadap laut langsung dan sunset-nya juara!",
+        "tanggal": "2026-06-21"
+    },
+    {
+        "nama": "Rian Utama",
+        "asal": "Surabaya",
+        "bintang": 5,
+        "ulasan": "Vila kayunya estetik parah, pemandangan laut dari atas balkon kamar benar-benar memanjakan mata. Fasilitas sewa motor gratisnya sangat membantu.",
+        "tanggal": "2026-06-22"
+    },
+    {
+        "nama": "Budi",
+        "asal": "Yogyakarta",
+        "bintang": 4,
+        "ulasan": "Pelayanan dan keramahan pengelola sangat memuaskan sekali! Kamar bersih dan AC dingin.",
+        "tanggal": "2026-06-22"
+    }
+]
