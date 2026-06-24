@@ -78,11 +78,11 @@ $daftar_penginapan = [
         "lokasi" => "Dekat Pelabuhan, Karimunjawa",
         "detail_deskripsi" => "Puri Karimun adalah akomodasi legendaris yang nyaman dengan arsitektur modern minimalis. Terletak sangat dekat dengan pintu masuk utama (Pelabuhan Karimunjawa), hotel ini memudahkan mobilitas Anda saat check-in maupun check-out menuju kapal penyeberangan.",
         "foto_galeri" => [
-            "assets/images/paket-snorkeling.jpg",
-            "assets/images/galeri-1.jpg",
-            "assets/images/galeri-2.jpg",
-            "assets/images/galeri-3.jpg",
-            "assets/images/galeri-4.jpg"
+            "assets/images/purikarimun/1.jpg",
+            "assets/images/purikarimun/2.jpg",
+            "assets/images/purikarimun/3.jpg",
+            "assets/images/purikarimun/4.jpg",
+            "assets/images/purikarimun/5.jpg"
         ],
         "fasilitas" => [
             "Kamar AC Premium",
