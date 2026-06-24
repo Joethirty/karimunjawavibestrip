@@ -3,8 +3,11 @@ $base_url = './';
 // Hubungkan komponen data konfigurasi
 require_once $base_url . 'config.php';
 
-// Map rating untuk masing-masing penginapan
-$ratings_map = [
+// Deklarasi global agar Intelephense VS Code tidak memunculkan garis merah
+global $daftar_penginapan;
+
+// Map rating default untuk masing-masing penginapan jika belum ada ulasan baru
+$default_ratings_map = [
     'homestay-fan' => 4.5,
     'homestay-ac' => 4.6,
     'puri-karimun' => 4.7,
@@ -19,6 +22,44 @@ $ratings_map = [
     'royal-ocean' => 5.0,
     'java-paradise' => 4.9
 ];
+
+// Hitung rating rata-rata dinamis dari reviews.json
+$lodging_ratings = [];
+$lodging_counts = [];
+
+if (isset($testimoni_pelanggan) && is_array($testimoni_pelanggan)) {
+    foreach ($testimoni_pelanggan as $testi) {
+        if (isset($testi['penginapan_id'])) {
+            $pid = $testi['penginapan_id'];
+            if (!isset($lodging_ratings[$pid])) {
+                $lodging_ratings[$pid] = 0;
+                $lodging_counts[$pid] = 0;
+            }
+            $lodging_ratings[$pid] += isset($testi['bintang']) ? intval($testi['bintang']) : 5;
+            $lodging_counts[$pid]++;
+        }
+    }
+}
+
+$ratings_map = [];
+foreach ($default_ratings_map as $pid => $def_rating) {
+    if (isset($lodging_counts[$pid]) && $lodging_counts[$pid] > 0) {
+        $ratings_map[$pid] = round($lodging_ratings[$pid] / $lodging_counts[$pid], 1);
+    } else {
+        $ratings_map[$pid] = $def_rating;
+    }
+}
+
+// Filter $testimoni_pelanggan untuk hanya memuat ulasan umum / tour guide (tanpa penginapan_id)
+$testimoni_tour_guide = [];
+if (isset($testimoni_pelanggan) && is_array($testimoni_pelanggan)) {
+    foreach ($testimoni_pelanggan as $testi) {
+        if (empty($testi['penginapan_id'])) {
+            $testimoni_tour_guide[] = $testi;
+        }
+    }
+}
+$testimoni_pelanggan = $testimoni_tour_guide;
 
 // Memproses input ulasan baru
 $review_success = false;
@@ -75,10 +116,80 @@ include_once $base_url . 'header.php';
             <span class="hero-tag">Travel Website</span>
             <h1 class="hero-main-title">NEVER STOP<br>EXPLORING THE<br>WORLD.</h1>
             <p class="hero-desc">Temukan keindahan pantai pasir putih yang tersembunyi, terumbu karang tropis yang menawan, dan pilihan penginapan mewah berkelas di Kepulauan Karimunjawa.</p>
-            <a href="#penginapan" class="btn-hero-learn-more">LEARN MORE</a>
+            <a href="#mengapa-kami" class="btn-hero-learn-more">LEARN MORE</a>
         </div>
     </div>
 </header>
+
+<!-- Mengapa Memilih Kami Section -->
+<section id="mengapa-kami" style="background-color: #0c2d2e; padding: 80px 16px; color: var(--off-white); border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <div class="container" style="padding: 0; max-width: 1200px;">
+        <h2 style="color: var(--off-white); text-transform: uppercase; font-size: 28px; letter-spacing: 1px; margin-bottom: 8px; text-align: center;">KENAPA MENGGUNAKAN JASA KARIMUNJAWA VIBES TRIP ?</h2>
+        <div style="width: 50px; height: 3px; background-color: var(--primary-teal); margin: 0 auto 50px auto; border-radius: 2px;"></div>
+        
+        <div class="why-us-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+            <!-- Card 1 -->
+            <div class="why-us-card" style="background-color: var(--off-white); color: var(--dark-gray); border-radius: 12px; padding: 35px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                <div style="margin-bottom: 20px; font-size: 32px; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(28, 187, 180, 0.1); color: var(--primary-teal);">
+                    <!-- Icon: Stars/Thumb up -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                </div>
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--dark-gray); margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Pilihan Destinasi Terbaik</h3>
+                <p style="font-size: 14px; line-height: 22px; color: var(--charcoal); margin: 0;">Nikmati perjalanan eksklusif ke 6 hingga 10 spot wisata terindah di Karimunjawa. Sebagai biro lokal tepercaya, kami aktif mengeksplorasi dan memetakan lokasi-lokasi tersembunyi yang jarang dijamah turis lain, termasuk titik terbaik menyaksikan matahari terbit (sunrise point) yang memukau.</p>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="why-us-card" style="background-color: var(--off-white); color: var(--dark-gray); border-radius: 12px; padding: 35px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                <div style="margin-bottom: 20px; font-size: 32px; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(255, 105, 0, 0.1); color: var(--vibrant-orange);">
+                    <!-- Icon: Discount tag -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                </div>
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--dark-gray); margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Harga Yang Kompetitif</h3>
+                <p style="font-size: 14px; line-height: 22px; color: var(--charcoal); margin: 0;">Dapatkan penawaran harga paket liburan terbaik yang sangat bersaing. Kami menjamin efisiensi biaya tanpa sedikit pun mengurangi standar fasilitas, kenyamanan akomodasi, dan kualitas pelayanan premium yang kami suguhkan.</p>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="why-us-card" style="background-color: var(--off-white); color: var(--dark-gray); border-radius: 12px; padding: 35px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                <div style="margin-bottom: 20px; font-size: 32px; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(255, 216, 63, 0.15); color: #E5B800;">
+                    <!-- Icon: Booking / Ribbon -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                </div>
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--dark-gray); margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Booking Dengan Mudah</h3>
+                <p style="font-size: 14px; line-height: 22px; color: var(--charcoal); margin: 0;">Proses pemesanan sangat praktis, cepat, dan tanpa ribet. Tim travel consultant profesional kami selalu siap siaga melayani konsultasi dan merespons pertanyaan Anda kapan saja selama 24 jam penuh setiap harinya.</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="why-us-card" style="background-color: var(--off-white); color: var(--dark-gray); border-radius: 12px; padding: 35px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                <div style="margin-bottom: 20px; font-size: 32px; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(6, 106, 171, 0.1); color: var(--deep-blue);">
+                    <!-- Icon: User / Guide -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--dark-gray); margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Guide Lokal Berpengalaman</h3>
+                <p style="font-size: 14px; line-height: 22px; color: var(--charcoal); margin: 0;">Perjalanan Anda akan dipandu oleh guide lokal berlisensi yang ramah, komunikatif, dan sangat memahami seluk-beluk pulau. Kami memastikan petualangan Anda berlangsung aman, nyaman, dan penuh edukasi.</p>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="why-us-card" style="background-color: var(--off-white); color: var(--dark-gray); border-radius: 12px; padding: 35px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                <div style="margin-bottom: 20px; font-size: 32px; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(6, 147, 227, 0.1); color: var(--sky-blue);">
+                    <!-- Icon: Camera / Photo -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                </div>
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--dark-gray); margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Dokumentasi Premium</h3>
+                <p style="font-size: 14px; line-height: 22px; color: var(--charcoal); margin: 0;">Abadikan momen liburan seru Anda secara maksimal. Kami menyediakan layanan dokumentasi foto dan video bawah air (underwater) menggunakan kamera aksi GoPro berkualitas tinggi secara cuma-cuma.</p>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="why-us-card" style="background-color: var(--off-white); color: var(--dark-gray); border-radius: 12px; padding: 35px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                <div style="margin-bottom: 20px; font-size: 32px; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(224, 79, 103, 0.1); color: var(--coral-red);">
+                    <!-- Icon: Heart / Customer trust -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </div>
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--dark-gray); margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Layanan Prima & Terpercaya</h3>
+                <p style="font-size: 14px; line-height: 22px; color: var(--charcoal); margin: 0;">Kepuasan dan kebahagiaan Anda adalah misi utama kami. Berbekal reputasi tepercaya dan ratusan testimoni positif dari para pelancong, kami berkomitmen menghadirkan momen liburan impian yang berkesan seumur hidup.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section id="penginapan" class="container">
     <div class="section-title-wrapper">
@@ -94,12 +205,6 @@ include_once $base_url . 'header.php';
         ?>
             <a href="<?php echo $base_url; ?>detail-page/<?php echo $penginapan['id']; ?>.php" class="<?php echo $card_class; ?>" style="<?php echo $card_style; ?>">
                 <div class="package-card">
-                    <?php if (!empty($penginapan['badge'])): ?>
-                        <div class="promotional-badge <?php echo $penginapan['badge_class']; ?>">
-                            <?php echo $penginapan['badge']; ?>
-                        </div>
-                    <?php endif; ?>
-
                     <div class="card-image-wrapper">
                         <img src="<?php echo $base_url . $penginapan['gambar']; ?>" alt="<?php echo $penginapan['nama']; ?>">
                     </div>

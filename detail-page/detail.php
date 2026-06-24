@@ -3,6 +3,9 @@ $base_url = '../';
 // Hubungkan komponen data konfigurasi
 require_once $base_url . 'config.php';
 
+// Deklarasi global agar Intelephense VS Code tidak memunculkan garis merah
+global $daftar_penginapan;
+
 // Validasi parameter ID penginapan
 $penginapan_id = isset($_GET['id']) ? trim(htmlspecialchars($_GET['id'])) : '';
 $penginapan = null;
@@ -16,26 +19,105 @@ if (!empty($penginapan_id)) {
     }
 }
 
+// Memproses input ulasan baru khusus penginapan ini
+$review_success = false;
+$review_error = "";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'tambah_ulasan_detail' && $penginapan) {
+    $nama = isset($_POST['nama_review']) ? trim(htmlspecialchars($_POST['nama_review'])) : "";
+    $asal = isset($_POST['asal_review']) ? trim(htmlspecialchars($_POST['asal_review'])) : "";
+    $bintang = isset($_POST['bintang']) ? intval($_POST['bintang']) : 5;
+    $ulasan = isset($_POST['ulasan_review']) ? trim(htmlspecialchars($_POST['ulasan_review'])) : "";
+    
+    if (!empty($nama) && !empty($ulasan) && $bintang >= 1 && $bintang <= 5) {
+        $reviews_file = $base_url . 'reviews.json';
+        $current_reviews = [];
+        if (file_exists($reviews_file)) {
+            $json_data = file_get_contents($reviews_file);
+            $current_reviews = json_decode($json_data, true);
+            if (!is_array($current_reviews)) {
+                $current_reviews = [];
+            }
+        }
+        
+        $new_review = [
+            "nama" => $nama,
+            "asal" => $asal,
+            "bintang" => $bintang,
+            "ulasan" => $ulasan,
+            "tanggal" => date('Y-m-d'),
+            "penginapan_id" => $penginapan['id']
+        ];
+        
+        // Tambahkan ke bagian teratas list
+        array_unshift($current_reviews, $new_review);
+        
+        if (file_put_contents($reviews_file, json_encode($current_reviews, JSON_PRETTY_PRINT))) {
+            // Redirect untuk menghindari resubmission saat refresh
+            header("Location: " . $penginapan['id'] . ".php?status=success#testimoni-paket");
+            exit;
+        } else {
+            $review_error = "Gagal menyimpan ulasan. Silakan coba lagi.";
+        }
+    } else {
+        $review_error = "Harap lengkapi semua kolom dan bintang rating.";
+    }
+}
+
+// Ambil ulasan spesifik penginapan ini
+$lodging_reviews = [];
+if (isset($testimoni_pelanggan) && is_array($testimoni_pelanggan)) {
+    foreach ($testimoni_pelanggan as $testi) {
+        if (isset($testi['penginapan_id']) && $testi['penginapan_id'] === $penginapan['id']) {
+            $lodging_reviews[] = $testi;
+        }
+    }
+}
+
+$total_bintang = 0;
+$jumlah_ulasan = count($lodging_reviews);
+foreach ($lodging_reviews as $testi) {
+    $total_bintang += isset($testi['bintang']) ? intval($testi['bintang']) : 5;
+}
+
+$default_ratings_map = [
+    'homestay-fan' => 4.5,
+    'homestay-ac' => 4.6,
+    'puri-karimun' => 4.7,
+    'blue-laguna' => 4.8,
+    'summer-inn' => 4.8,
+    'dseason' => 4.9,
+    'almare' => 4.8,
+    'omah-alchy' => 4.9,
+    'hallo-resort' => 4.8,
+    'happinezz-hill' => 4.8,
+    'legon-waru' => 4.9,
+    'royal-ocean' => 5.0,
+    'java-paradise' => 4.9
+];
+$default_rating = isset($default_ratings_map[$penginapan['id']]) ? $default_ratings_map[$penginapan['id']] : 4.8;
+$rating_rata_rata = $jumlah_ulasan > 0 ? round($total_bintang / $jumlah_ulasan, 1) : $default_rating;
+
 // Judul halaman dinamis untuk SEO
-$page_title = $penginapan ? $penginapan['nama'] . " - Penginapan Karimunjawa" : "Penginapan Tidak Ditemukan - Karimunjawavibestrip";
+$page_title = $penginapan ? $penginapan['nama'] . " - Penginapan Karimunjawa" : "Penginapan Tidak Ditemukan - KarimunJawa Vibes Trip";
 
 // Muat komponen header visual
 include_once $base_url . 'header.php';
 ?>
 
-<div class="btn-back-container">
-    <a href="<?php echo $base_url; ?>index.php#penginapan" class="btn-back">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        Kembali ke Semua Penginapan
-    </a>
-</div>
-
 <?php if ($penginapan): ?>
     <!-- Main Container -->
-    <main class="container" style="padding-top: 20px; max-width: 1200px; margin: 0 auto;">
+    <main class="container" style="padding-top: 80px; max-width: 1200px; margin: 0 auto;">
+        
+        <!-- Tombol Kembali di Pojok Kiri Atas di atas Gambar -->
+        <div style="margin-bottom: 20px; text-align: left;">
+            <a href="<?php echo $base_url; ?>index.php#penginapan" class="btn-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                KEMBALI KE BERANDA
+            </a>
+        </div>
         
         <!-- 5-Photo Grid Gallery (Spans full width at the top) -->
         <div class="lodging-detail-gallery">
@@ -80,49 +162,7 @@ include_once $base_url . 'header.php';
                     <p style="font-size: 15px; color: var(--medium-gray); line-height: 24px; margin-bottom: 0;"><?php echo $penginapan['deskripsi']; ?></p>
                 </div>
 
-                <!-- Horizontal Line of Meta Boxes with Icons -->
-                <div class="lodging-meta-row">
-                    <!-- Lokasi -->
-                    <div class="lodging-meta-box">
-                        <div class="lodging-meta-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        </div>
-                        <div class="lodging-meta-text">
-                            <span class="lodging-meta-label">Lokasi</span>
-                            <span class="lodging-meta-value"><?php echo str_replace(', Karimunjawa', '', $penginapan['lokasi']); ?></span>
-                        </div>
-                    </div>
-                    <!-- Kapasitas -->
-                    <div class="lodging-meta-box">
-                        <div class="lodging-meta-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        </div>
-                        <div class="lodging-meta-text">
-                            <span class="lodging-meta-label">Kapasitas</span>
-                            <span class="lodging-meta-value">2-3 Tamu / Kamar</span>
-                        </div>
-                    </div>
-                    <!-- Tipe Stay -->
-                    <div class="lodging-meta-box">
-                        <div class="lodging-meta-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                        </div>
-                        <div class="lodging-meta-text">
-                            <span class="lodging-meta-label">Tipe Stay</span>
-                            <span class="lodging-meta-value">Kamar Privat</span>
-                        </div>
-                    </div>
-                    <!-- Konfirmasi -->
-                    <div class="lodging-meta-box">
-                        <div class="lodging-meta-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        </div>
-                        <div class="lodging-meta-text">
-                            <span class="lodging-meta-label">Status</span>
-                            <span class="lodging-meta-value">Konfirmasi Instan</span>
-                        </div>
-                    </div>
-                </div>
+
 
                 <!-- Tentang Penginapan (Detailed Description) -->
                 <div>
@@ -352,43 +392,139 @@ include_once $base_url . 'header.php';
                 }
                 </script>
 
-                <!-- Fasilitas & Aturan Card (Styled like "What's Included") -->
-                <div class="lodging-features-card">
-                    <div class="lodging-features-title">Fasilitas & Kebijakan Stay</div>
-                    
-                    <div class="lodging-features-grid">
-                        <!-- Fasilitas Kamar & Layanan -->
-                        <div>
-                            <div style="font-size: 14px; font-weight: 700; color: var(--primary-teal); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                                <span style="background-color: rgba(28, 187, 180, 0.1); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</span>
-                                Fasilitas & Layanan
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 10px;">
-                                <?php foreach ($penginapan['fasilitas'] as $fasilitas): ?>
-                                    <div class="lodging-feature-item">
-                                        <span class="lodging-feature-bullet">&#10003;</span>
-                                        <span><?php echo $fasilitas; ?></span>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                        
-                        <!-- Kebijakan & Aturan Stay -->
-                        <div>
-                            <div style="font-size: 14px; font-weight: 700; color: var(--coral-red); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                                <span style="background-color: rgba(224, 79, 103, 0.1); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--coral-red);">!</span>
-                                Kebijakan & Aturan
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 10px;">
-                                <?php foreach ($penginapan['aturan'] as $aturan): ?>
-                                    <div class="lodging-feature-item">
-                                        <span class="lodging-feature-bullet" style="color: var(--coral-red); font-size: 13px;">&#9888;</span>
-                                        <span><?php echo $aturan; ?></span>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
+                <!-- Testimoni & Ulasan Section -->
+                <div class="lodging-features-card" id="testimoni-paket" style="margin-top: 30px;">
+                    <div class="lodging-features-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <span>Testimoni & Ulasan Paket</span>
+                        <div style="display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: normal; color: var(--charcoal);">
+                            <span class="stars-gold" style="color: var(--warm-gold); font-size: 18px;">
+                                <?php
+                                $rounded_rating = round($rating_rata_rata);
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $rounded_rating) {
+                                        echo '&#9733;';
+                                    } else {
+                                        echo '<span style="color:#DDDDDD;">&#9733;</span>';
+                                    }
+                                }
+                                ?>
+                            </span>
+                            <strong><?php echo $rating_rata_rata; ?></strong> (<?php echo $jumlah_ulasan; ?> ulasan)
                         </div>
                     </div>
+                    
+                    <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
+                        <div class="review-alert review-alert-success" style="background-color: #E2F0D9; border: 1px solid #385723; color: #385723; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-size: 14px;">
+                            <strong>Berhasil!</strong> Ulasan Anda untuk paket ini telah berhasil disimpan dan diterbitkan.
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($review_error)): ?>
+                        <div class="review-alert review-alert-danger" style="background-color: #FADBD8; border: 1px solid #C0392B; color: #C0392B; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-size: 14px;">
+                            <strong>Error:</strong> <?php echo $review_error; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Daftar Ulasan -->
+                    <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
+                        <?php if ($jumlah_ulasan > 0): ?>
+                            <?php foreach ($lodging_reviews as $idx => $testi): ?>
+                                <div style="background-color: rgba(28, 187, 180, 0.03); border: 1px solid #ECECEC; border-radius: 8px; padding: 16px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <div style="color: var(--warm-gold); font-size: 14px;">
+                                            <?php
+                                            $bintang_ulasan = isset($testi['bintang']) ? intval($testi['bintang']) : 5;
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                if ($i <= $bintang_ulasan) {
+                                                    echo "&#9733;";
+                                                } else {
+                                                    echo "<span style='color:#DDDDDD;'>&#9733;</span>";
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                        <div style="font-size: 11px; color: var(--light-gray);">
+                                            <?php echo isset($testi['tanggal']) ? $testi['tanggal'] : date('Y-m-d'); ?>
+                                        </div>
+                                    </div>
+                                    <p style="font-style: italic; font-size: 14px; line-height: 20px; color: var(--charcoal); margin: 0 0 10px 0;">"<?php echo $testi['ulasan']; ?>"</p>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--primary-teal); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11px; text-transform: uppercase;">
+                                            <?php echo substr($testi['nama'], 0, 1); ?>
+                                        </div>
+                                        <div style="font-size: 12px; font-weight: 700; color: var(--primary-teal);">
+                                            <?php echo $testi['nama']; ?> <span style="font-weight: 400; color: var(--medium-gray);">dari <?php echo $testi['asal']; ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div style="text-align: center; padding: 30px 10px; color: var(--medium-gray); font-size: 14px; border: 1px dashed #DDD; border-radius: 8px;">
+                                Belum ada ulasan untuk penginapan ini. Jadilah yang pertama memberikan ulasan!
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Tombol Tulis Ulasan -->
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <button id="toggleReviewBtn" class="btn-review-primary" style="background-color: var(--primary-teal); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='var(--primary-teal-hover)'" onmouseout="this.style.backgroundColor='var(--primary-teal)'" onclick="toggleReviewForm()">Tulis Ulasan Baru</button>
+                    </div>
+
+                    <!-- Form Tambah Ulasan (Toggled) -->
+                    <div id="reviewFormContainer" class="review-form-box" style="display: none; background-color: #FAFAFA; border: 1px solid #ECECEC; border-radius: 8px; padding: 20px; box-shadow: none; margin-top: 20px;">
+                        <h3 style="margin-bottom: 16px; border-bottom: 1px solid var(--very-light-gray); padding-bottom: 8px; font-size: 16px;">Berikan Ulasan Anda</h3>
+                        <form action="" method="POST">
+                            <input type="hidden" name="action" value="tambah_ulasan_detail">
+
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <label class="form-label" for="nama_review" style="display: block; font-size: 13px; font-weight: 700; color: var(--dark-gray); margin-bottom: 6px;">Nama Lengkap</label>
+                                <input class="text-input" type="text" id="nama_review" name="nama_review" placeholder="Contoh: Sarah Aulia" required style="width: 100%; padding: 10px; border: 1px solid var(--very-light-gray); border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <label class="form-label" for="asal_review" style="display: block; font-size: 13px; font-weight: 700; color: var(--dark-gray); margin-bottom: 6px;">Asal Kota</label>
+                                <input class="text-input" type="text" id="asal_review" name="asal_review" placeholder="Contoh: Bandung" required style="width: 100%; padding: 10px; border: 1px solid var(--very-light-gray); border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <label class="form-label" style="display: block; font-size: 13px; font-weight: 700; color: var(--dark-gray); margin-bottom: 6px;">Rating Pelayanan</label>
+                                <div class="rating-input-group">
+                                    <div class="star-rating-form">
+                                        <input type="radio" id="bintang5_det" name="bintang" value="5" required />
+                                        <label for="bintang5_det" title="Sangat Puas">&#9733;</label>
+                                        <input type="radio" id="bintang4_det" name="bintang" value="4" />
+                                        <label for="bintang4_det" title="Puas">&#9733;</label>
+                                        <input type="radio" id="bintang3_det" name="bintang" value="3" />
+                                        <label for="bintang3_det" title="Cukup Puas">&#9733;</label>
+                                        <input type="radio" id="bintang2_det" name="bintang" value="2" />
+                                        <label for="bintang2_det" title="Kurang Puas">&#9733;</label>
+                                        <input type="radio" id="bintang1_det" name="bintang" value="1" />
+                                        <label for="bintang1_det" title="Sangat Kecewa">&#9733;</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label class="form-label" for="ulasan_review" style="display: block; font-size: 13px; font-weight: 700; color: var(--dark-gray); margin-bottom: 6px;">Ulasan Anda</label>
+                                <textarea class="text-input" id="ulasan_review" name="ulasan_review" rows="4" placeholder="Tuliskan pengalaman menyenangkan Anda menginap di sini..." required style="width: 100%; padding: 10px; border: 1px solid var(--very-light-gray); border-radius: 6px; font-size: 14px; font-family: inherit; resize: vertical;"></textarea>
+                            </div>
+
+                            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                                <button type="button" class="btn-review-secondary" style="background-color: transparent; border: 1px solid var(--light-gray); color: var(--charcoal); padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer;" onclick="toggleReviewForm()">Batal</button>
+                                <button type="submit" class="btn-review-primary" style="background-color: var(--primary-teal); border: none; color: white; padding: 8px 20px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer;" onmouseover="this.style.backgroundColor='var(--primary-teal-hover)'" onmouseout="this.style.backgroundColor='var(--primary-teal)'">Kirim Ulasan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; text-align: left;">
+                    <a href="<?php echo $base_url; ?>index.php#penginapan" class="btn-back" style="font-size: 15px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        KEMBALI KE SEMUA PENGINAPAN
+                    </a>
                 </div>
 
             </div>
@@ -401,8 +537,19 @@ include_once $base_url . 'header.php';
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-size: 11px; font-weight: 700; color: #FFF; background-color: var(--dark-gray); padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px;">TOP SELLER</span>
                         <div style="display: flex; align-items: center; gap: 4px;">
-                            <span style="color: var(--warm-gold); font-size: 14px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                            <span style="font-size: 12px; color: var(--light-gray); font-weight: 500;">(4.9)</span>
+                            <span style="color: var(--warm-gold); font-size: 14px;">
+                                <?php
+                                $rounded_rating = round($rating_rata_rata);
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $rounded_rating) {
+                                        echo '&#9733;';
+                                    } else {
+                                        echo '<span style="color:#DDDDDD;">&#9733;</span>';
+                                    }
+                                }
+                                ?>
+                            </span>
+                            <span style="font-size: 12px; color: var(--light-gray); font-weight: 500;">(<?php echo $rating_rata_rata; ?>)</span>
                         </div>
                     </div>
                     
@@ -470,7 +617,7 @@ include_once $base_url . 'header.php';
 
                     <?php
                     // Bikin pesan custom WA terenkripsi yang estetik
-                    $pesan_wa = "Halo Karimunjawavibestrip, saya ingin menanyakan ketersediaan paket trip *" . $penginapan['nama'] . "*.%0A%0AMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                    $pesan_wa = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan paket trip *" . $penginapan['nama'] . "*.%0A%0AMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
                     ?>
                     <a href="https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo $pesan_wa; ?>" target="_blank" rel="noopener noreferrer" class="btn-booking-wa" style="background-color: #0F2D2E; border-radius: 8px; font-family: Tahoma, sans-serif; box-shadow: 0 4px 12px rgba(15, 45, 46, 0.15);">
                         Pesan Sekarang via WA

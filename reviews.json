@@ -1,30 +1,55 @@
 [
     {
+        "nama": "Rendi Pratama",
+        "asal": "Bandung",
+        "bintang": 5,
+        "ulasan": "Pelayanan tour guide dari Karimunjawa Vibes Trip luar biasa ramah dan sabar! Snorkeling dipandu dengan baik, dokumentasi underwater-nya super jernih dan keren.",
+        "tanggal": "2026-06-23"
+    },
+    {
+        "nama": "Clarissa",
+        "asal": "Tangerang",
+        "bintang": 5,
+        "ulasan": "Sangat puas trip dengan agen ini! Jadwal kapal terorganisir dengan rapi, guide-nya informatif menjelaskan sejarah pulau, dan diajak ke spot sunset rahasia.",
+        "tanggal": "2026-06-24"
+    },
+    {
+        "nama": "Ahmad Fauzi",
+        "asal": "Yogyakarta",
+        "bintang": 5,
+        "ulasan": "Pengalaman tak terlupakan bersama kru Karimunjawa Vibes Trip. Makanan bakar ikan di pulau tak berpenghuni rasanya juara banget! Sangat direkomendasikan.",
+        "tanggal": "2026-06-24"
+    },
+    {
         "nama": "Andi Wijaya",
         "asal": "Semarang",
         "bintang": 5,
         "ulasan": "Tempatnya sangat bersih dan nyaman sekali. Pelayanan dari host ramah banget, dekat sekali dengan alun-alun!",
-        "tanggal": "2026-06-20"
+        "tanggal": "2026-06-20",
+        "penginapan_id": "homestay-fan"
     },
     {
         "nama": "Siti Rahma",
         "asal": "Jakarta",
         "bintang": 5,
         "ulasan": "Honeymoon di Lighthouse Resort luar biasa berkesan. Kolam renang privatnya menghadap laut langsung dan sunset-nya juara!",
-        "tanggal": "2026-06-21"
+        "tanggal": "2026-06-21",
+        "penginapan_id": "java-paradise"
     },
     {
         "nama": "Rian Utama",
         "asal": "Surabaya",
         "bintang": 5,
         "ulasan": "Vila kayunya estetik parah, pemandangan laut dari atas balkon kamar benar-benar memanjakan mata. Fasilitas sewa motor gratisnya sangat membantu.",
-        "tanggal": "2026-06-22"
+        "tanggal": "2026-06-22",
+        "penginapan_id": "omah-alchy"
     },
     {
         "nama": "Budi",
         "asal": "Yogyakarta",
         "bintang": 4,
         "ulasan": "Pelayanan dan keramahan pengelola sangat memuaskan sekali! Kamar bersih dan AC dingin.",
-        "tanggal": "2026-06-22"
+        "tanggal": "2026-06-22",
+        "penginapan_id": "homestay-ac"
     }
 ]

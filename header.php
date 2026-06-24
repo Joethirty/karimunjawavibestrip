@@ -11,7 +11,7 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($page_title) ? $page_title : 'Karimunjawavibestrip'; ?></title>
+    <title><?php echo isset($page_title) ? $page_title : 'KarimunJawa Vibes Trip'; ?></title>
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/style.css?v=<?php echo filemtime(__DIR__ . '/assets/css/style.css'); ?>">
 </head>
 <body>
@@ -19,8 +19,8 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
     <nav class="header-nav <?php echo $is_home ? 'transparent-header' : 'solid-header'; ?>" id="headerNav">
         <div class="nav-container">
             <div class="logo" style="cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="window.location.href='<?php echo $base_url; ?>index.php';">
-                <img src="<?php echo $base_url; ?>assets/images/logo.png" alt="Karimunjawavibestrip Logo" class="logo-img">
-                <span class="logo-text">Karimunjawavibestrip</span>
+                <img src="<?php echo $base_url; ?>assets/images/logo.png" alt="KarimunJawa Vibes Trip Logo" class="logo-img">
+                <span class="logo-text">KarimunJawa Vibes Trip</span>
             </div>
             
             <ul class="nav-menu">
@@ -51,19 +51,33 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
         </div>
     </nav>
 
-    <?php if ($is_home): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const header = document.getElementById('headerNav');
+            let lastScrollY = window.scrollY;
+
             function checkScroll() {
-                if (window.scrollY > 50) {
+                const currentScrollY = window.scrollY;
+
+                // Toggle solid header background on scroll
+                if (currentScrollY > 50) {
                     header.classList.add('header-scrolled');
                 } else {
                     header.classList.remove('header-scrolled');
                 }
+
+                // Sembunyikan saat scroll ke bawah, tunjukkan saat scroll ke atas
+                // Threshold 100px agar tidak langsung tersembunyi di bagian paling atas
+                if (currentScrollY > 100 && currentScrollY > lastScrollY) {
+                    header.classList.add('header-hidden');
+                } else {
+                    header.classList.remove('header-hidden');
+                }
+
+                lastScrollY = currentScrollY;
             }
-            window.addEventListener('scroll', checkScroll);
-            checkScroll(); // Check once in case page loads scrolled down
+
+            window.addEventListener('scroll', checkScroll, { passive: true });
+            checkScroll(); // Cek sekali saat halaman dimuat
         });
     </script>
-    <?php endif; ?>
