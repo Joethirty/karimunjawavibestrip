@@ -120,30 +120,36 @@ include_once $base_url . 'header.php';
         </div>
         
         <!-- 5-Photo Grid Gallery (Spans full width at the top) -->
+        <?php
+        $active_gallery = $penginapan['foto_galeri'];
+        if (!empty($penginapan['tipe_kamar'])) {
+            $active_gallery = $penginapan['tipe_kamar'][0]['foto_galeri'];
+        }
+        ?>
         <div class="lodging-detail-gallery">
             <!-- 1. Left Top Image -->
-            <div class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $penginapan['foto_galeri'][1]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img src="<?php echo $base_url . $penginapan['foto_galeri'][1]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+            <div id="gallery-item-1" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[1]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                <img id="gallery-img-1" src="<?php echo $base_url . $active_gallery[1]; ?>" alt="<?php echo $penginapan['nama']; ?>">
             </div>
             
             <!-- 2. Middle Large Image (spans two rows) -->
-            <div class="lodging-detail-gallery-item big-image" onclick="bukaModalLightbox('<?php echo $base_url . $penginapan['foto_galeri'][0]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img src="<?php echo $base_url . $penginapan['foto_galeri'][0]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+            <div id="gallery-item-0" class="lodging-detail-gallery-item big-image" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[0]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                <img id="gallery-img-0" src="<?php echo $base_url . $active_gallery[0]; ?>" alt="<?php echo $penginapan['nama']; ?>">
             </div>
             
             <!-- 3. Right Top Image -->
-            <div class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $penginapan['foto_galeri'][2]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img src="<?php echo $base_url . $penginapan['foto_galeri'][2]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+            <div id="gallery-item-2" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[2]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                <img id="gallery-img-2" src="<?php echo $base_url . $active_gallery[2]; ?>" alt="<?php echo $penginapan['nama']; ?>">
             </div>
             
             <!-- 4. Left Bottom Image -->
-            <div class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $penginapan['foto_galeri'][3]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img src="<?php echo $base_url . $penginapan['foto_galeri'][3]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+            <div id="gallery-item-3" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[3]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                <img id="gallery-img-3" src="<?php echo $base_url . $active_gallery[3]; ?>" alt="<?php echo $penginapan['nama']; ?>">
             </div>
             
             <!-- 5. Right Bottom Image -->
-            <div class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $penginapan['foto_galeri'][4]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img src="<?php echo $base_url . $penginapan['foto_galeri'][4]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+            <div id="gallery-item-4" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[4]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                <img id="gallery-img-4" src="<?php echo $base_url . $active_gallery[4]; ?>" alt="<?php echo $penginapan['nama']; ?>">
             </div>
         </div>
 
@@ -160,6 +166,115 @@ include_once $base_url . 'header.php';
                     </div>
                     <h1 style="font-size: 32px; font-weight: 700; color: var(--dark-gray); margin-bottom: 12px;"><?php echo $penginapan['nama']; ?></h1>
                     <p style="font-size: 15px; color: var(--medium-gray); line-height: 24px; margin-bottom: 0;"><?php echo $penginapan['deskripsi']; ?></p>
+                    
+                    <!-- Selector Tipe Kamar -->
+                    <?php if (!empty($penginapan['tipe_kamar'])): ?>
+                        <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <span style="font-size: 14px; font-weight: 700; color: var(--dark-gray); line-height: 1;">Pilih Tipe Kamar:</span>
+                            <div class="room-type-tabs" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <?php foreach ($penginapan['tipe_kamar'] as $index => $tipe): ?>
+                                    <button class="room-type-tab-btn <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                            onclick="switchRoomType('<?php echo $tipe['id']; ?>')" 
+                                            data-room-id="<?php echo $tipe['id']; ?>"
+                                            style="padding: 8px 18px; font-size: 13px; font-weight: 700; border-radius: 30px; cursor: pointer; border: 1px solid #ECECEC; background-color: #F9F9F9; color: var(--charcoal); transition: all 0.3s ease; font-family: inherit;">
+                                        <?php echo $tipe['nama']; ?>
+                                    </button>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+                        <!-- Script to handle room type switching -->
+                        <script>
+                        const roomTypeData = {
+                            <?php foreach ($penginapan['tipe_kamar'] as $tipe): ?>
+                            '<?php echo $tipe['id']; ?>': {
+                                nama: '<?php echo $tipe['nama']; ?>',
+                                images: [
+                                    '<?php echo $base_url . $tipe['foto_galeri'][0]; ?>',
+                                    '<?php echo $base_url . $tipe['foto_galeri'][1]; ?>',
+                                    '<?php echo $base_url . $tipe['foto_galeri'][2]; ?>',
+                                    '<?php echo $base_url . $tipe['foto_galeri'][3]; ?>',
+                                    '<?php echo $base_url . $tipe['foto_galeri'][4]; ?>'
+                                ],
+                                price: '<?php echo str_replace(' / pax', '', $tipe['harga']); ?>',
+                                waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                            },
+                            <?php endforeach; ?>
+                        };
+
+                        function switchRoomType(roomId) {
+                            // Switch active states on selector buttons
+                            document.querySelectorAll('.room-type-tab-btn').forEach(btn => {
+                                if (btn.getAttribute('data-room-id') === roomId) {
+                                    btn.classList.add('active');
+                                    btn.style.backgroundColor = 'var(--primary-teal)';
+                                    btn.style.color = '#ffffff';
+                                    btn.style.borderColor = 'var(--primary-teal)';
+                                    btn.style.boxShadow = '0 4px 12px rgba(28, 187, 180, 0.2)';
+                                } else {
+                                    btn.classList.remove('active');
+                                    btn.style.backgroundColor = '#F9F9F9';
+                                    btn.style.color = 'var(--charcoal)';
+                                    btn.style.borderColor = '#ECECEC';
+                                    btn.style.boxShadow = 'none';
+                                }
+                            });
+                            
+                            // Dynamically update Top Grid Gallery Images & Lightbox Click Handlers
+                            if (roomTypeData[roomId]) {
+                                for (let i = 0; i < 5; i++) {
+                                    const imgEl = document.getElementById('gallery-img-' + i);
+                                    if (imgEl) {
+                                        imgEl.style.transition = 'opacity 0.25s ease-in-out';
+                                        imgEl.style.opacity = '0';
+                                        setTimeout(() => {
+                                            imgEl.src = roomTypeData[roomId].images[i];
+                                            imgEl.alt = roomTypeData[roomId].nama;
+                                            imgEl.style.opacity = '1';
+                                        }, 250);
+                                    }
+                                    
+                                    const containerEl = document.getElementById('gallery-item-' + i);
+                                    if (containerEl) {
+                                        containerEl.setAttribute('onclick', `bukaModalLightbox('${roomTypeData[roomId].images[i]}', '${roomTypeData[roomId].nama}')`);
+                                    }
+                                }
+
+                                // Update Sidebar price
+                                const sidebarPrice = document.getElementById('sidebar-price');
+                                if (sidebarPrice) {
+                                    sidebarPrice.textContent = roomTypeData[roomId].price;
+                                }
+
+                                // Update Sidebar WA button link
+                                const sidebarBtn = document.getElementById('sidebar-booking-btn');
+                                if (sidebarBtn) {
+                                    sidebarBtn.href = roomTypeData[roomId].waUrl;
+                                }
+                            }
+                        }
+
+                        // Set initial styles for active tab
+                        document.addEventListener("DOMContentLoaded", function() {
+                            const activeBtn = document.querySelector('.room-type-tab-btn.active');
+                            if (activeBtn) {
+                                activeBtn.style.backgroundColor = 'var(--primary-teal)';
+                                activeBtn.style.color = '#ffffff';
+                                activeBtn.style.borderColor = 'var(--primary-teal)';
+                                activeBtn.style.boxShadow = '0 4px 12px rgba(28, 187, 180, 0.2)';
+                            }
+                        });
+                        </script>
+                        
+                        <style>
+                        /* Styling room type tab buttons hover effect */
+                        .room-type-tab-btn:not(.active):hover {
+                            background-color: rgba(28, 187, 180, 0.05) !important;
+                            border-color: var(--primary-teal) !important;
+                            color: var(--primary-teal) !important;
+                        }
+                        </style>
+                    <?php endif; ?>
                 </div>
 
 
@@ -395,7 +510,7 @@ include_once $base_url . 'header.php';
                 <!-- Testimoni & Ulasan Section -->
                 <div class="lodging-features-card" id="testimoni-paket" style="margin-top: 30px;">
                     <div class="lodging-features-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                        <span>Testimoni & Ulasan Paket</span>
+                        <span>Testimoni & Ulasan</span>
                         <div style="display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: normal; color: var(--charcoal);">
                             <span class="stars-gold" style="color: var(--warm-gold); font-size: 18px;">
                                 <?php
@@ -415,7 +530,7 @@ include_once $base_url . 'header.php';
                     
                     <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
                         <div class="review-alert review-alert-success" style="background-color: #E2F0D9; border: 1px solid #385723; color: #385723; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-size: 14px;">
-                            <strong>Berhasil!</strong> Ulasan Anda untuk paket ini telah berhasil disimpan dan diterbitkan.
+                            <strong>Berhasil!</strong> Ulasan Anda untuk penginapan ini telah berhasil disimpan dan diterbitkan.
                         </div>
                     <?php endif; ?>
 
@@ -557,6 +672,9 @@ include_once $base_url . 'header.php';
                     <div style="margin-top: 5px;">
                         <?php 
                         $harga_text = $penginapan['harga']; 
+                        if (!empty($penginapan['tipe_kamar'])) {
+                            $harga_text = $penginapan['tipe_kamar'][0]['harga'];
+                        }
                         $is_mulai = false;
                         if (stripos($harga_text, 'Mulai') !== false) {
                             $is_mulai = true;
@@ -570,10 +688,10 @@ include_once $base_url . 'header.php';
                         $price_unit = isset($parts[1]) ? trim($parts[1]) : 'pax';
                         ?>
                         <div style="font-size: 11px; color: var(--light-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
-                            <?php echo $is_mulai ? 'Harga Mulai Dari' : 'Harga Paket'; ?>
+                            <?php echo $is_mulai ? 'Harga Mulai Dari' : 'Harga'; ?>
                         </div>
                         <div style="display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap;">
-                            <span style="font-size: 22px; font-weight: 700; color: var(--primary-teal); line-height: 1.2; letter-spacing: -0.5px;"><?php echo $price_val; ?></span>
+                            <span id="sidebar-price" style="font-size: 22px; font-weight: 700; color: var(--primary-teal); line-height: 1.2; letter-spacing: -0.5px;"><?php echo $price_val; ?></span>
                             <span style="font-size: 13px; color: var(--medium-gray); font-weight: 500;">/ <?php echo $price_unit; ?></span>
                         </div>
                     </div>
@@ -617,9 +735,13 @@ include_once $base_url . 'header.php';
 
                     <?php
                     // Bikin pesan custom WA terenkripsi yang estetik
-                    $pesan_wa = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan paket trip *" . $penginapan['nama'] . "*.%0A%0AMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                    $pesan_wa = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "*.%0A%0AMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                    if (!empty($penginapan['tipe_kamar'])) {
+                        $pesan_wa = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $penginapan['tipe_kamar'][0]['nama'] . "*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                        $pesan_wa = urlencode($pesan_wa);
+                    }
                     ?>
-                    <a href="https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo $pesan_wa; ?>" target="_blank" rel="noopener noreferrer" class="btn-booking-wa" style="background-color: #0F2D2E; border-radius: 8px; font-family: Tahoma, sans-serif; box-shadow: 0 4px 12px rgba(15, 45, 46, 0.15);">
+                    <a id="sidebar-booking-btn" href="https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo $pesan_wa; ?>" target="_blank" rel="noopener noreferrer" class="btn-booking-wa" style="background-color: #0F2D2E; border-radius: 8px; font-family: Tahoma, sans-serif; box-shadow: 0 4px 12px rgba(15, 45, 46, 0.15);">
                         Pesan Sekarang via WA
                     </a>
 

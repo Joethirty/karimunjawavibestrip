@@ -122,14 +122,14 @@ if (!isset($base_url)) {
             const nomorHandphone = "<?php echo isset($nomor_whatsapp) ? $nomor_whatsapp : ''; ?>"; 
 
             if (nama === "" || paket === "") {
-                alert("Harap isi Nama dan Pilih Paket terlebih dahulu!");
+                alert("Harap isi Nama dan Pilih Penginapan terlebih dahulu!");
                 return;
             }
 
             // Membangun teks draf pesan terenkripsi yang estetik untuk WhatsApp
-            const pesan = `Halo KarimunJawa Vibes Trip Guide, saya ingin konsultasi paket wisata.%0A%0A` +
+            const pesan = `Halo KarimunJawa Vibes Trip Guide, saya ingin konsultasi penginapan.%0A%0A` +
                           `*Nama:* ${encodeURIComponent(nama)}%0A` +
-                          `*Paket Wisata:* ${encodeURIComponent(paket)}%0A%0A` +
+                          `*Penginapan:* ${encodeURIComponent(paket)}%0A%0A` +
                           `Mohon informasi ketersediaan slot dan jadwal keberangkatan terdekat. Terima kasih!`;
 
             const urlWA = `https://api.whatsapp.com/send?phone=${nomorHandphone}&text=${pesan}`;

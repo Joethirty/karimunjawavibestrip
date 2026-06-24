@@ -145,7 +145,7 @@ include_once $base_url . 'header.php';
                     <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                 </div>
                 <h3 style="font-size: 17px; font-weight: 800; color: var(--dark-gray); margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Harga Yang Kompetitif</h3>
-                <p style="font-size: 14px; line-height: 22px; color: var(--charcoal); margin: 0;">Dapatkan penawaran harga paket liburan terbaik yang sangat bersaing. Kami menjamin efisiensi biaya tanpa sedikit pun mengurangi standar fasilitas, kenyamanan akomodasi, dan kualitas pelayanan premium yang kami suguhkan.</p>
+                <p style="font-size: 14px; line-height: 22px; color: var(--charcoal); margin: 0;">Dapatkan penawaran harga liburan terbaik yang sangat bersaing. Kami menjamin efisiensi biaya tanpa sedikit pun mengurangi standar fasilitas, kenyamanan akomodasi, dan kualitas pelayanan premium yang kami suguhkan.</p>
             </div>
             
             <!-- Card 3 -->
@@ -193,7 +193,7 @@ include_once $base_url . 'header.php';
 
 <section id="penginapan" class="container">
     <div class="section-title-wrapper">
-        <h2>Paket Penginapan Karimunjawa</h2>
+        <h2>Penginapan Karimunjawa</h2>
         <p class="section-subtitle">Harga Terbaik dan terpercaya</p>
     </div>
     
@@ -229,7 +229,7 @@ include_once $base_url . 'header.php';
                             <span class="rating-value"><?php echo number_format($rating, 1); ?></span>
                         </div>
                         
-                        <h3 class="card-title">Paket <?php echo $penginapan['nama']; ?></h3>
+                        <h3 class="card-title"><?php echo $penginapan['nama']; ?></h3>
                     </div>
                     
                     <?php 

@@ -4,67 +4,39 @@ $nomor_whatsapp = "62895361870926"; // Ganti dengan nomor WA operasional Anda
 
 $daftar_penginapan = [
     [
-        "id" => "homestay-fan",
-        "nama" => "Homestay Fan",
+        "id" => "homestay-loyal",
+        "nama" => "Homestay Loyal",
         "deskripsi" => "Penginapan kipas angin (fan) yang bersih, ekonomis, dan nyaman untuk budget traveler.",
         "harga" => "Rp. 1.200.000 / pax",
-        "gambar" => "assets/images/paket-family.jpg",
+        "gambar" => "assets/images/homestayloyal/1.jpg",
         "badge" => "Budget Friendly",
         "badge_class" => "",
         "lokasi" => "Pusat Kota, Karimunjawa",
         "detail_deskripsi" => "Homestay Fan menawarkan akomodasi ekonomis yang sangat bersih dan nyaman di jantung kepulauan Karimunjawa. Pilihan ideal bagi para pelancong ransel (backpacker) yang menginginkan tempat istirahat ramah di kantong setelah seharian berkeliling pulau. Lokasinya strategis dekat dengan area kuliner.",
         "foto_galeri" => [
-            "assets/images/paket-family.jpg",
-            "assets/images/galeri-3.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-1.jpg",
-            "assets/images/galeri-2.jpg"
-        ],
-        "fasilitas" => [
-            "Kamar dengan Kipas Angin (Fan)",
-            "Kamar Mandi Bersama yang Bersih",
-            "Koneksi Wi-Fi Gratis",
-            "Breakfast Tradisional Sederhana",
-            "Dispenser Air Minum Bersama",
-            "Teras Bersantai Depan Kamar"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 13:00",
-            "Check-out: Sebelum pukul 11:30",
-            "Harap mematikan listrik/fan saat keluar kamar",
-            "Harap menjaga ketenangan di malam hari"
+            "assets/images/homestayloyal/1.jpg",
+            "assets/images/homestayloyal/2.jpg",
+            "assets/images/homestayloyal/3.jpg",
+            "assets/images/homestayloyal/4.jpg",
+            "assets/images/homestayloyal/5.jpg"
         ]
     ],
     [
-        "id" => "homestay-ac",
-        "nama" => "Homestay AC",
+        "id" => "homestay-azza",
+        "nama" => "Homestay Azza",
         "deskripsi" => "Penginapan berpendingin ruangan (AC) yang sejuk dengan lokasi strategis di pusat kota.",
         "harga" => "Rp. 1.400.000 / pax",
-        "gambar" => "assets/images/paket-family.jpg",
+        "gambar" => "assets/images/homestayazza/1.jpg",
         "badge" => "Best Value",
         "badge_class" => "orange",
         "lokasi" => "Pusat Kota, Karimunjawa",
         "detail_deskripsi" => "Nikmati kenyamanan beristirahat di kamar sejuk ber-AC setelah beraktivitas di bawah terik matahari pantai Karimunjawa. Homestay AC menyediakan akomodasi bersih dengan kamar mandi dalam, memberikan privasi penuh dengan harga yang tetap sangat bersahabat.",
         "foto_galeri" => [
-            "assets/images/paket-family.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-3.jpg",
-            "assets/images/galeri-2.jpg",
-            "assets/images/galeri-1.jpg"
-        ],
-        "fasilitas" => [
-            "Kamar Full AC",
-            "Kamar Mandi Dalam (Shower)",
-            "Koneksi Wi-Fi Gratis",
-            "Breakfast Khas Karimunjawa",
-            "Air Mineral Kemasan Gratis",
-            "Teras Santai Depan Kamar"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 13:00",
-            "Check-out: Sebelum pukul 11:30",
-            "Matikan AC saat meninggalkan penginapan",
-            "Dilarang merokok di dalam kamar tidur"
+            "assets/images/homestayazza/1.jpg",
+            "assets/images/homestayazza/2.jpg",
+            "assets/images/homestayazza/3.jpg",
+            "assets/images/homestayazza/4.jpg",
+            "assets/images/homestayazza/5.jpg"
         ]
     ],
     [
@@ -81,20 +53,6 @@ $daftar_penginapan = [
             "assets/images/purikarimun/3.jpg",
             "assets/images/purikarimun/4.jpg",
             "assets/images/purikarimun/5.jpg"
-        ],
-        "fasilitas" => [
-            "Kamar AC Premium",
-            "Kamar Mandi Dalam (Shower & Air Panas)",
-            "Wi-Fi Kecepatan Tinggi",
-            "Televisi LCD di Setiap Kamar",
-            "Breakfast Prasmanan Enak",
-            "Jasa Penjemputan Pelabuhan Gratis"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang membawa barang berbau tajam (durian dll)",
-            "Kunci kamar wajib dititipkan di resepsionis saat keluar"
         ]
     ],
     [
@@ -111,52 +69,40 @@ $daftar_penginapan = [
             "assets/images/bluelaguna/2.jpg",
             "assets/images/bluelaguna/3.jpg",
             "assets/images/bluelaguna/4.jpg"
-        ],
-        "fasilitas" => [
-            "Balkon Privat Menghadap Pantai",
-            "Kamar AC & Tempat Tidur King Size",
-            "Kamar Mandi Dalam dengan Perlengkapan",
-            "Wi-Fi Gratis di Seluruh Resort",
-            "Breakfast & Teh Sore di Cafe Pantai",
-            "Sewa Kano & Alat Snorkeling (Opsional)"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang membuang sampah di bibir pantai",
-            "Harap membilas badan setelah berenang di laut sebelum masuk kamar"
         ]
     ],
     [
-        "id" => "summer-inn",
-        "nama" => "Hotel Summer Inn",
+        "id" => "narayana",
+        "nama" => "Hotel Narayana",
         "deskripsi" => "Hotel modern minimalis dengan fasilitas lengkap, bersih, dan sangat dekat ke pusat kota.",
         "harga" => "Rp. 1.850.000 / pax",
-        "gambar" => "assets/images/paket-snorkeling.jpg",
+        "gambar" => "assets/images/narayana/2.jpg",
         "badge" => "Modern Stay",
         "badge_class" => "",
         "lokasi" => "Pusat Kota, Karimunjawa",
-        "detail_deskripsi" => "Hotel Summer Inn mengusung konsep urban-modern yang minimalis, menghadirkan kamar tidur dengan interior cerah dan pencahayaan yang sangat baik. Sangat bersih, nyaman, dan berjarak hanya 3 menit dari pusat kuliner malam Alun-Alun Karimunjawa.",
+        "detail_deskripsi" => "Hotel Narayana mengusung konsep urban-modern yang minimalis, menghadirkan kamar tidur dengan interior cerah dan pencahayaan yang sangat baik. Sangat bersih, nyaman, dan berjarak hanya 3 menit dari pusat kuliner malam Alun-Alun Karimunjawa.",
         "foto_galeri" => [
-            "assets/images/paket-snorkeling.jpg",
-            "assets/images/galeri-3.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-2.jpg",
-            "assets/images/galeri-1.jpg"
-        ],
-        "fasilitas" => [
-            "Kamar AC Cozy & Bersih",
-            "Kamar Mandi Dalam (Rain Shower)",
-            "Wi-Fi di Seluruh Area Hotel",
-            "Smart TV & Netflix Ready",
-            "Breakfast Prasmanan Bervariasi",
-            "Kopi & Teh Gratis di Lobby 24 Jam"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang merokok di kamar (Smoking Area tersedia)",
-            "Menjaga kebersihan dan ketertiban bersama"
+            "assets/images/narayana/1.jpg",
+            "assets/images/narayana/2.jpg",
+            "assets/images/narayana/3.jpg",
+            "assets/images/narayana/4.jpg",
+            "assets/images/narayana/5.jpg"
+        ]
+    ],
+    [
+        "id" => "homestay-e2",
+        "nama" => "Homestay E2 House",
+        "deskripsi" => "Hotel modern minimalis dengan fasilitas lengkap, bersih, dan sangat dekat ke pusat kota.",
+        "harga" => "Rp. 1.850.000 / pax",
+        "gambar" => "assets/images/homestaye2/2.jpg",
+        "lokasi" => "Pusat Kota, Karimunjawa",
+        "detail_deskripsi" => "Hotel Narayana mengusung konsep urban-modern yang minimalis, menghadirkan kamar tidur dengan interior cerah dan pencahayaan yang sangat baik. Sangat bersih, nyaman, dan berjarak hanya 3 menit dari pusat kuliner malam Alun-Alun Karimunjawa.",
+        "foto_galeri" => [
+            "assets/images/homestaye2/1.jpg",
+            "assets/images/homestaye2/2.jpg",
+            "assets/images/homestaye2/3.jpg",
+            "assets/images/homestaye2/4.jpg",
+            "assets/images/homestaye2/5.jpg"
         ]
     ],
     [
@@ -164,7 +110,7 @@ $daftar_penginapan = [
         "nama" => "Hotel D'Season",
         "deskripsi" => "Resort bintang tiga mewah dengan fasilitas kolam renang besar di tepi pantai.",
         "harga" => "Rp. 1.875.000 / pax",
-        "gambar" => "assets/images/paket-honeymoon.jpg",
+        "gambar" => "assets/images/dseason/dseason.jpg",
         "badge" => "Bintang 3",
         "badge_class" => "orange",
         "lokasi" => "Pantai Barat, Karimunjawa",
@@ -176,19 +122,43 @@ $daftar_penginapan = [
             "assets/images/galeri-3.jpg",
             "assets/images/galeri-4.jpg"
         ],
-        "fasilitas" => [
-            "Kamar Mewah Ber-AC & Balkon",
-            "Kolam Renang Besar (Swimming Pool)",
-            "Gym & Area Kebugaran",
-            "Wi-Fi Kecepatan Tinggi & TV Kabel",
-            "Breakfast Mewah untuk Keluarga",
-            "Layanan Antar-Jemput Pelabuhan Eksklusif"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Gunakan pakaian renang yang layak di area kolam",
-            "Dilarang membawa senjata tajam atau narkoba"
+        "tipe_kamar" => [
+            [
+                "id" => "executive",
+                "nama" => "Tipe Executive",
+                "harga" => "Rp 2.450.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/dseason/exe1.jpg",
+                    "assets/images/dseason/exe2.jpg",
+                    "assets/images/dseason/exe3.jpg",
+                    "assets/images/dseason/exe2.jpg",
+                    "assets/images/dseason/exe3.jpg"
+                ]
+            ],
+            [
+                "id" => "family",
+                "nama" => "Tipe Family",
+                "harga" => "Rp 2.850.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/dseason/fam1.jpg",
+                    "assets/images/dseason/fam2.jpg",
+                    "assets/images/dseason/fam3.jpg",
+                    "assets/images/dseason/fam4.jpg",
+                    "assets/images/dseason/fam5.jpg"
+                ]
+            ],
+            [
+                "id" => "bisnis",
+                "nama" => "Tipe Bisnis",
+                "harga" => "Rp 1.875.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/dseason/bisnis1.jpg",
+                    "assets/images/dseason/bisnis2.jpg",
+                    "assets/images/dseason/bisnis3.jpg",
+                    "assets/images/dseason/bisnis4.jpg",
+                    "assets/images/dseason/bisnis5.jpg"
+                ]
+            ]
         ]
     ],
     [
@@ -196,31 +166,17 @@ $daftar_penginapan = [
         "nama" => "Almare",
         "deskripsi" => "Penginapan tepi laut eksklusif dengan dermaga kayu pribadi untuk menikmati matahari terbit.",
         "harga" => "Rp. 2.050.000 / pax",
-        "gambar" => "assets/images/paket-snorkeling.jpg",
+        "gambar" => "assets/images/almare/3.jpg",
         "badge" => "Sea Front",
         "badge_class" => "",
         "lokasi" => "Tepi Pantai, Karimunjawa",
         "detail_deskripsi" => "Almare menyajikan akomodasi bernuansa bahari yang elegan. Terletak menjorok ke arah pantai, penginapan ini dilengkapi dengan dermaga kayu pribadi (sun deck) yang sangat indah untuk berfoto, bersantai, atau menikmati matahari terbit langsung dari lokasi penginapan.",
         "foto_galeri" => [
-            "assets/images/paket-snorkeling.jpg",
-            "assets/images/galeri-2.jpg",
-            "assets/images/galeri-1.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-3.jpg"
-        ],
-        "fasilitas" => [
-            "Kamar Tepi Laut View Spektakuler",
-            "Dermaga Pribadi & Tempat Berjemur",
-            "AC & Kamar Mandi Dalam (Water Heater)",
-            "Wi-Fi Gratis di Semua Area",
-            "Breakfast & Welcome Drink Segar",
-            "Sewa Motor & Alat Kayak Gratis"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Berhati-hati saat berjalan di area dermaga kayu",
-            "Dilarang merusak terumbu karang di sekitar penginapan"
+            "assets/images/almare/1.jpg",
+            "assets/images/almare/2.jpg",
+            "assets/images/almare/3.jpg",
+            "assets/images/almare/4.jpg",
+            "assets/images/almare/5.jpg"
         ]
     ],
     [
@@ -228,31 +184,17 @@ $daftar_penginapan = [
         "nama" => "Omah Alchy",
         "deskripsi" => "Cottage kayu tradisional estetik di atas air laut, menyuguhkan nuansa liburan tropis yang eksotis.",
         "harga" => "Rp. 2.150.000 / pax",
-        "gambar" => "assets/images/paket-honeymoon.jpg",
+        "gambar" => "assets/images/alchy/1.jpg",
         "badge" => "Unique Stay",
         "badge_class" => "orange",
         "lokasi" => "Tepi Pantai, Karimunjawa",
         "detail_deskripsi" => "Omah Alchy menawarkan cottage kayu bergaya tradisional Jawa (Joglo) yang berdiri tepat di atas permukaan air laut dangkal Karimunjawa. Menghadirkan pengalaman menginap unik dan intim dengan pemandangan laut 180 derajat yang memanjakan mata Anda sepanjang hari.",
         "foto_galeri" => [
-            "assets/images/paket-honeymoon.jpg",
-            "assets/images/galeri-3.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-1.jpg",
-            "assets/images/galeri-2.jpg"
-        ],
-        "fasilitas" => [
-            "Water Cottage (Kamar di Atas Air)",
-            "AC & Kamar Mandi Semi-Outdoor",
-            "Balkon Privat dengan Hammock",
-            "Wi-Fi Kecepatan Tinggi",
-            "Breakfast Lezat Menu Lokal/Barat",
-            "Fasilitas Alat Snorkeling Gratis"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang membuang sampah apapun ke dalam air laut",
-            "Anak-anak harus selalu dalam pengawasan orang dewasa di teras air"
+            "assets/images/alchy/1.jpg",
+            "assets/images/alchy/2.jpg",
+            "assets/images/alchy/3.jpg",
+            "assets/images/alchy/4.jpg",
+            "assets/images/alchy/5.jpg"
         ]
     ],
     [
@@ -260,31 +202,17 @@ $daftar_penginapan = [
         "nama" => "Hallo Resort",
         "deskripsi" => "Resort asri dengan taman hijau yang luas dan pemandangan laut dari atas ketinggian bukit.",
         "harga" => "Rp. 2.150.000 / pax",
-        "gambar" => "assets/images/paket-family.jpg",
+        "gambar" => "assets/images/hallo/2.jpg",
         "badge" => "Hill Resort",
         "badge_class" => "",
         "lokasi" => "Perbukitan, Karimunjawa",
         "detail_deskripsi" => "Hallo Resort memadukan kesejukan alam bukit Karimunjawa dengan keindahan pemandangan laut lepas. Dikelilingi taman kelapa dan vegetasi hijau yang asri, resort ini menawarkan penginapan bertipe cottage mandiri yang tenang untuk melepas kepenatan rutinitas kota.",
         "foto_galeri" => [
-            "assets/images/paket-family.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-3.jpg",
-            "assets/images/galeri-2.jpg",
-            "assets/images/galeri-1.jpg"
-        ],
-        "fasilitas" => [
-            "Private Villa / Cottage AC",
-            "Taman Luas & Spot Foto Menarik",
-            "Kamar Mandi Dalam dengan Bathtub",
-            "Wi-Fi & TV Satelit/Kabel",
-            "Breakfast & Dinner di Resto Bukit",
-            "Transportasi Shuttle ke Pantai/Kota PP"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang menyalakan musik terlalu keras (menjaga ketenangan bukit)",
-            "Aturan ketat pelestarian alam sekitar resort"
+            "assets/images/hallo/1.jpg",
+            "assets/images/hallo/2.jpg",
+            "assets/images/hallo/3.jpg",
+            "assets/images/hallo/4.jpg",
+            "assets/images/hallo/5.jpg"
         ]
     ],
     [
@@ -292,7 +220,7 @@ $daftar_penginapan = [
         "nama" => "The Happinezz Hill",
         "deskripsi" => "Penginapan estetik bernuansa bohemian dengan view panorama perbukitan dan sunset laut yang indah.",
         "harga" => "Rp. 2.050.000 / pax",
-        "gambar" => "assets/images/paket-snorkeling.jpg",
+        "gambar" => "assets/images/happinesshill/EFB3.jpg",
         "badge" => "Best Sunset View",
         "badge_class" => "",
         "lokasi" => "Bukit Karimunjawa, Karimunjawa",
@@ -304,19 +232,55 @@ $daftar_penginapan = [
             "assets/images/galeri-3.jpg",
             "assets/images/galeri-4.jpg"
         ],
-        "fasilitas" => [
-            "Kamar AC Desain Bohemian Estetik",
-            "Infinity Pool View Bukit & Laut",
-            "Rooftop Cafe & Sunset Area",
-            "Wi-Fi Gratis Seluruh Lokasi",
-            "Breakfast Enak Khas Happinezz",
-            "Sewa Motor Gratis selama Menginap"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang membawa makanan luar ke area rooftop cafe",
-            "Menjaga ketenangan dan kenyamanan pengunjung lain"
+        "tipe_kamar" => [
+            [
+                "id" => "executive-family",
+                "nama" => "Tipe Executive Family",
+                "harga" => "Rp 2.450.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/happinesshill/EFV1.jpg",
+                    "assets/images/happinesshill/EFV2.jpg",
+                    "assets/images/happinesshill/EFV3.jpg",
+                    "assets/images/happinesshill/EFV4.jpg",
+                    "assets/images/happinesshill/EFV5.jpg"
+                ]
+            ],
+            [
+                "id" => "family-bungalow",
+                "nama" => "Tipe Family Bungalow",
+                "harga" => "Rp 2.850.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/happinesshill/EFB1.jpg",
+                    "assets/images/happinesshill/EFB2.jpg",
+                    "assets/images/happinesshill/EFB3.jpg",
+                    "assets/images/happinesshill/EFB4.jpg",
+                    "assets/images/happinesshill/EFB5.jpg"
+                ]
+            ],
+            [
+                "id" => "twin-toom",
+                "nama" => "Tipe Twin Toom",
+                "harga" => "Rp 1.875.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/happinesshill/TTT1.jpg",
+                    "assets/images/happinesshill/TTT2.jpg",
+                    "assets/images/happinesshill/TTT3.jpg",
+                    "assets/images/happinesshill/TTT4.jpg",
+                    "assets/images/happinesshill/TTT2.jpg"
+                ]
+            ],
+            [
+                "id" => "deluxe-double",
+                "nama" => "Tipe Deluxe Double",
+                "harga" => "Rp 2.850.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/happinesshill/TDD1.jpg",
+                    "assets/images/happinesshill/TDD2.jpg",
+                    "assets/images/happinesshill/TDD3.jpg",
+                    "assets/images/happinesshill/TDD4.jpg",
+                    "assets/images/happinesshill/TDD2.jpg"
+                ]
+            ]
         ]
     ],
     [
@@ -324,31 +288,17 @@ $daftar_penginapan = [
         "nama" => "Legon Waru Cottage",
         "deskripsi" => "Cottage eksklusif yang tenang dengan pantai tersembunyi berpagar pepohonan kelapa rimbun.",
         "harga" => "Rp. 3.000.000 / pax",
-        "gambar" => "assets/images/paket-family.jpg",
+        "gambar" => "assets/images/legonwaru/2.jpg",
         "badge" => "Private Beach",
         "badge_class" => "orange",
         "lokasi" => "Legon Waru, Karimunjawa",
         "detail_deskripsi" => "Legon Waru Cottage terletak di area eksklusif Legon Waru, menawarkan akomodasi peristirahatan privat yang jauh dari keramaian. Memiliki teluk pantai pasir putih sendiri yang teduh, dikelilingi ribuan pohon kelapa rimbun. Sangat pas untuk liburan keluarga eksklusif.",
         "foto_galeri" => [
-            "assets/images/paket-family.jpg",
-            "assets/images/galeri-2.jpg",
-            "assets/images/galeri-1.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-3.jpg"
-        ],
-        "fasilitas" => [
-            "Private Beach Access (Akses Teluk Pantai)",
-            "Cottage AC Kayu Jati Mewah",
-            "Kamar Mandi Semi-Outdoor",
-            "Koneksi Wi-Fi & TV Satelit",
-            "Breakfast & Dinner Layanan Privat",
-            "Free Penjemputan Mobil AC PP"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang memancing tanpa izin di area teluk cottage",
-            "Kamar dibersihkan sekali sehari demi privasi tamu"
+            "assets/images/legonwaru/1.jpg",
+            "assets/images/legonwaru/2.jpg",
+            "assets/images/legonwaru/3.jpg",
+            "assets/images/legonwaru/4.jpg",
+            "assets/images/legonwaru/5.jpg"
         ]
     ],
     [
@@ -356,32 +306,55 @@ $daftar_penginapan = [
         "nama" => "Royal Ocean View",
         "deskripsi" => "Akomodasi premium mewah dengan pemandangan laut luas, menawarkan 3 kelas kamar eksklusif.",
         "harga" => "Mulai Rp. 2.700.000 / pax",
-        "gambar" => "assets/images/paket-honeymoon.jpg",
+        "gambar" => "assets/images/royaloceanview/1.jpg",
         "badge" => "Executive Resort",
         "badge_class" => "orange",
         "lokasi" => "Pantai Utara, Karimunjawa",
         "detail_deskripsi" => "Royal Ocean View merupakan kompleks akomodasi premium termewah yang menghadap langsung ke samudera biru luas Karimunjawa. Kami menawarkan pilihan kamar berkelas tinggi untuk liburan eksklusif Anda:<br>\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\n    <li>Deluxe Sea View : Rp. 2.700.000 / pax</li>\n    <li>Superior Room : Rp. 3.150.000 / pax</li>\n    <li>Executive Sea View : Rp. 3.950.000 / pax</li>\n</ol>\nSetiap kamar dirancang dengan standar resort mewah internasional dan balkon yang luas.",
         "foto_galeri" => [
-            "assets/images/paket-honeymoon.jpg",
-            "assets/images/galeri-3.jpg",
-            "assets/images/galeri-4.jpg",
-            "assets/images/galeri-1.jpg",
-            "assets/images/galeri-2.jpg"
+            "assets/images/royaloceanview/deluxe1.JPG",
+            "assets/images/royaloceanview/deluxe2.JPG",
+            "assets/images/royaloceanview/deluxe3.JPG",
+            "assets/images/royaloceanview/deluxe4.JPG",
+            "assets/images/royaloceanview/deluxe5.JPG"
         ],
-        "fasilitas" => [
-            "Pilihan Kamar Deluxe, Superior, & Executive",
-            "Balkon Kamar Menghadap Laut Lepas",
-            "AC, Bathtub, & Water Heater Mewah",
-            "Wi-Fi Kecepatan Tinggi & Smart TV",
-            "Breakfast Prasmanan Berkelas Bintang 5",
-            "Infinity Pool & Sky Lounge",
-            "Layanan Butler & Antar Jemput VIP PP"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang membawa hewan peliharaan",
-            "Tidak diperbolehkan merokok di dalam kamar tidur"
+        "tipe_kamar" => [
+            [
+                "id" => "executive-sea-view",
+                "nama" => "Executive Sea View",
+                "harga" => "Rp 3.950.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/royaloceanview/EXE1.JPG",
+                    "assets/images/royaloceanview/2.JPG",
+                    "assets/images/royaloceanview/3.JPG",
+                    "assets/images/royaloceanview/4.JPG",
+                    "assets/images/royaloceanview/5.JPG"
+                ]
+            ],
+            [
+                "id" => "superior-room",
+                "nama" => "Tipe Superior Room",
+                "harga" => "Rp 3.150.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/royaloceanview/TS1.JPG",
+                    "assets/images/royaloceanview/2.JPG",
+                    "assets/images/royaloceanview/3.JPG",
+                    "assets/images/royaloceanview/4.JPG",
+                    "assets/images/royaloceanview/5.JPG"
+                ]
+            ],
+            [
+                "id" => "deluxe-sea-view",
+                "nama" => "Deluxe Sea View",
+                "harga" => "Rp 2.700.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/royaloceanview/TDV1.JPG",
+                    "assets/images/royaloceanview/TDV2.JPG",
+                    "assets/images/royaloceanview/TDV3.JPG",
+                    "assets/images/royaloceanview/TDV4.JPG",
+                    "assets/images/royaloceanview/TDV5.JPG"
+                ]
+            ]
         ]
     ],
     [
@@ -389,7 +362,7 @@ $daftar_penginapan = [
         "nama" => "Java Paradise",
         "deskripsi" => "Resort bergaya klasik tropis modern dengan 3 pilihan tipe kamar yang sangat nyaman.",
         "harga" => "Mulai Rp. 2.050.000 / pax",
-        "gambar" => "assets/images/paket-snorkeling.jpg",
+        "gambar" => "assets/images/javaparadise/JTD2.jpg",
         "badge" => "Paradise Resort",
         "badge_class" => "",
         "lokasi" => "Tepi Pantai, Karimunjawa",
@@ -402,20 +375,43 @@ $daftar_penginapan = [
             "assets/images/galeri-2.jpg",
             "assets/images/galeri-1.jpg"
         ],
-        "fasilitas" => [
-            "Pilihan Kamar Family, Superior, & Executive",
-            "Akses Langsung ke Pantai Pasir Putih",
-            "Kamar AC & Kamar Mandi Shower Premium",
-            "Wi-Fi Gratis Seluruh Resort",
-            "Breakfast Lezat Khas Java Paradise",
-            "Restoran Outdoor Pinggir Pantai",
-            "Penjemputan Pelabuhan Gratis PP"
-        ],
-        "aturan" => [
-            "Check-in: Mulai pukul 14:00",
-            "Check-out: Sebelum pukul 12:00",
-            "Dilarang membuang sampah sembarangan di pantai resort",
-            "Menjaga kebersihan dan keamanan fasilitas resort"
+        "tipe_kamar" => [
+            [
+                "id" => "java-type-family",
+                "nama" => "Java Type Family",
+                "harga" => "Rp 3.950.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/javaparadise/JTF1.JPG",
+                    "assets/images/javaparadise/JTF2.JPG",
+                    "assets/images/javaparadise/JTF3.JPG",
+                    "assets/images/javaparadise/JTF3.JPG",
+                    "assets/images/javaparadise/JTF2.JPG"
+                ]
+            ],
+            [
+                "id" => "java-exe-room",
+                "nama" => "Java Type Executive Room",
+                "harga" => "Rp 3.150.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/javaparadise/TER1.JPG",
+                    "assets/images/javaparadise/TER2.JPG",
+                    "assets/images/javaparadise/TER3.JPG",
+                    "assets/images/javaparadise/TER4.JPG",
+                    "assets/images/javaparadise/TER5.JPG"
+                ]
+            ],
+            [
+                "id" => "java-type-deluxe",
+                "nama" => "Java Type Deluxe",
+                "harga" => "Rp 2.700.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/javaparadise/JTD1.JPG",
+                    "assets/images/javaparadise/JTD2.JPG",
+                    "assets/images/javaparadise/JTD3.JPG",
+                    "assets/images/javaparadise/JTD4.JPG",
+                    "assets/images/javaparadise/JTD5.JPG"
+                ]
+            ]
         ]
     ]
 ];
