@@ -14,7 +14,7 @@ if (!isset($base_url)) {
     <div class="container footer-content-grid">
         <!-- Brand Info -->
         <div class="footer-column brand-col">
-            <div class="footer-logo">Karimunjawavibestrip</div>
+            <div class="footer-logo">KarimunJawa Vibes Trip</div>
             <p class="brand-description">Penyedia reservasi penginapan, resort, homestay, dan villa resmi di Kepulauan Karimunjawa. Kami menghadirkan kenyamanan menginap terbaik untuk liburan Anda dan keluarga.</p>
             <div class="social-links-wrapper">
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Instagram">
@@ -85,7 +85,7 @@ if (!isset($base_url)) {
     <div class="footer-bottom">
         <div class="container footer-bottom-inner">
             <p>&copy; <?php echo date('Y'); ?> Karimunjawa Homestay & Resort. Seluruh Hak Cipta Dilindungi.</p>
-            <p>Designed & Developed with ♥ by Karimunjawavibestrip Team</p>
+            <p>Designed & Developed with ♥ by KarimunJawa Vibes Trip Team</p>
         </div>
     </div>
 </footer>
@@ -127,7 +127,7 @@ if (!isset($base_url)) {
             }
 
             // Membangun teks draf pesan terenkripsi yang estetik untuk WhatsApp
-            const pesan = `Halo Karimunjawavibestrip Guide, saya ingin konsultasi paket wisata.%0A%0A` +
+            const pesan = `Halo KarimunJawa Vibes Trip Guide, saya ingin konsultasi paket wisata.%0A%0A` +
                           `*Nama:* ${encodeURIComponent(nama)}%0A` +
                           `*Paket Wisata:* ${encodeURIComponent(paket)}%0A%0A` +
                           `Mohon informasi ketersediaan slot dan jadwal keberangkatan terdekat. Terima kasih!`;
