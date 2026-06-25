@@ -372,7 +372,7 @@ include_once $base_url . 'header.php';
         <div class="reviews-grid-list">
             <?php if (isset($testimoni_pelanggan) && is_array($testimoni_pelanggan)): ?>
                 <?php foreach ($testimoni_pelanggan as $idx => $testi):
-                    $is_hidden = $idx >= 3;
+                    $is_hidden = $idx >= 4;
                     $hidden_class = $is_hidden ? 'review-item-card-hidden' : '';
                     $hidden_style = $is_hidden ? 'display: none;' : '';
                     ?>
@@ -414,7 +414,7 @@ include_once $base_url . 'header.php';
 
         <!-- Tombol Aksi Ulasan (Lihat Semua & Tulis Baru) -->
         <div class="review-actions-container">
-            <?php if ($jumlah_ulasan > 3): ?>
+            <?php if ($jumlah_ulasan > 4): ?>
                 <button id="toggleMoreReviewsBtn" class="btn-review-secondary" onclick="toggleMoreReviews()">Lihat Semua
                     Ulasan (<?php echo $jumlah_ulasan; ?>)</button>
             <?php endif; ?>

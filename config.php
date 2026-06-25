@@ -454,13 +454,6 @@ $galeri_foto = [
         "tag" => "Snorkeling"
     ],
     [
-        "file" => "assets/images/paket-honeymoon.jpg",
-        "alt" => "Resort Tepi Pantai Romantis",
-        "posisi" => "center center",
-        "kategori" => "penginapan",
-        "tag" => "Resort"
-    ],
-    [
         "file" => "assets/images/paket-family.jpg",
         "alt" => "Keseruan Outbound di Pantai",
         "posisi" => "center center",
