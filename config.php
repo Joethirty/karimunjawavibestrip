@@ -12,7 +12,7 @@ $daftar_penginapan = [
         "badge" => "Budget Friendly",
         "badge_class" => "",
         "lokasi" => "Pusat Kota, Karimunjawa",
-        "detail_deskripsi" => "Homestay Fan menawarkan akomodasi ekonomis yang sangat bersih dan nyaman di jantung kepulauan Karimunjawa. Pilihan ideal bagi para pelancong ransel (backpacker) yang menginginkan tempat istirahat ramah di kantong setelah seharian berkeliling pulau. Lokasinya strategis dekat dengan area kuliner.",
+        "detail_deskripsi" => "Homestay Loyal menawarkan akomodasi ekonomis yang sangat bersih dan nyaman di jantung kepulauan Karimunjawa. Pilihan ideal bagi para pelancong ransel (backpacker) yang menginginkan tempat istirahat ramah di kantong setelah seharian berkeliling pulau. Lokasinya strategis dekat dengan area kuliner.",
         "foto_galeri" => [
             "assets/images/homestayloyal/1.jpg",
             "assets/images/homestayloyal/2.jpg",
@@ -366,7 +366,7 @@ $daftar_penginapan = [
         "badge" => "Paradise Resort",
         "badge_class" => "",
         "lokasi" => "Tepi Pantai, Karimunjawa",
-        "durasi"=> "3D2N",
+        "durasi" => "3D2N",
         "detail_deskripsi" => "Java Paradise Resort menawarkan liburan surga tropis berkelas dengan perpaduan arsitektur kayu Jawa klasik dan fasilitas modern. Terletak tepat di pinggir pantai berpasir putih, kami menyediakan 3 pilihan kelas kamar:<br>\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\n    <li>Family (P) : Rp. 2.050.000 / pax</li>\n    <li>Superior Class : Rp. 2.200.000 / pax</li>\n    <li>Executive Class : Rp. 2.450.000 / pax</li>\n</ol>",
         "foto_galeri" => [
             "assets/images/paket-snorkeling.jpg",
@@ -419,78 +419,78 @@ $daftar_penginapan = [
 // DATA GALERI: Menyimpan koleksi foto Karimunjawa beserta posisi fokus dan kategori
 $galeri_foto = [
     [
-        "file" => "assets/images/galeri-1.jpg", 
-        "alt" => "Pantai Tanjung Gelam", 
+        "file" => "assets/images/galeri-1.jpg",
+        "alt" => "Pantai Tanjung Gelam",
         "posisi" => "center top", // Mengunci bagian atas foto agar pohon kelapa terlihat utuh & eye-catching
         "kategori" => "destinasi",
         "tag" => "Pantai"
     ],
     [
-        "file" => "assets/images/galeri-2.jpg", 
-        "alt" => "Pulau Menjangan Kecil", 
+        "file" => "assets/images/galeri-2.jpg",
+        "alt" => "Pulau Menjangan Kecil",
         "posisi" => "center center",
         "kategori" => "destinasi",
         "tag" => "Pulau"
     ],
     [
-        "file" => "assets/images/galeri-3.jpg", 
-        "alt" => "Bukit Love Karimunjawa", 
+        "file" => "assets/images/galeri-3.jpg",
+        "alt" => "Bukit Love Karimunjawa",
         "posisi" => "left bottom", // Mengunci plang nama agar teks tidak terpotong menjadi "KA"
         "kategori" => "destinasi",
         "tag" => "Bukit"
     ],
     [
-        "file" => "assets/images/galeri-4.jpg", 
-        "alt" => "Penangkaran Hiu", 
+        "file" => "assets/images/galeri-4.jpg",
+        "alt" => "Penangkaran Hiu",
         "posisi" => "center center",
         "kategori" => "aktivitas",
         "tag" => "Aktivitas"
     ],
     [
-        "file" => "assets/images/paket-snorkeling.jpg", 
-        "alt" => "Spot Terumbu Karang Menawan", 
+        "file" => "assets/images/paket-snorkeling.jpg",
+        "alt" => "Spot Terumbu Karang Menawan",
         "posisi" => "center center",
         "kategori" => "aktivitas",
         "tag" => "Snorkeling"
     ],
     [
-        "file" => "assets/images/paket-honeymoon.jpg", 
-        "alt" => "Resort Tepi Pantai Romantis", 
+        "file" => "assets/images/paket-honeymoon.jpg",
+        "alt" => "Resort Tepi Pantai Romantis",
         "posisi" => "center center",
         "kategori" => "penginapan",
         "tag" => "Resort"
     ],
     [
-        "file" => "assets/images/paket-family.jpg", 
-        "alt" => "Keseruan Outbound di Pantai", 
+        "file" => "assets/images/paket-family.jpg",
+        "alt" => "Keseruan Outbound di Pantai",
         "posisi" => "center center",
         "kategori" => "aktivitas",
         "tag" => "Outbound"
     ],
     [
-        "file" => "assets/images/galeri-5.jpg", 
-        "alt" => "Pesona Sunset Pantai Karimunjawa", 
+        "file" => "assets/images/galeri-5.jpg",
+        "alt" => "Pesona Sunset Pantai Karimunjawa",
         "posisi" => "center center",
         "kategori" => "destinasi",
         "tag" => "Sunset"
     ],
     [
-        "file" => "assets/images/galeri-6.jpg", 
-        "alt" => "Snorkeling Terumbu Karang Pulau Cilik", 
+        "file" => "assets/images/galeri-6.jpg",
+        "alt" => "Snorkeling Terumbu Karang Pulau Cilik",
         "posisi" => "center center",
         "kategori" => "aktivitas",
         "tag" => "Snorkeling"
     ],
     [
-        "file" => "assets/images/galeri-7.jpg", 
-        "alt" => "Dermaga Kayu Pelabuhan Karimunjawa", 
+        "file" => "assets/images/galeri-7.jpg",
+        "alt" => "Dermaga Kayu Pelabuhan Karimunjawa",
         "posisi" => "center center",
         "kategori" => "destinasi",
         "tag" => "Dermaga"
     ],
     [
-        "file" => "assets/images/galeri-8.jpg", 
-        "alt" => "Pantai Pasir Putih Pulau Geleang", 
+        "file" => "assets/images/galeri-8.jpg",
+        "alt" => "Pantai Pasir Putih Pulau Geleang",
         "posisi" => "center center",
         "kategori" => "destinasi",
         "tag" => "Pantai"
@@ -528,25 +528,25 @@ if (file_exists($reviews_file)) {
             "tanggal" => "2026-06-24"
         ],
         [
-            "nama" => "Andi Wijaya", 
-            "asal" => "Semarang", 
-            "bintang" => 5, 
+            "nama" => "Andi Wijaya",
+            "asal" => "Semarang",
+            "bintang" => 5,
             "ulasan" => "Tempatnya sangat bersih dan nyaman sekali. Pelayanan dari host ramah banget, dekat sekali dengan alun-alun!",
             "tanggal" => "2026-06-20",
             "penginapan_id" => "homestay-fan"
         ],
         [
-            "nama" => "Siti Rahma", 
-            "asal" => "Jakarta", 
-            "bintang" => 5, 
+            "nama" => "Siti Rahma",
+            "asal" => "Jakarta",
+            "bintang" => 5,
             "ulasan" => "Honeymoon di Lighthouse Resort luar biasa berkesan. Kolam renang privatnya menghadap laut langsung dan sunset-nya juara!",
             "tanggal" => "2026-06-21",
             "penginapan_id" => "java-paradise"
         ],
         [
-            "nama" => "Rian Utama", 
-            "asal" => "Surabaya", 
-            "bintang" => 5, 
+            "nama" => "Rian Utama",
+            "asal" => "Surabaya",
+            "bintang" => 5,
             "ulasan" => "Vila kayunya estetik parah, pemandangan laut dari atas balkon kamar benar-benar memanjakan mata. Fasilitas sewa motor gratisnya sangat membantu.",
             "tanggal" => "2026-06-22",
             "penginapan_id" => "omah-alchy"

@@ -48,12 +48,20 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
                 <li class="nav-item <?php echo ($current_page == 'galeri.php') ? 'active' : ''; ?>"><a href="<?php echo $base_url; ?>galeri.php">Galeri</a></li>
                 <li class="nav-item"><a href="<?php echo $base_url; ?>index.php#kontak">Hubungi Kami</a></li>
             </ul>
+
+            <button class="hamburger-menu" id="hamburgerMenu" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
     </nav>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const header = document.getElementById('headerNav');
+            const hamburger = document.getElementById('hamburgerMenu');
+            const navMenu = document.querySelector('.nav-menu');
             let lastScrollY = window.scrollY;
 
             function checkScroll() {
@@ -68,7 +76,8 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
 
                 // Sembunyikan saat scroll ke bawah, tunjukkan saat scroll ke atas
                 // Threshold 100px agar tidak langsung tersembunyi di bagian paling atas
-                if (currentScrollY > 100 && currentScrollY > lastScrollY) {
+                // Jangan sembunyikan jika menu mobile sedang terbuka
+                if (currentScrollY > 100 && currentScrollY > lastScrollY && (!hamburger || !hamburger.classList.contains('active'))) {
                     header.classList.add('header-hidden');
                 } else {
                     header.classList.remove('header-hidden');
@@ -76,6 +85,39 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
 
                 lastScrollY = currentScrollY;
             }
+
+            // Hamburger menu toggle logic
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    header.classList.toggle('mobile-menu-open');
+                });
+            }
+
+            // Close mobile menu when clicking a link
+            const navLinks = document.querySelectorAll('.nav-item a:not(.dropdown-toggle), .dropdown-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (hamburger && hamburger.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        header.classList.remove('mobile-menu-open');
+                    }
+                });
+            });
+
+            // Handle dropdown toggling on mobile view
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        const dropdown = this.parentElement;
+                        dropdown.classList.toggle('open');
+                    }
+                });
+            });
 
             window.addEventListener('scroll', checkScroll, { passive: true });
             checkScroll(); // Cek sekali saat halaman dimuat
