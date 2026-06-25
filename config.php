@@ -11,8 +11,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/homestayloyal/1.jpg",
         "badge" => "Budget Friendly",
         "badge_class" => "",
-        "lokasi" => "Pusat Kota, Karimunjawa",
-        "detail_deskripsi" => "Homestay Loyal menawarkan akomodasi ekonomis yang sangat bersih dan nyaman di jantung kepulauan Karimunjawa. Pilihan ideal bagi para pelancong ransel (backpacker) yang menginginkan tempat istirahat ramah di kantong setelah seharian berkeliling pulau. Lokasinya strategis dekat dengan area kuliner.",
+        "lokasi" => "Jl. Slamet Riyadi No.RT.01, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
+        "detail_deskripsi" => "Loyal Friend Hostel Karimunjawa adalah pilihan favorit para pelancong yang menawarkan suasana komunal hangat dan tarif menginap yang sangat bersahabat di kantong. Berkat ruang santai bersamanya yang nyaman dan lokasinya yang strategis dekat akses kuliner alun-alun malam, tempat ini menjadi titik kumpul yang sempurna untuk bersosialisasi dan merayakan momen liburan bersama sahabat.",
         "foto_galeri" => [
             "assets/images/homestayloyal/1.jpg",
             "assets/images/homestayloyal/2.jpg",
@@ -29,8 +29,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/homestayazza/1.jpg",
         "badge" => "Best Value",
         "badge_class" => "orange",
-        "lokasi" => "Pusat Kota, Karimunjawa",
-        "detail_deskripsi" => "Nikmati kenyamanan beristirahat di kamar sejuk ber-AC setelah beraktivitas di bawah terik matahari pantai Karimunjawa. Homestay AC menyediakan akomodasi bersih dengan kamar mandi dalam, memberikan privasi penuh dengan harga yang tetap sangat bersahabat.",
+        "lokasi" => "Jl. Wage Rudolf Supratman, RT.3/RW.2, Kepulauan, Karimunjawa, Kabupaten Jepara, Jawa Tengah",
+        "detail_deskripsi" => "Membaur dengan pemukiman warga lokal, Homestay AZZA adalah hunian nyaman yang sangat memprioritaskan kepraktisan dan harga yang bersahabat. Fasilitasnya yang memadai dipadukan dengan keramahan pemilik yang sigap membantu berbagai kebutuhan tambahan memberikan kesempatan bagi Anda untuk berinteraksi lebih hangat dengan masyarakat asli Karimunjawa.",
         "foto_galeri" => [
             "assets/images/homestayazza/1.jpg",
             "assets/images/homestayazza/2.jpg",
@@ -45,8 +45,8 @@ $daftar_penginapan = [
         "deskripsi" => "Hotel Puri Karimun menawarkan kenyamanan menginap yang menyenangkan dengan akses dekat pelabuhan.",
         "harga" => "Rp. 1.600.000 / pax",
         "gambar" => "assets/images/purikarimun/5.jpg",
-        "lokasi" => "Dekat Pelabuhan, Karimunjawa",
-        "detail_deskripsi" => "Puri Karimun adalah akomodasi legendaris yang nyaman dengan arsitektur modern minimalis. Terletak sangat dekat dengan pintu masuk utama (Pelabuhan Karimunjawa), hotel ini memudahkan mobilitas Anda saat check-in maupun check-out menuju kapal penyeberangan.",
+        "lokasi" => "Jl. Slamet Riyadi, Karimunjawa, Kabupaten Jepara, Jawa Tengah",
+        "detail_deskripsi" => "Homestay Puri merupakan penginapan fungsional yang sangat mengedepankan fungsi dasar beristirahat dengan fasilitas standar seperti pendingin ruangan dan area parkir gratis. Tempat ini adalah opsi transit yang sangat praktis, khususnya bagi Anda yang memiliki jadwal padat dan berencana untuk lebih banyak menghabiskan waktu beraktivitas di luar ruangan seharian penuh.",
         "foto_galeri" => [
             "assets/images/purikarimun/1.jpg",
             "assets/images/purikarimun/2.jpg",
@@ -61,8 +61,8 @@ $daftar_penginapan = [
         "deskripsi" => "Penginapan bernuansa laguna tropis dengan area santai tepi pantai yang romantis.",
         "harga" => "Rp. 1.850.000 / pax",
         "gambar" => "assets/images/bluelaguna/2.jpg",
-        "lokasi" => "Tepi Pantai, Karimunjawa",
-        "detail_deskripsi" => "Blue Laguna Inn menghadirkan suasana penginapan eksotis yang memadukan keindahan alam pantai dengan arsitektur kayu tradisional. Terletak di tepi pantai pasir putih, Anda dapat menikmati suara deburan ombak dan hembusan angin laut langsung dari balkon kamar.",
+        "lokasi" => "Dermaga Baru, Jl. Jenderal Sudirman, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59411",
+        "detail_deskripsi" => "Menghadap langsung ke perairan biru yang menenangkan, Blue Laguna Inn memberikan pengalaman menginap dengan pemandangan laut yang indah tepat di depan mata. Penginapan sederhana yang dilengkapi kamar mandi dalam dan fasilitas sarapan gratis ini juga berlokasi sangat dekat dengan dermaga, sehingga sangat memudahkan mobilitas Anda untuk melakukan kegiatan island hopping.",
         "foto_galeri" => [
             "assets/images/bluelaguna/5.jpg",
             "assets/images/bluelaguna/1.jpg",
@@ -79,8 +79,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/narayana/2.jpg",
         "badge" => "Modern Stay",
         "badge_class" => "",
-        "lokasi" => "Pusat Kota, Karimunjawa",
-        "detail_deskripsi" => "Hotel Narayana mengusung konsep urban-modern yang minimalis, menghadirkan kamar tidur dengan interior cerah dan pencahayaan yang sangat baik. Sangat bersih, nyaman, dan berjarak hanya 3 menit dari pusat kuliner malam Alun-Alun Karimunjawa.",
+        "lokasi" => "Jl. Sunan Nyamplungan, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
+        "detail_deskripsi" => "Menawarkan gaya bangunan modern yang cerah dan elegan, Narayana Hotel Karimunjawa menonjolkan tingkat kenyamanan premium dan kebersihan yang selalu dipuji oleh para tamu. Ditunjang oleh staf yang ramah, layanan optimal, serta ruang bersama yang estetik, hotel ini menjanjikan pengalaman menginap yang maksimal di tengah hangatnya iklim kepulauan.",
         "foto_galeri" => [
             "assets/images/narayana/1.jpg",
             "assets/images/narayana/2.jpg",
@@ -95,8 +95,8 @@ $daftar_penginapan = [
         "deskripsi" => "Hotel modern minimalis dengan fasilitas lengkap, bersih, dan sangat dekat ke pusat kota.",
         "harga" => "Rp. 1.850.000 / pax",
         "gambar" => "assets/images/homestaye2/2.jpg",
-        "lokasi" => "Pusat Kota, Karimunjawa",
-        "detail_deskripsi" => "Hotel Narayana mengusung konsep urban-modern yang minimalis, menghadirkan kamar tidur dengan interior cerah dan pencahayaan yang sangat baik. Sangat bersih, nyaman, dan berjarak hanya 3 menit dari pusat kuliner malam Alun-Alun Karimunjawa.",
+        "lokasi" => "Karimunjawa 3 No.2, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
+        "detail_deskripsi" => "Mendapatkan banyak ulasan positif berkat keramahtamahan pemiliknya yang luar biasa, E2 Guest House menawarkan suasana menginap yang akrab, bersih, dan sangat terawat. Selain lingkungannya yang tenang untuk beristirahat bebas gangguan, pelayanan personal dari pemiliknya yang sigap membantu mengatur jadwal tur membuat pengalaman liburan Anda menjadi jauh lebih mudah dan menyenangkan.",
         "foto_galeri" => [
             "assets/images/homestaye2/1.jpg",
             "assets/images/homestaye2/2.jpg",
@@ -113,8 +113,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/dseason/dseason.jpg",
         "badge" => "Bintang 3",
         "badge_class" => "orange",
-        "lokasi" => "Pantai Barat, Karimunjawa",
-        "detail_deskripsi" => "Hotel D'Season Karimunjawa merupakan resort bintang 3 premium yang menawarkan kenyamanan berkelas. Dilengkapi kolam renang outdoor yang besar menghadap laut, pusat kebugaran, dan kamar luas bertaraf hotel internasional. Pilihan tepat untuk kenyamanan berlibur maksimal.",
+        "lokasi" => "Jl. Danang Joyo Jl. Kapuran No.9, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
+        "detail_deskripsi" => "Sebagai penginapan yang memadukan relaksasi dan kenyamanan standar hotel modern, d'SEASON Hotel menawarkan fasilitas komprehensif mulai dari kolam renang outdoor, restoran, hingga fasilitas spa. Ketersediaan makanan yang mudah didapat di dalam area hotel serta beberapa tipe kamar yang menghadap ke laut menjadikannya opsi premium yang sangat memanjakan tamu di Karimunjawa.",
         "foto_galeri" => [
             "assets/images/paket-honeymoon.jpg",
             "assets/images/galeri-1.jpg",
@@ -169,8 +169,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/almare/3.jpg",
         "badge" => "Sea Front",
         "badge_class" => "",
-        "lokasi" => "Tepi Pantai, Karimunjawa",
-        "detail_deskripsi" => "Almare menyajikan akomodasi bernuansa bahari yang elegan. Terletak menjorok ke arah pantai, penginapan ini dilengkapi dengan dermaga kayu pribadi (sun deck) yang sangat indah untuk berfoto, bersantai, atau menikmati matahari terbit langsung dari lokasi penginapan.",
+        "lokasi" => "Jl. Pattimura, RT.02/RW.01, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
+        "detail_deskripsi" => "Hotel Al Mare menawarkan akomodasi bernuansa homey yang berlokasi strategis di pusat aktivitas Karimunjawa, menjadikannya pilihan tepat bagi Anda yang mencari kenyamanan layaknya di rumah sendiri. Pelayanan yang ramah serta kebersihan kamar yang selalu dijaga dengan baik membuat penginapan ini sangat ideal untuk beristirahat dengan tenang setelah seharian penuh menjelajahi keindahan pulau.",
         "foto_galeri" => [
             "assets/images/almare/1.jpg",
             "assets/images/almare/2.jpg",
@@ -187,8 +187,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/alchy/1.jpg",
         "badge" => "Unique Stay",
         "badge_class" => "orange",
-        "lokasi" => "Tepi Pantai, Karimunjawa",
-        "detail_deskripsi" => "Omah Alchy menawarkan cottage kayu bergaya tradisional Jawa (Joglo) yang berdiri tepat di atas permukaan air laut dangkal Karimunjawa. Menghadirkan pengalaman menginap unik dan intim dengan pemandangan laut 180 derajat yang memanjakan mata Anda sepanjang hari.",
+        "lokasi" => "Karimunjawa, Kabupaten Jepara, Jawa Tengah (Terletak di pesisir kawasan hutan bakau/mangrove)",
+        "detail_deskripsi" => "Tersembunyi di dalam area hutan bakau yang asri, Omah Alchy Cottages menawarkan penginapan pinggir laut berkonsep kasual dan privat yang sangat estetik. Suara ombak yang tenang saat sarapan pagi dan bangunan cottage yang menyatu indah dengan alam mangrove menciptakan suasana syahdu yang sempurna untuk relaksasi total maupun untuk menenangkan pikiran.",
         "foto_galeri" => [
             "assets/images/alchy/1.jpg",
             "assets/images/alchy/2.jpg",
@@ -205,8 +205,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/hallo/2.jpg",
         "badge" => "Hill Resort",
         "badge_class" => "",
-        "lokasi" => "Perbukitan, Karimunjawa",
-        "detail_deskripsi" => "Hallo Resort memadukan kesejukan alam bukit Karimunjawa dengan keindahan pemandangan laut lepas. Dikelilingi taman kelapa dan vegetasi hijau yang asri, resort ini menawarkan penginapan bertipe cottage mandiri yang tenang untuk melepas kepenatan rutinitas kota.",
+        "lokasi" => "Jl. Kemojan No.KM.01, Karimunjawa, Kabupaten Jepara, Jawa Tengah",
+        "detail_deskripsi" => "Halo Sustainable Resort Karimunjawa tampil unik dengan mengusung konsep ramah lingkungan (eco-friendly) yang dirancang secara sistematis untuk meminimalkan dampak terhadap alam. Desain bangunannya yang menyatu harmonis dengan rimbunnya lingkungan sekitar menciptakan suasana menginap yang asri, sejuk, dan menyegarkan bagi para tamu yang mencari kedamaian.",
         "foto_galeri" => [
             "assets/images/hallo/1.jpg",
             "assets/images/hallo/2.jpg",
@@ -223,8 +223,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/happinesshill/EFB3.jpg",
         "badge" => "Best Sunset View",
         "badge_class" => "",
-        "lokasi" => "Bukit Karimunjawa, Karimunjawa",
-        "detail_deskripsi" => "The Happinezz Hill didesain dengan konsep tropis bohemian yang sangat estetik dan instagramable. Terletak di perbukitan Karimunjawa, tempat ini menjadi lokasi terbaik untuk menyaksikan momen matahari terbenam (sunset) yang spektakuler langsung dari kolam renang atau area cafe santai.",
+        "lokasi" => "Dekat titik pandang (viewpoint) Bukit Love, Jl. I. J. Kasimo, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
+        "detail_deskripsi" => "Berlokasi di dataran tinggi dekat viewpoint Bukit Love, Hotel The Happinezz Hills Karimunjawa menjanjikan pemandangan spektakuler berupa perpaduan perbukitan dan lautan luas dari atas. Suasananya yang sangat rileks, ditambah dengan area bersantai yang menjadi titik sempurna untuk menikmati senja magis, membuat tempat ini ideal untuk melepas penat.",
         "foto_galeri" => [
             "assets/images/paket-snorkeling.jpg",
             "assets/images/galeri-1.jpg",
@@ -291,8 +291,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/legonwaru/2.jpg",
         "badge" => "Private Beach",
         "badge_class" => "orange",
-        "lokasi" => "Legon Waru, Karimunjawa",
-        "detail_deskripsi" => "Legon Waru Cottage terletak di area eksklusif Legon Waru, menawarkan akomodasi peristirahatan privat yang jauh dari keramaian. Memiliki teluk pantai pasir putih sendiri yang teduh, dikelilingi ribuan pohon kelapa rimbun. Sangat pas untuk liburan keluarga eksklusif.",
+        "lokasi" => "Jl. Kapuran, RT.004/RW.001, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
+        "detail_deskripsi" => "Berada sedikit menjauh dari pusat keramaian komersial, Legon Waru Cottage menawarkan pelarian total dari kebisingan rutinitas harian di lingkungan yang sangat sepi dan tenang. Desain bangunannya yang unik berkonsep cottage eksklusif membuat pengalaman menginap terasa jauh lebih intim, personal, dan efektif untuk mengisi ulang energi Anda.",
         "foto_galeri" => [
             "assets/images/legonwaru/1.jpg",
             "assets/images/legonwaru/2.jpg",
@@ -309,8 +309,8 @@ $daftar_penginapan = [
         "gambar" => "assets/images/royaloceanview/1.jpg",
         "badge" => "Executive Resort",
         "badge_class" => "orange",
-        "lokasi" => "Pantai Utara, Karimunjawa",
-        "detail_deskripsi" => "Royal Ocean View merupakan kompleks akomodasi premium termewah yang menghadap langsung ke samudera biru luas Karimunjawa. Kami menawarkan pilihan kamar berkelas tinggi untuk liburan eksklusif Anda:<br>\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\n    <li>Deluxe Sea View : Rp. 2.700.000 / pax</li>\n    <li>Superior Room : Rp. 3.150.000 / pax</li>\n    <li>Executive Sea View : Rp. 3.950.000 / pax</li>\n</ol>\nSetiap kamar dirancang dengan standar resort mewah internasional dan balkon yang luas.",
+        "lokasi" => "Kemujan, Karimunjawa, Kabupaten Jepara, Jawa Tengah",
+        "detail_deskripsi" => "Terletak di area Kemujan yang jauh dari hiruk-pikuk pusat pulau, Royal Ocean View Beach Resort menghadirkan ketenangan dan privasi luar biasa dengan suasana kasual yang tertata rapi. Resor ini sangat cocok untuk liburan bersama keluarga karena dilengkapi fasilitas memadai seperti kolam renang outdoor, ruang makan yang luas, serta beberapa kamar dengan pemandangan langsung ke arah laut. Kami menawarkan pilihan kamar berkelas tinggi untuk liburan eksklusif Anda:<br>\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\n    <li>Deluxe Sea View : Rp. 2.700.000 / pax</li>\n    <li>Superior Room : Rp. 3.150.000 / pax</li>\n    <li>Executive Sea View : Rp. 3.950.000 / pax</li>\n</ol>\nSetiap kamar dirancang dengan standar resort mewah internasional dan balkon yang luas.",
         "foto_galeri" => [
             "assets/images/royaloceanview/deluxe1.JPG",
             "assets/images/royaloceanview/deluxe2.JPG",
@@ -365,9 +365,9 @@ $daftar_penginapan = [
         "gambar" => "assets/images/javaparadise/JTD2.jpg",
         "badge" => "Paradise Resort",
         "badge_class" => "",
-        "lokasi" => "Tepi Pantai, Karimunjawa",
+        "lokasi" => "Dukuh Kapuran, RT.04/RW.01, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
         "durasi" => "3D2N",
-        "detail_deskripsi" => "Java Paradise Resort menawarkan liburan surga tropis berkelas dengan perpaduan arsitektur kayu Jawa klasik dan fasilitas modern. Terletak tepat di pinggir pantai berpasir putih, kami menyediakan 3 pilihan kelas kamar:<br>\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\n    <li>Family (P) : Rp. 2.050.000 / pax</li>\n    <li>Superior Class : Rp. 2.200.000 / pax</li>\n    <li>Executive Class : Rp. 2.450.000 / pax</li>\n</ol>",
+        "detail_deskripsi" => "Mengusung desain arsitektur bernuansa kayu yang elegan dan tradisional, Java Paradise Resort menghadirkan nuansa liburan tropis yang sesungguhnya dengan fasilitas modern yang memanjakan. Area bersantai yang luas dipadukan dengan kolam renang estetis menjadikan resor ini tempat pelarian yang sempurna untuk menyegarkan pikiran bersama rombongan atau keluarga besar. kami menyediakan 3 pilihan kelas kamar:<br>\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\n    <li>Family (P) : Rp. 2.050.000 / pax</li>\n    <li>Superior Class : Rp. 2.200.000 / pax</li>\n    <li>Executive Class : Rp. 2.450.000 / pax</li>\n</ol>",
         "foto_galeri" => [
             "assets/images/paket-snorkeling.jpg",
             "assets/images/galeri-4.jpg",
@@ -377,9 +377,9 @@ $daftar_penginapan = [
         ],
         "tipe_kamar" => [
             [
-                "id" => "java-type-family",
-                "nama" => "Java Type Family",
-                "harga" => "Rp 3.950.000 / pax",
+                "id" => "java-family-p",
+                "nama" => "Family (P)",
+                "harga" => "Rp. 2.050.000 / pax",
                 "foto_galeri" => [
                     "assets/images/javaparadise/JTF1.JPG",
                     "assets/images/javaparadise/JTF2.JPG",
@@ -389,27 +389,27 @@ $daftar_penginapan = [
                 ]
             ],
             [
-                "id" => "java-exe-room",
-                "nama" => "Java Type Executive Room",
-                "harga" => "Rp 3.150.000 / pax",
-                "foto_galeri" => [
-                    "assets/images/javaparadise/TER1.JPG",
-                    "assets/images/javaparadise/TER2.JPG",
-                    "assets/images/javaparadise/TER3.JPG",
-                    "assets/images/javaparadise/TER4.JPG",
-                    "assets/images/javaparadise/TER5.JPG"
-                ]
-            ],
-            [
-                "id" => "java-type-deluxe",
-                "nama" => "Java Type Deluxe",
-                "harga" => "Rp 2.700.000 / pax",
+                "id" => "java-superior-class",
+                "nama" => "Superior Class",
+                "harga" => "Rp. 2.200.000 / pax",
                 "foto_galeri" => [
                     "assets/images/javaparadise/JTD1.JPG",
                     "assets/images/javaparadise/JTD2.JPG",
                     "assets/images/javaparadise/JTD3.JPG",
                     "assets/images/javaparadise/JTD4.JPG",
                     "assets/images/javaparadise/JTD5.JPG"
+                ]
+            ],
+            [
+                "id" => "java-executive-class",
+                "nama" => "Executive Class",
+                "harga" => "Rp. 2.450.000 / pax",
+                "foto_galeri" => [
+                    "assets/images/javaparadise/TER1.JPG",
+                    "assets/images/javaparadise/TER2.JPG",
+                    "assets/images/javaparadise/TER3.JPG",
+                    "assets/images/javaparadise/TER4.JPG",
+                    "assets/images/javaparadise/TER5.JPG"
                 ]
             ]
         ]

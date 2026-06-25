@@ -1644,16 +1644,21 @@ a:hover {
 .booking-card-detail-item {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
     font-size: 14px;
+    line-height: 1.4;
 }
 
 .booking-card-detail-label {
     color: var(--medium-gray);
+    flex-shrink: 0;
 }
 
 .booking-card-detail-val {
     font-weight: 700;
     color: var(--dark-gray);
+    text-align: right;
 }
 
 .btn-booking-wa {

@@ -8,20 +8,43 @@ $page_title = "Galeri Wisata & Penginapan Karimunjawa - Karimunjawa Vibes Strip"
 
 // Muat komponen header visual
 include_once $base_url . 'header.php';
+
+// Gabungkan galeri foto umum dengan foto utama dari setiap penginapan
+$semua_foto_galeri = $galeri_foto;
+if (isset($daftar_penginapan) && is_array($daftar_penginapan)) {
+    foreach ($daftar_penginapan as $p) {
+        $tag = "Resort";
+        if (stripos($p['nama'], 'Homestay') !== false || stripos($p['nama'], 'Hostel') !== false || stripos($p['nama'], 'Guest House') !== false) {
+            $tag = "Homestay";
+        } elseif (stripos($p['nama'], 'Hotel') !== false) {
+            $tag = "Hotel";
+        } elseif (stripos($p['nama'], 'Cottage') !== false || stripos($p['nama'], 'Omah') !== false) {
+            $tag = "Cottage";
+        }
+        
+        $semua_foto_galeri[] = [
+            "file" => $p['gambar'],
+            "alt" => $p['nama'],
+            "posisi" => "center center",
+            "kategori" => "penginapan",
+            "tag" => $tag
+        ];
+    }
+}
 ?>
 
-<div class="btn-back-container" style="margin-bottom: 20px;">
-    <a href="<?php echo $base_url; ?>index.php" class="btn-back">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        Kembali ke Beranda
-    </a>
-</div>
-
 <!-- Main Gallery Section -->
-<main class="container" style="padding-top: 20px;">
+<main class="container" style="padding-top: 80px;">
+    <!-- Tombol Kembali di Pojok Kiri Atas -->
+    <div style="margin-bottom: 20px; text-align: left;">
+        <a href="<?php echo $base_url; ?>index.php" class="btn-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            KEMBALI KE BERANDA
+        </a>
+    </div>
     <h1 style="text-align: center; margin-bottom: 8px;">Galeri Keindahan Karimunjawa</h1>
     <p style="text-align: center; color: var(--medium-gray); max-width: 600px; margin: 0 auto 32px auto; font-size: 16px; line-height: 24px;">
         Jelajahi keindahan panorama alam, terumbu karang tropis, aktivitas wisata bahari seru, dan kenyamanan resort/homestay pilihan kami di Kepulauan Karimunjawa.
@@ -37,8 +60,8 @@ include_once $base_url . 'header.php';
 
     <!-- Gallery Grid -->
     <div class="gallery-grid">
-        <?php if (isset($galeri_foto) && is_array($galeri_foto)): ?>
-            <?php foreach ($galeri_foto as $foto): 
+        <?php if (isset($semua_foto_galeri) && is_array($semua_foto_galeri)): ?>
+            <?php foreach ($semua_foto_galeri as $foto): 
                 $kategori = isset($foto['kategori']) ? $foto['kategori'] : 'destinasi';
                 $tag = isset($foto['tag']) ? $foto['tag'] : 'Wisata';
             ?>
