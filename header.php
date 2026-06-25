@@ -13,6 +13,7 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($page_title) ? $page_title : 'KarimunJawa Vibes Trip'; ?></title>
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/style.css?v=<?php echo filemtime(__DIR__ . '/assets/css/style.css'); ?>">
+    <link rel="icon" type="image/png" href="<?php echo $base_url; ?>assets/images/logo.png">
 </head>
 <body>
 

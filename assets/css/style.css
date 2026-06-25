@@ -392,23 +392,29 @@ a:hover {
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    color: #555555;
+    color: var(--primary-teal);
     font-size: 12px;
     font-weight: 700;
     line-height: 25px;
     padding: 5px 18px;
     height: 39px;
     border-radius: 3px;
-    border: 2px solid #555555;
+    border: 2px solid var(--primary-teal);
     cursor: pointer;
     text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
 .btn-secondary:hover {
-    background-color: #F5F5F5;
-    color: var(--dark-gray);
-    border-color: var(--dark-gray);
+    background-color: rgba(28, 187, 180, 0.05);
+    color: var(--primary-teal);
+    border-color: var(--primary-teal);
     text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
 }
 
 /* Responsive Grid & Package Cards */

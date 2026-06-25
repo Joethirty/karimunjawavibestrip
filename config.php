@@ -7,7 +7,7 @@ $daftar_penginapan = [
         "id" => "homestay-loyal",
         "nama" => "Homestay Loyal",
         "deskripsi" => "Penginapan kipas angin (fan) yang bersih, ekonomis, dan nyaman untuk budget traveler.",
-        "harga" => "Rp. 1.200.000 / pax",
+        "harga" => "Rp. 1.850.000 / pax",
         "gambar" => "assets/images/homestayloyal/1.jpg",
         "badge" => "Budget Friendly",
         "badge_class" => "",
@@ -75,7 +75,7 @@ $daftar_penginapan = [
         "id" => "narayana",
         "nama" => "Hotel Narayana",
         "deskripsi" => "Hotel modern minimalis dengan fasilitas lengkap, bersih, dan sangat dekat ke pusat kota.",
-        "harga" => "Rp. 1.850.000 / pax",
+        "harga" => "Rp. 3.000.000 / pax",
         "gambar" => "assets/images/narayana/2.jpg",
         "badge" => "Modern Stay",
         "badge_class" => "",
@@ -114,7 +114,7 @@ $daftar_penginapan = [
         "badge" => "Bintang 3",
         "badge_class" => "orange",
         "lokasi" => "Jl. Danang Joyo Jl. Kapuran No.9, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
-        "detail_deskripsi" => "Sebagai penginapan yang memadukan relaksasi dan kenyamanan standar hotel modern, d'SEASON Hotel menawarkan fasilitas komprehensif mulai dari kolam renang outdoor, restoran, hingga fasilitas spa. Ketersediaan makanan yang mudah didapat di dalam area hotel serta beberapa tipe kamar yang menghadap ke laut menjadikannya opsi premium yang sangat memanjakan tamu di Karimunjawa.",
+        "detail_deskripsi" => "Sebagai penginapan yang memadukan relaksasi dan kenyamanan standar hotel modern, d'SEASON Hotel menawarkan fasilitas komprehensif mulai dari kolam renang outdoor, restoran, hingga fasilitas spa. Ketersediaan makanan yang mudah didapat di dalam area hotel serta beberapa tipe kamar yang menghadap ke laut menjadikannya opsi premium yang sangat memanjakan tamu di Karimunjawa. kami menyediakan 3 pilihan kelas kamar:<br>\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\n    <li>Tipe Executive : Rp. 1.875.000 / pax</li>\n    <li>Tipe Family : Rp. 1.875.000 / pax</li>\n    <li>Tipe Bisnis : Rp. 1.875.000 / pax</li>\n</ol>",
         "foto_galeri" => [
             "assets/images/paket-honeymoon.jpg",
             "assets/images/galeri-1.jpg",
@@ -126,7 +126,7 @@ $daftar_penginapan = [
             [
                 "id" => "executive",
                 "nama" => "Tipe Executive",
-                "harga" => "Rp 2.450.000 / pax",
+                "harga" => "Rp 1.875.000 / pax",
                 "foto_galeri" => [
                     "assets/images/dseason/exe1.jpg",
                     "assets/images/dseason/exe2.jpg",
@@ -138,7 +138,7 @@ $daftar_penginapan = [
             [
                 "id" => "family",
                 "nama" => "Tipe Family",
-                "harga" => "Rp 2.850.000 / pax",
+                "harga" => "Rp 1.875.000 / pax",
                 "foto_galeri" => [
                     "assets/images/dseason/fam1.jpg",
                     "assets/images/dseason/fam2.jpg",
@@ -224,7 +224,7 @@ $daftar_penginapan = [
         "badge" => "Best Sunset View",
         "badge_class" => "",
         "lokasi" => "Dekat titik pandang (viewpoint) Bukit Love, Jl. I. J. Kasimo, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
-        "detail_deskripsi" => "Berlokasi di dataran tinggi dekat viewpoint Bukit Love, Hotel The Happinezz Hills Karimunjawa menjanjikan pemandangan spektakuler berupa perpaduan perbukitan dan lautan luas dari atas. Suasananya yang sangat rileks, ditambah dengan area bersantai yang menjadi titik sempurna untuk menikmati senja magis, membuat tempat ini ideal untuk melepas penat.",
+        "detail_deskripsi" => "Berlokasi di dataran tinggi dekat viewpoint Bukit Love, Hotel The Happinezz Hills Karimunjawa menjanjikan pemandangan spektakuler berupa perpaduan perbukitan dan lautan luas dari atas. Suasananya yang sangat rileks, ditambah dengan area bersantai yang menjadi titik sempurna untuk menikmati senja magis, membuat tempat ini ideal untuk melepas penat. kami menyediakan 4 pilihan kelas kamar:<br>\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\n    <li>Tipe Executive Family : Rp. 2.050.000 / pax</li>\n    <li>Tipe Family Bungalow : Rp. 2.050.000 / pax</li>\n    <li>Tipe Twin Toom : Rp. 2.050.000 / pax</li>\n    <li>Tipe Deluxe Double : Rp. 2.050.000 / pax</li>\n</ol>",
         "foto_galeri" => [
             "assets/images/paket-snorkeling.jpg",
             "assets/images/galeri-1.jpg",
@@ -236,7 +236,7 @@ $daftar_penginapan = [
             [
                 "id" => "executive-family",
                 "nama" => "Tipe Executive Family",
-                "harga" => "Rp 2.450.000 / pax",
+                "harga" => "Rp 2.050.000 / pax",
                 "foto_galeri" => [
                     "assets/images/happinesshill/EFV1.jpg",
                     "assets/images/happinesshill/EFV2.jpg",
@@ -248,7 +248,7 @@ $daftar_penginapan = [
             [
                 "id" => "family-bungalow",
                 "nama" => "Tipe Family Bungalow",
-                "harga" => "Rp 2.850.000 / pax",
+                "harga" => "Rp 2.050.000 / pax",
                 "foto_galeri" => [
                     "assets/images/happinesshill/EFB1.jpg",
                     "assets/images/happinesshill/EFB2.jpg",
@@ -260,7 +260,7 @@ $daftar_penginapan = [
             [
                 "id" => "twin-toom",
                 "nama" => "Tipe Twin Toom",
-                "harga" => "Rp 1.875.000 / pax",
+                "harga" => "Rp 2.050.000 / pax",
                 "foto_galeri" => [
                     "assets/images/happinesshill/TTT1.jpg",
                     "assets/images/happinesshill/TTT2.jpg",
@@ -272,7 +272,7 @@ $daftar_penginapan = [
             [
                 "id" => "deluxe-double",
                 "nama" => "Tipe Deluxe Double",
-                "harga" => "Rp 2.850.000 / pax",
+                "harga" => "Rp 2.050.000 / pax",
                 "foto_galeri" => [
                     "assets/images/happinesshill/TDD1.jpg",
                     "assets/images/happinesshill/TDD2.jpg",
