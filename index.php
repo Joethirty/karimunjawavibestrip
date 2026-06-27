@@ -396,6 +396,13 @@ include_once $base_url . 'header.php';
                         </div>
                         <p class="review-card-text">"<?php echo $testi['ulasan']; ?>"</p>
 
+                        <?php if (!empty($testi['balasan'])): ?>
+                            <div class="review-reply-admin" style="background-color: rgba(28, 187, 180, 0.05); border-left: 3px solid var(--primary-teal); padding: 10px 14px; margin-top: 12px; border-radius: 8px; font-size: 13px; text-align: left; line-height: 1.5; color: var(--charcoal);">
+                                <strong style="color: var(--primary-teal); display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Balasan Admin:</strong>
+                                <?php echo htmlspecialchars($testi['balasan']); ?>
+                            </div>
+                        <?php endif; ?>
+
                         <div
                             style="display: flex; align-items: center; gap: 12px; margin-top: 12px; border-top: 1px solid #F0F0F0; padding-top: 12px;">
                             <div class="review-avatar-circle"

@@ -126,32 +126,54 @@ include_once $base_url . 'header.php';
             $active_gallery = $penginapan['tipe_kamar'][0]['foto_galeri'];
         }
         ?>
-        <div class="lodging-detail-gallery">
-            <!-- 1. Left Top Image -->
-            <div id="gallery-item-1" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[1]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img id="gallery-img-1" src="<?php echo $base_url . $active_gallery[1]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+        <div class="lodging-detail-gallery-container">
+            <div class="lodging-detail-gallery">
+                <!-- 1. Left Top Image -->
+                <div id="gallery-item-1" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[1]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                    <img id="gallery-img-1" src="<?php echo $base_url . $active_gallery[1]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+                </div>
+                
+                <!-- 2. Middle Large Image (spans two rows) -->
+                <div id="gallery-item-0" class="lodging-detail-gallery-item big-image" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[0]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                    <img id="gallery-img-0" src="<?php echo $base_url . $active_gallery[0]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+                </div>
+                
+                <!-- 3. Right Top Image -->
+                <div id="gallery-item-2" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[2]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                    <img id="gallery-img-2" src="<?php echo $base_url . $active_gallery[2]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+                </div>
+                
+                <!-- 4. Left Bottom Image -->
+                <div id="gallery-item-3" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[3]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                    <img id="gallery-img-3" src="<?php echo $base_url . $active_gallery[3]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+                </div>
+                
+                <!-- 5. Right Bottom Image -->
+                <div id="gallery-item-4" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[4]; ?>', '<?php echo $penginapan['nama']; ?>')">
+                    <img id="gallery-img-4" src="<?php echo $base_url . $active_gallery[4]; ?>" alt="<?php echo $penginapan['nama']; ?>">
+                </div>
             </div>
-            
-            <!-- 2. Middle Large Image (spans two rows) -->
-            <div id="gallery-item-0" class="lodging-detail-gallery-item big-image" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[0]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img id="gallery-img-0" src="<?php echo $base_url . $active_gallery[0]; ?>" alt="<?php echo $penginapan['nama']; ?>">
-            </div>
-            
-            <!-- 3. Right Top Image -->
-            <div id="gallery-item-2" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[2]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img id="gallery-img-2" src="<?php echo $base_url . $active_gallery[2]; ?>" alt="<?php echo $penginapan['nama']; ?>">
-            </div>
-            
-            <!-- 4. Left Bottom Image -->
-            <div id="gallery-item-3" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[3]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img id="gallery-img-3" src="<?php echo $base_url . $active_gallery[3]; ?>" alt="<?php echo $penginapan['nama']; ?>">
-            </div>
-            
-            <!-- 5. Right Bottom Image -->
-            <div id="gallery-item-4" class="lodging-detail-gallery-item" onclick="bukaModalLightbox('<?php echo $base_url . $active_gallery[4]; ?>', '<?php echo $penginapan['nama']; ?>')">
-                <img id="gallery-img-4" src="<?php echo $base_url . $active_gallery[4]; ?>" alt="<?php echo $penginapan['nama']; ?>">
-            </div>
+            <!-- Mobile Badge Indicator -->
+            <div class="gallery-badge-mobile">1 / 5</div>
         </div>
+
+        <!-- Script to handle mobile gallery scroll badge update -->
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const gallery = document.querySelector('.lodging-detail-gallery');
+            const badge = document.querySelector('.gallery-badge-mobile');
+            
+            if (gallery && badge) {
+                gallery.addEventListener('scroll', function() {
+                    const width = gallery.getBoundingClientRect().width;
+                    if (width > 0) {
+                        const activeIndex = Math.round(gallery.scrollLeft / width) + 1;
+                        badge.textContent = activeIndex + ' / 5';
+                    }
+                }, { passive: true });
+            }
+        });
+        </script>
 
         <!-- 2-Column Split Layout -->
         <div class="detail-grid">
@@ -245,6 +267,12 @@ include_once $base_url . 'header.php';
                                 const sidebarBtn = document.getElementById('sidebar-booking-btn');
                                 if (sidebarBtn) {
                                     sidebarBtn.href = roomTypeData[roomId].waUrl;
+                                }
+
+                                // Reset scroll position on mobile gallery slider
+                                const gallery = document.querySelector('.lodging-detail-gallery');
+                                if (gallery) {
+                                    gallery.scrollLeft = 0;
                                 }
                             }
                         }
@@ -568,6 +596,12 @@ include_once $base_url . 'header.php';
                                         </div>
                                     </div>
                                     <p style="font-style: italic; font-size: 14px; line-height: 20px; color: var(--charcoal); margin: 0 0 10px 0;">"<?php echo $testi['ulasan']; ?>"</p>
+                                    <?php if (!empty($testi['balasan'])): ?>
+                                        <div style="background-color: rgba(28, 187, 180, 0.05); border-left: 3px solid var(--primary-teal); padding: 8px 12px; margin-bottom: 12px; border-radius: 6px; font-size: 13px; text-align: left; line-height: 1.5; color: var(--charcoal);">
+                                            <strong style="color: var(--primary-teal); display: block; font-size: 11px; font-weight: 700; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">Balasan Admin:</strong>
+                                            <?php echo htmlspecialchars($testi['balasan']); ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <div style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--primary-teal); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11px; text-transform: uppercase;">
                                             <?php echo substr($testi['nama'], 0, 1); ?>

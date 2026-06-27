@@ -1923,6 +1923,13 @@ a:hover {
    NEW PREMIUM LODGING DETAIL PAGE LAYOUT (Based on Reference Layout)
    ========================================================================== */
 
+/* Gallery Container & Mobile Badge */
+.lodging-detail-gallery-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 24px;
+}
+
 /* 5-Photo Grid Gallery */
 .lodging-detail-gallery {
     display: grid;
@@ -1932,7 +1939,26 @@ a:hover {
     height: 380px;
     border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 24px;
+}
+
+.gallery-badge-mobile {
+    display: none;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(15, 45, 46, 0.85); /* Match the primary dark green brand color */
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 700;
+    z-index: 10;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .lodging-detail-gallery-item {
@@ -2088,15 +2114,49 @@ a:hover {
 
 /* Responsive Overrides for Lodging Details */
 @media (max-width: 767px) {
-    .lodging-detail-gallery {
-        grid-template-columns: 2fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        height: 280px;
+    .lodging-detail-gallery-container {
+        margin-bottom: 16px;
     }
 
-    .lodging-detail-gallery-item:nth-child(4),
-    .lodging-detail-gallery-item:nth-child(5) {
+    .lodging-detail-gallery {
+        display: flex !important;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        height: 300px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        gap: 0;
+        border-radius: 8px;
+    }
+
+    .lodging-detail-gallery::-webkit-scrollbar {
         display: none;
+    }
+
+    .lodging-detail-gallery-item {
+        display: block !important;
+        flex: 0 0 100% !important;
+        scroll-snap-align: start;
+        height: 100% !important;
+        width: 100% !important;
+    }
+
+    .lodging-detail-gallery-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    /* Chronological order for swiping on mobile */
+    #gallery-item-0 { order: 1; }
+    #gallery-item-1 { order: 2; }
+    #gallery-item-2 { order: 3; }
+    #gallery-item-3 { order: 4; }
+    #gallery-item-4 { order: 5; }
+
+    .gallery-badge-mobile {
+        display: block;
     }
 
     .lodging-meta-row {
@@ -2107,17 +2167,7 @@ a:hover {
 
 @media (max-width: 480px) {
     .lodging-detail-gallery {
-        display: block;
-        height: 200px;
-    }
-
-    .lodging-detail-gallery-item {
-        display: none;
-    }
-
-    .lodging-detail-gallery-item.big-image {
-        display: block;
-        height: 100%;
+        height: 240px;
     }
 
     .lodging-features-grid {
