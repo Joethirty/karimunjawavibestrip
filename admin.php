@@ -2023,16 +2023,15 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
 
                                                     <!-- Form Balas Inline -->
                                                     <form action="admin.php?action=reviews" method="POST"
-                                                        style="display: flex; gap: 8px; align-items: center;">
+                                                        style="display: flex; gap: 8px; align-items: flex-end; width: 100%;">
                                                         <input type="hidden" name="action" value="reply_review">
                                                         <input type="hidden" name="review_id"
                                                             value="<?php echo htmlspecialchars($testi['id']); ?>">
-                                                        <input class="form-control" type="text" name="balasan"
+                                                        <textarea class="form-control" name="balasan"
                                                             placeholder="<?php echo empty($testi['balasan']) ? 'Tulis balasan...' : 'Ubah balasan...'; ?>"
-                                                            style="padding: 8px 12px; font-size: 12.5px; background: rgba(10,20,20,0.3); border-radius: 8px; height: 34px;"
-                                                            value="<?php echo isset($testi['balasan']) ? htmlspecialchars($testi['balasan']) : ''; ?>">
+                                                            style="padding: 8px 12px; font-size: 12.5px; background: rgba(10,20,20,0.3); border-radius: 8px; height: 75px; resize: vertical; flex-grow: 1; border: 1px solid var(--border-color); color: var(--text-light); line-height: 1.4; width: 100%; font-family: inherit;"><?php echo isset($testi['balasan']) ? htmlspecialchars($testi['balasan']) : ''; ?></textarea>
                                                         <button class="btn-new" type="submit"
-                                                            style="padding: 0 14px; font-size: 12px; height: 34px; border-radius: 8px; flex-shrink: 0; box-shadow: none;">
+                                                            style="padding: 0 14px; font-size: 12px; height: 34px; border-radius: 8px; flex-shrink: 0; box-shadow: none; margin-bottom: 2px;">
                                                             Simpan
                                                         </button>
                                                     </form>
