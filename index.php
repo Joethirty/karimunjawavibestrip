@@ -8,10 +8,17 @@ global $daftar_penginapan;
 
 // Map rating default untuk masing-masing penginapan jika belum ada ulasan baru
 $default_ratings_map = [
+    'homestay-loyal' => 4.5,
     'homestay-fan' => 4.5,
+    'homestay-azza' => 4.6,
     'homestay-ac' => 4.6,
     'puri-karimun' => 4.7,
+    'the-body-tree' => 4.8,
+    'ayu-hotel' => 4.8,
+    'bale-karimunjawa' => 4.8,
+    'hotel-blue-laguna-inn' => 4.8,
     'blue-laguna' => 4.8,
+    'hotel-summer-inn' => 4.8,
     'summer-inn' => 4.8,
     'dseason' => 4.9,
     'almare' => 4.8,
@@ -109,15 +116,77 @@ $is_homepage = true;
 include_once $base_url . 'header.php';
 ?>
 
-<header class="hero" id="home">
-    <div class="hero-inner">
-        <!-- Kolom Kiri: Informasi & Ajakan Aksi -->
-        <div class="hero-left-panel">
-            <span class="hero-tag">Travel Website</span>
-            <h1 class="hero-main-title">NEVER STOP<br>EXPLORING THE<br>WORLD.</h1>
-            <p class="hero-desc">Temukan keindahan pantai pasir putih yang tersembunyi, terumbu karang tropis yang menawan, dan pilihan penginapan mewah berkelas di Kepulauan Karimunjawa.</p>
-            <a href="#mengapa-kami" class="btn-hero-learn-more">LEARN MORE</a>
-        </div>
+<header class="hero-slider" id="home">
+    <div class="slider-container">
+        <?php 
+        global $slider_data;
+        // Pilih paket dinamis dari slider_data (decoupled from catalog)
+        $slider_items = isset($slider_data) && is_array($slider_data) ? $slider_data : [];
+
+        foreach ($slider_items as $key => $slide):
+            $harga_bersih = str_replace(['Rp.', 'Mulai', 'Rp', '/ pax', '/pax'], '', $slide['harga']);
+            $harga_bersih = trim(explode('/', $harga_bersih)[0]);
+            $harga_formatted = 'IDR ' . $harga_bersih;
+            $active_class = $key === 0 ? 'active' : '';
+
+            // Ambil durasi dinamis dari data paket
+            $durasi_val = isset($slide['durasi']) ? $slide['durasi'] : '3D2N';
+            if ($durasi_val === '3D2N') {
+                $durasi_text = '3 Hari 2 Malam';
+            } elseif ($durasi_val === '2D1N') {
+                $durasi_text = '2 Hari 1 Malam';
+            } elseif ($durasi_val === '4D3N') {
+                $durasi_text = '4 Hari 3 Malam';
+            } else {
+                $durasi_text = $durasi_val;
+            }
+        ?>
+            <div class="slide <?php echo $active_class; ?>" style="background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.6)), url('<?php echo $base_url . $slide['gambar']; ?>');">
+                <div class="slide-content">
+                    <h1 class="slide-title">
+                        <?php 
+                        if (isset($slide['judul_slider']) && !empty($slide['judul_slider'])) {
+                            echo htmlspecialchars($slide['judul_slider']);
+                        } else {
+                            echo 'Paket Karimunjawa ' . $durasi_text;
+                        }
+                        ?>
+                    </h1>
+                    
+                    <div class="slide-meta-box">
+                        <div class="meta-left">
+                            <span class="meta-label">Start From</span>
+                            <span class="meta-price"><?php echo $harga_formatted; ?></span>
+                        </div>
+                        <div class="meta-divider"></div>
+                        <div class="meta-right">
+                             <a href="<?php echo $base_url; ?>detail-page/<?php echo htmlspecialchars(isset($slide['lodging_id']) ? $slide['lodging_id'] : $slide['id']); ?>.php" class="view-detail-btn">
+                                <span class="arrow-icon">➔</span> View Detail ...
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button class="slider-arrow prev-arrow" onclick="moveSlide(-1)" aria-label="Previous Slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+    </button>
+    <button class="slider-arrow next-arrow" onclick="moveSlide(1)" aria-label="Next Slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+    </button>
+
+    <!-- Slide Indicators / Dots -->
+    <div class="slider-dots">
+        <?php foreach ($slider_items as $key => $slide): ?>
+            <span class="dot <?php echo $key === 0 ? 'active' : ''; ?>" onclick="currentSlide(<?php echo $key; ?>)"></span>
+        <?php endforeach; ?>
     </div>
 </header>
 
@@ -190,71 +259,151 @@ include_once $base_url . 'header.php';
         </div>
     </div>
 </section>
-
 <section id="penginapan" class="container">
     <div class="section-title-wrapper">
         <h2>Penginapan Karimunjawa</h2>
         <p class="section-subtitle">Harga Terbaik dan terpercaya</p>
     </div>
     
+    <?php
+    $selected_durasi = isset($_GET['durasi']) ? trim($_GET['durasi']) : '';
+    $selected_kategori = isset($_GET['kategori']) ? trim($_GET['kategori']) : '';
+    
+    $filtered_penginapan = $daftar_penginapan;
+    
+    if (!empty($selected_durasi)) {
+        $filtered_penginapan = array_filter($filtered_penginapan, function($p) use ($selected_durasi) {
+            $selected_durasi = strtolower($selected_durasi);
+            if ($selected_durasi === '2d1n') {
+                return isset($p['harga_2d1n']) || (isset($p['durasi']) && stripos($p['durasi'], '2D1N') !== false);
+            } elseif ($selected_durasi === '4d3n') {
+                return isset($p['harga_4d3n']) || (isset($p['durasi']) && stripos($p['durasi'], '4D3N') !== false);
+            } elseif ($selected_durasi === 'honeymoon') {
+                return isset($p['harga_honeymoon']);
+            } elseif ($selected_durasi === '3d2n') {
+                return isset($p['harga']) || (isset($p['durasi']) && stripos($p['durasi'], '3D2N') !== false);
+            } else {
+                $p_dur = isset($p['durasi']) ? $p['durasi'] : '3D2N';
+                return stripos(strtolower($p_dur), $selected_durasi) !== false;
+            }
+        });
+    }
+    
+    if (!empty($selected_kategori)) {
+        $filtered_penginapan = array_filter($filtered_penginapan, function($p) use ($selected_kategori) {
+            $nama_lc = strtolower($p['nama']);
+            if ($selected_kategori === 'homestay') {
+                return (strpos($nama_lc, 'homestay') !== false || strpos($nama_lc, 'hostel') !== false || strpos($nama_lc, 'inn') !== false);
+            } elseif ($selected_kategori === 'hotel') {
+                return (strpos($nama_lc, 'hotel') !== false || strpos($nama_lc, 'mare') !== false || strpos($nama_lc, 'season') !== false);
+            } elseif ($selected_kategori === 'resort') {
+                return (strpos($nama_lc, 'resort') !== false || strpos($nama_lc, 'cottage') !== false || strpos($nama_lc, 'paradise') !== false);
+            }
+            return true;
+        });
+    }
+    ?>
+
+    <?php if (!empty($selected_durasi) || !empty($selected_kategori)): ?>
+        <div style="background-color: rgba(28, 187, 180, 0.08); border: 1px solid rgba(28, 187, 180, 0.15); border-radius: 8px; padding: 14px 20px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; gap: 15px; flex-wrap: wrap;">
+            <div style="color: var(--charcoal); font-weight: 500;">
+                Menampilkan: <strong style="color: var(--primary-teal);"><?php 
+                    $labels = [];
+                    if (!empty($selected_durasi)) {
+                        if ($selected_durasi === '3D2N') $labels[] = 'Durasi 3 Hari 2 Malam';
+                        elseif ($selected_durasi === '2D1N') $labels[] = 'Durasi 2 Hari 1 Malam';
+                        elseif ($selected_durasi === '4D3N') $labels[] = 'Durasi 4 Hari 3 Malam';
+                        elseif (strtoupper($selected_durasi) === 'HONEYMOON') $labels[] = 'Paket Honeymoon';
+                        else $labels[] = 'Durasi ' . htmlspecialchars($selected_durasi);
+                    }
+                    if (!empty($selected_kategori)) {
+                        if ($selected_kategori === 'homestay') $labels[] = 'Kategori Homestay';
+                        elseif ($selected_kategori === 'hotel') $labels[] = 'Kategori Hotel';
+                        elseif ($selected_kategori === 'resort') $labels[] = 'Kategori Resort & Cottage';
+                    }
+                    echo implode(' + ', $labels);
+                ?></strong>
+            </div>
+            <a href="index.php#penginapan" style="color: var(--accent-orange); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(255, 123, 84, 0.25); padding: 4px 10px; border-radius: 4px; background: rgba(255, 123, 84, 0.04);">
+                Hapus Filter ×
+            </a>
+        </div>
+    <?php endif; ?>
+    
     <div class="grid-cards">
-        <?php foreach ($daftar_penginapan as $index => $penginapan): 
-            $is_hidden = $index >= 8;
-            $card_class = "package-card-link" . ($is_hidden ? " hidden-card" : "");
-            $card_style = $is_hidden ? "display: none;" : "";
-        ?>
-            <a href="<?php echo $base_url; ?>detail-page/<?php echo $penginapan['id']; ?>.php" class="<?php echo $card_class; ?>" style="<?php echo $card_style; ?>">
-                <div class="package-card">
-                    <div class="card-image-wrapper">
-                        <img src="<?php echo $base_url . $penginapan['gambar']; ?>" alt="<?php echo $penginapan['nama']; ?>">
-                    </div>
-                    
-                    <div class="card-body">
-                        <?php 
-                        $rating = isset($ratings_map[$penginapan['id']]) ? $ratings_map[$penginapan['id']] : 4.8;
-                        $full_stars = floor($rating);
-                        ?>
-                        <div class="card-rating-wrapper">
-                            <div class="star-rating">
-                                <?php
-                                for ($i = 1; $i <= 5; $i++) {
-                                    if ($i <= $full_stars) {
-                                        echo '<span class="star">&#9733;</span>';
-                                    } else {
-                                        echo '<span class="star empty">&#9733;</span>';
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <span class="rating-value"><?php echo number_format($rating, 1); ?></span>
+        <?php if (!empty($filtered_penginapan)): ?>
+            <?php 
+            $idx = 0;
+            foreach ($filtered_penginapan as $penginapan): 
+                $is_hidden = empty($selected_durasi) && ($idx >= 8);
+                $card_class = "package-card-link" . ($is_hidden ? " hidden-card" : "");
+                $card_style = $is_hidden ? "display: none;" : "";
+                $idx++;
+            ?>
+                <?php 
+                $query_param = !empty($selected_durasi) ? '?durasi=' . urlencode($selected_durasi) : '';
+                ?>
+                <a href="<?php echo $base_url; ?>detail-page/<?php echo $penginapan['id']; ?>.php<?php echo $query_param; ?>" class="<?php echo $card_class; ?>" style="<?php echo $card_style; ?>">
+                    <div class="package-card">
+                        <div class="card-image-wrapper">
+                            <img src="<?php echo $base_url . $penginapan['gambar']; ?>" alt="<?php echo $penginapan['nama']; ?>">
                         </div>
                         
-                        <h3 class="card-title"><?php echo $penginapan['nama']; ?></h3>
-                    </div>
-                    
-                    <?php 
-                    $harga_bersih = str_replace(['Rp.', 'Mulai', 'Rp'], '', $penginapan['harga']);
-                    $harga_bersih = trim(explode('/', $harga_bersih)[0]);
-                    $harga_formatted = 'IDR ' . $harga_bersih;
-                    ?>
-                    <div class="card-footer-price">
-                        <div class="price-info">
-                            <span class="price-start-label">Start From</span>
-                            <span class="price-val"><?php echo $harga_formatted; ?></span>
+                        <div class="card-body">
+                            <?php 
+                            $rating = isset($ratings_map[$penginapan['id']]) ? $ratings_map[$penginapan['id']] : 4.8;
+                            $full_stars = floor($rating);
+                            ?>
+                            <div class="card-rating-wrapper">
+                                <div class="star-rating">
+                                    <?php
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        if ($i <= $full_stars) {
+                                            echo '<span class="star">&#9733;</span>';
+                                        } else {
+                                            echo '<span class="star empty">&#9733;</span>';
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <span class="rating-value"><?php echo number_format($rating, 1); ?></span>
+                            </div>
+                            
+                            <h3 class="card-title"><?php echo $penginapan['nama']; ?></h3>
+                            
+                            <div class="card-price-row">
+                                <?php 
+                                $sel_dur_lc = strtolower($selected_durasi);
+                                $is_honeymoon = ($sel_dur_lc === 'honeymoon');
+                                if ($sel_dur_lc === '2d1n' && isset($penginapan['harga_2d1n'])) {
+                                    $harga_raw = $penginapan['harga_2d1n'];
+                                } elseif ($sel_dur_lc === '4d3n' && isset($penginapan['harga_4d3n'])) {
+                                    $harga_raw = $penginapan['harga_4d3n'];
+                                } elseif ($is_honeymoon && isset($penginapan['harga_honeymoon'])) {
+                                    $harga_raw = $penginapan['harga_honeymoon'];
+                                } else {
+                                    $harga_raw = $penginapan['harga'];
+                                }
+                                $parts = explode('/', $harga_raw);
+                                $harga_bersih = str_replace(['Rp.', 'Mulai', 'Rp'], '', $parts[0]);
+                                $harga_bersih = trim($harga_bersih);
+                                $unit = isset($parts[1]) ? trim($parts[1]) : 'pax';
+                                ?>
+                                <span class="price-label">Mulai</span>
+                                <span class="price-val">IDR <?php echo $harga_bersih; ?> <span style="font-size: 11px; font-weight: 500; color: var(--medium-gray);">/ <?php echo $unit; ?></span></span>
+                            </div>
                         </div>
-                        <div class="arrow-container">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="footer-arrow">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </div>
                     </div>
-                </div>
-            </a>
-        <?php endforeach; ?>
+                </a>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px 10px; font-size: 15px; border: 1px dashed var(--very-light-gray); border-radius: 8px;">
+                Belum ada paket wisata/penginapan dengan pilihan durasi ini.
+            </div>
+        <?php endif; ?>
     </div>
 
-    <?php if (count($daftar_penginapan) > 8): ?>
+    <?php if (empty($selected_durasi) && count($daftar_penginapan) > 8): ?>
         <div class="show-more-container" style="text-align: center; margin-top: 32px;">
             <button id="btnShowMoreLodgings" class="btn-secondary" onclick="toggleLodgings()" data-showing="false" style="min-width: 220px; height: 44px; font-size: 14px; border-radius: 6px;">
                 Lihat Semua Penginapan (<?php echo count($daftar_penginapan); ?>)
@@ -265,6 +414,7 @@ include_once $base_url . 'header.php';
             function toggleLodgings() {
                 const hiddenCards = document.querySelectorAll('.hidden-card');
                 const btn = document.getElementById('btnShowMoreLodgings');
+                if (!btn) return;
                 const isShowing = btn.getAttribute('data-showing') === 'true';
                 
                 if (isShowing) {
@@ -296,14 +446,14 @@ include_once $base_url . 'header.php';
 
 <!-- SEKSI GALERI: Menggunakan CSS Grid dengan Aspect Ratio 16:9 (Lanskap Seragam) -->
 <section id="galeri" class="container">
-    <h2>Keindahan Karimunjawa</h2>
+    <h2>Galeri Keindahan Karimunjawa</h2>
     <div
         style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 32px;">
         <?php if (isset($galeri_foto) && is_array($galeri_foto)): ?>
             <?php foreach (array_slice($galeri_foto, 0, 4) as $foto): ?>
                 <!-- Mengunci bentuk kontainer kotak menjadi lanskap persegi panjang (16:9) -->
                 <div style="cursor: pointer; overflow: hidden; height: auto; aspect-ratio: 16 / 9; border: 1px solid var(--very-light-gray);"
-                    onclick="bukaModalLightbox('<?php echo $foto['file']; ?>', '<?php echo $foto['alt']; ?>')">
+                    onclick="bukaModalLightbox('<?php echo $foto['file']; ?>', '')">
                     <!-- Menggunakan object-fit: cover dan memanggil koordinat posisi dari config.php secara dinamis -->
                     <img src="<?php echo $base_url . $foto['file']; ?>" alt="<?php echo $foto['alt']; ?>"
                         style="width: 100%; height: 100%; object-fit: cover; object-position: <?php echo !empty($foto['posisi']) ? $foto['posisi'] : 'center center'; ?>; transition: transform 0.3s;"
@@ -505,6 +655,67 @@ include_once $base_url . 'header.php';
         </form>
     </div>
 </section>
+
+<!-- Script Kontrol Slider Hero Banner -->
+<script>
+let currentSlideIndex = 0;
+const slides = document.querySelectorAll('.hero-slider .slide');
+const dots = document.querySelectorAll('.hero-slider .dot');
+
+function showSlide(index) {
+    if (slides.length === 0) return;
+    
+    if (index >= slides.length) {
+        currentSlideIndex = 0;
+    } else if (index < 0) {
+        currentSlideIndex = slides.length - 1;
+    } else {
+        currentSlideIndex = index;
+    }
+    
+    slides.forEach((slide, i) => {
+        if (i === currentSlideIndex) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    
+    dots.forEach((dot, i) => {
+        if (i === currentSlideIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+function moveSlide(step) {
+    showSlide(currentSlideIndex + step);
+}
+
+function currentSlide(index) {
+    showSlide(index);
+}
+
+// Auto play slides setiap 6 detik
+let slideInterval = setInterval(() => {
+    moveSlide(1);
+}, 6000);
+
+// Pause autoplay saat kursor berada di atas slider
+const sliderElement = document.getElementById('home');
+if (sliderElement) {
+    sliderElement.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+    });
+    sliderElement.addEventListener('mouseleave', () => {
+        slideInterval = setInterval(() => {
+            moveSlide(1);
+        }, 6000);
+    });
+}
+</script>
 
 <?php
 // Muat komponen footer dan script

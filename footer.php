@@ -20,7 +20,7 @@ if (!isset($base_url)) {
             <p class="brand-description">Penyedia reservasi penginapan, resort, homestay, dan villa resmi di Kepulauan
                 Karimunjawa. Kami menghadirkan kenyamanan menginap terbaik untuk liburan Anda dan keluarga.</p>
             <div class="social-links-wrapper">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link"
+                <a href="https://www.instagram.com/indrakarimunjawavibestrip?igsh=MWx2MHE3YXVvMXhuaw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-icon-link"
                     aria-label="Instagram">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -29,24 +29,14 @@ if (!isset($base_url)) {
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                     </svg>
                 </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link"
+                <a href="https://www.facebook.com/share/1Ax7RDr9x6/" target="_blank" rel="noopener noreferrer" class="social-icon-link"
                     aria-label="Facebook">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                     </svg>
                 </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link"
-                    aria-label="YouTube">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
-                        </path>
-                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-                    </svg>
-                </a>
-                <a href="https://wa.me/62895361870926" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/6282229055694" target="_blank" rel="noopener noreferrer"
                     class="social-icon-link" aria-label="WhatsApp">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path
@@ -89,16 +79,8 @@ if (!isset($base_url)) {
 
         <!-- Contact Info -->
         <div class="footer-column contact-col">
-            <h4 class="footer-title">Kontak & Kantor</h4>
+            <h4 class="footer-title">Kontak</h4>
             <ul class="footer-contact-info">
-                <li>
-                    <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    <span>Jl. Raya Karimunjawa, Jepara, Jawa Tengah, Indonesia</span>
-                </li>
                 <li>
                     <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -106,7 +88,7 @@ if (!isset($base_url)) {
                             d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
                         </path>
                     </svg>
-                    <span>+62 895-3618-70926</span>
+                    <span>+62 822-2905-5694</span>
                 </li>
                 <li>
                     <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -114,7 +96,7 @@ if (!isset($base_url)) {
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                         <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
-                    <span>info@karimunjawavibestrip.com</span>
+                    <span>krimunjawavibestrip@gmail.com</span>
                 </li>
             </ul>
         </div>
@@ -189,7 +171,8 @@ if (!isset($base_url)) {
         if (modal && modalImg && modalCaption) {
             modal.style.display = "flex";
             modalImg.src = src;
-            modalCaption.innerText = alt;
+            modalCaption.innerText = alt || "";
+            modalCaption.style.display = alt ? "block" : "none";
         }
     }
 

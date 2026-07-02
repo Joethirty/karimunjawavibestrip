@@ -1,0 +1,38 @@
+[
+    {
+        "id": "dseason-slide",
+        "lodging_id": "dseason",
+        "nama": "Hotel D&#039;Season",
+        "judul_slider": "",
+        "durasi": "3D2N",
+        "harga": "Rp. 1.875.000 / pax",
+        "gambar": "assets/images/uploads/1782644067_3D2N_SNORKLING.JPG"
+    },
+    {
+        "id": "6a40fd8321979-slide",
+        "lodging_id": "hallo-resort",
+        "nama": "Hallo Resort",
+        "judul_slider": "Paket Karimunjawa 3 Hari 2 Malam",
+        "durasi": "",
+        "harga": "Rp. 2.150.000 / pax",
+        "gambar": "assets/images/uploads/1782642996_3D2N_BUKIT_KARIMUN.jpg"
+    },
+    {
+        "id": "6a40fd97787b8-slide",
+        "lodging_id": "omah-alchy",
+        "nama": "Omah Alchy",
+        "judul_slider": "Paket Karimunjawa 3 Hari 2 Malam",
+        "durasi": "",
+        "harga": "Rp. 2.150.000 / pax",
+        "gambar": "assets/images/uploads/1782643027_3D2N_KAPAL_1_ORANG.JPG"
+    },
+    {
+        "id": "6a40fdbae1ff5-slide",
+        "lodging_id": "almare",
+        "nama": "Almare",
+        "judul_slider": "",
+        "durasi": "3D2N",
+        "harga": "Rp. 2.050.000 / pax",
+        "gambar": "assets/images/uploads/1782644169_3D2N_JETSKI.JPG"
+    }
+]

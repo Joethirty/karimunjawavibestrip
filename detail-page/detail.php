@@ -19,6 +19,15 @@ if (!empty($penginapan_id)) {
     }
 }
 
+// Deteksi durasi terpilih (default 3D2N)
+$selected_durasi = isset($_GET['durasi']) ? trim(htmlspecialchars($_GET['durasi'])) : '3D2N';
+$selected_durasi_upper = strtoupper($selected_durasi);
+if ($selected_durasi_upper !== '2D1N' && $selected_durasi_upper !== '4D3N' && $selected_durasi_upper !== 'HONEYMOON') {
+    $selected_durasi = '3D2N';
+} else {
+    $selected_durasi = $selected_durasi_upper;
+}
+
 // Memproses input ulasan baru khusus penginapan ini
 $review_success = false;
 $review_error = "";
@@ -53,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         
         if (file_put_contents($reviews_file, json_encode($current_reviews, JSON_PRETTY_PRINT))) {
             // Redirect untuk menghindari resubmission saat refresh
-            header("Location: " . $penginapan['id'] . ".php?status=success#testimoni-paket");
+            header("Location: " . $penginapan['id'] . ".php?status=success&durasi=" . urlencode($selected_durasi) . "#testimoni-paket");
             exit;
         } else {
             $review_error = "Gagal menyimpan ulasan. Silakan coba lagi.";
@@ -80,10 +89,17 @@ foreach ($lodging_reviews as $testi) {
 }
 
 $default_ratings_map = [
+    'homestay-loyal' => 4.5,
     'homestay-fan' => 4.5,
+    'homestay-azza' => 4.6,
     'homestay-ac' => 4.6,
     'puri-karimun' => 4.7,
+    'the-body-tree' => 4.8,
+    'ayu-hotel' => 4.8,
+    'bale-karimunjawa' => 4.8,
+    'hotel-blue-laguna-inn' => 4.8,
     'blue-laguna' => 4.8,
+    'hotel-summer-inn' => 4.8,
     'summer-inn' => 4.8,
     'dseason' => 4.9,
     'almare' => 4.8,
@@ -196,98 +212,182 @@ include_once $base_url . 'header.php';
                             <div class="room-type-tabs" style="display: flex; gap: 8px; flex-wrap: wrap;">
                                 <?php foreach ($penginapan['tipe_kamar'] as $index => $tipe): ?>
                                     <button class="room-type-tab-btn <?php echo $index === 0 ? 'active' : ''; ?>" 
-                                            onclick="switchRoomType('<?php echo $tipe['id']; ?>')" 
-                                            data-room-id="<?php echo $tipe['id']; ?>"
-                                            style="padding: 8px 18px; font-size: 13px; font-weight: 700; border-radius: 30px; cursor: pointer; border: 1px solid #ECECEC; background-color: #F9F9F9; color: var(--charcoal); transition: all 0.3s ease; font-family: inherit;">
+                                             onclick="switchRoomType('<?php echo $tipe['id']; ?>')" 
+                                             data-room-id="<?php echo $tipe['id']; ?>"
+                                             style="padding: 8px 18px; font-size: 13px; font-weight: 700; border-radius: 30px; cursor: pointer; border: 1px solid #ECECEC; background-color: #F9F9F9; color: var(--charcoal); transition: all 0.3s ease; font-family: inherit;">
                                         <?php echo $tipe['nama']; ?>
                                     </button>
                                 <?php endforeach; ?>
                             </div>
                         </div>
+                    <?php endif; ?>
 
-                        <!-- Script to handle room type switching -->
-                        <script>
-                        const roomTypeData = {
-                            <?php foreach ($penginapan['tipe_kamar'] as $tipe): ?>
-                            '<?php echo $tipe['id']; ?>': {
-                                nama: '<?php echo $tipe['nama']; ?>',
-                                images: [
-                                    '<?php echo $base_url . $tipe['foto_galeri'][0]; ?>',
-                                    '<?php echo $base_url . $tipe['foto_galeri'][1]; ?>',
-                                    '<?php echo $base_url . $tipe['foto_galeri'][2]; ?>',
-                                    '<?php echo $base_url . $tipe['foto_galeri'][3]; ?>',
-                                    '<?php echo $base_url . $tipe['foto_galeri'][4]; ?>'
-                                ],
-                                price: '<?php echo str_replace(' / pax', '', $tipe['harga']); ?>',
-                                waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
-                            },
-                            <?php endforeach; ?>
-                        };
+                    <script>
+                    let currentDuration = '<?php echo $selected_durasi; ?>';
+                    let currentRoomId = '<?php echo !empty($penginapan['tipe_kamar']) ? $penginapan['tipe_kamar'][0]['id'] : ''; ?>';
 
-                        function switchRoomType(roomId) {
-                            // Switch active states on selector buttons
-                            document.querySelectorAll('.room-type-tab-btn').forEach(btn => {
-                                if (btn.getAttribute('data-room-id') === roomId) {
-                                    btn.classList.add('active');
-                                    btn.style.backgroundColor = 'var(--primary-teal)';
-                                    btn.style.color = '#ffffff';
-                                    btn.style.borderColor = 'var(--primary-teal)';
-                                    btn.style.boxShadow = '0 4px 12px rgba(28, 187, 180, 0.2)';
-                                } else {
-                                    btn.classList.remove('active');
-                                    btn.style.backgroundColor = '#F9F9F9';
-                                    btn.style.color = 'var(--charcoal)';
-                                    btn.style.borderColor = '#ECECEC';
-                                    btn.style.boxShadow = 'none';
-                                }
-                            });
+                    <?php if (!empty($penginapan['tipe_kamar'])): ?>
+                    const roomTypeData = {
+                        <?php foreach ($penginapan['tipe_kamar'] as $tipe): 
+                            $harga_3d2d = $tipe['harga'];
+                            $harga_2d1n = isset($tipe['harga_2d1n']) ? $tipe['harga_2d1n'] : $tipe['harga'];
+                            $harga_4d3n = isset($tipe['harga_4d3n']) ? $tipe['harga_4d3n'] : $tipe['harga'];
+                            $harga_honeymoon = isset($tipe['harga_honeymoon']) ? $tipe['harga_honeymoon'] : (isset($penginapan['harga_honeymoon']) ? $penginapan['harga_honeymoon'] : '');
                             
-                            // Dynamically update Top Grid Gallery Images & Lightbox Click Handlers
-                            if (roomTypeData[roomId]) {
-                                for (let i = 0; i < 5; i++) {
-                                    const imgEl = document.getElementById('gallery-img-' + i);
-                                    if (imgEl) {
-                                        imgEl.src = roomTypeData[roomId].images[i];
-                                        imgEl.alt = roomTypeData[roomId].nama;
-                                    }
-                                    
-                                    const containerEl = document.getElementById('gallery-item-' + i);
-                                    if (containerEl) {
-                                        containerEl.setAttribute('onclick', `bukaModalLightbox('${roomTypeData[roomId].images[i]}', '${roomTypeData[roomId].nama}')`);
-                                    }
-                                }
+                            $pesan_wa_3d2n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_2d1n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_4d3n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_honeymoon = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon Karimunjawa*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                        ?>
+                        '<?php echo $tipe['id']; ?>': {
+                            nama: '<?php echo $tipe['nama']; ?>',
+                            images: [
+                                '<?php echo $base_url . $tipe['foto_galeri'][0]; ?>',
+                                '<?php echo $base_url . $tipe['foto_galeri'][1]; ?>',
+                                '<?php echo $base_url . $tipe['foto_galeri'][2]; ?>',
+                                '<?php echo $base_url . $tipe['foto_galeri'][3]; ?>',
+                                '<?php echo $base_url . $tipe['foto_galeri'][4]; ?>'
+                            ],
+                            prices: {
+                                '3D2N': '<?php echo $harga_3d2d; ?>',
+                                '2D1N': '<?php echo $harga_2d1n; ?>',
+                                '4D3N': '<?php echo $harga_4d3n; ?>',
+                                'HONEYMOON': '<?php echo $harga_honeymoon; ?>'
+                            },
+                            waUrls: {
+                                '3D2N': 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode($pesan_wa_3d2n); ?>',
+                                '2D1N': 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode($pesan_wa_2d1n); ?>',
+                                '4D3N': 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode($pesan_wa_4d3n); ?>',
+                                'HONEYMOON': 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode($pesan_wa_honeymoon); ?>'
+                            }
+                        },
+                        <?php endforeach; ?>
+                    };
+                    <?php else: ?>
+                    const lodgingPriceData = {
+                        '3D2N': {
+                            price: '<?php echo $penginapan['harga']; ?>',
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                        },
+                        '2D1N': {
+                            price: '<?php echo isset($penginapan['harga_2d1n']) ? $penginapan['harga_2d1n'] : $penginapan['harga']; ?>',
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                        },
+                        '4D3N': {
+                            price: '<?php echo isset($penginapan['harga_4d3n']) ? $penginapan['harga_4d3n'] : $penginapan['harga']; ?>',
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                        },
+                        'HONEYMOON': {
+                            price: '<?php echo isset($penginapan['harga_honeymoon']) ? $penginapan['harga_honeymoon'] : ''; ?>',
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon Karimunjawa*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                        }
+                    };
+                    <?php endif; ?>
 
-                                // Update Sidebar price
-                                const sidebarPrice = document.getElementById('sidebar-price');
-                                if (sidebarPrice) {
-                                    sidebarPrice.textContent = roomTypeData[roomId].price;
-                                }
+                    function updateBookingCard() {
+                        let priceText = '';
+                        let waUrl = '';
 
-                                // Update Sidebar WA button link
-                                const sidebarBtn = document.getElementById('sidebar-booking-btn');
-                                if (sidebarBtn) {
-                                    sidebarBtn.href = roomTypeData[roomId].waUrl;
-                                }
-
-                                // Reset scroll position on mobile gallery slider
-                                const gallery = document.querySelector('.lodging-detail-gallery');
-                                if (gallery) {
-                                    gallery.scrollLeft = 0;
-                                }
+                        if (currentRoomId) {
+                            const room = roomTypeData[currentRoomId];
+                            if (room) {
+                                priceText = room.prices[currentDuration];
+                                waUrl = room.waUrls[currentDuration];
+                            }
+                        } else {
+                            const data = lodgingPriceData[currentDuration];
+                            if (data) {
+                                priceText = data.price;
+                                waUrl = data.waUrl;
                             }
                         }
 
-                        // Set initial styles for active tab and preload images
-                        document.addEventListener("DOMContentLoaded", function() {
-                            const activeBtn = document.querySelector('.room-type-tab-btn.active');
-                            if (activeBtn) {
-                                activeBtn.style.backgroundColor = 'var(--primary-teal)';
-                                activeBtn.style.color = '#ffffff';
-                                activeBtn.style.borderColor = 'var(--primary-teal)';
-                                activeBtn.style.boxShadow = '0 4px 12px rgba(28, 187, 180, 0.2)';
+                        const sidebarPrice = document.getElementById('sidebar-price');
+                        const sidebarPriceUnit = document.getElementById('sidebar-price-unit');
+                        if (sidebarPrice) {
+                            let parts = priceText.split('/');
+                            let displayPrice = parts[0].trim();
+                            displayPrice = displayPrice.replace(/Rp\.?/i, 'Rp ').replace(/\s+/, ' ');
+                            sidebarPrice.textContent = displayPrice;
+                            if (sidebarPriceUnit && parts[1]) {
+                                sidebarPriceUnit.textContent = '/' + parts[1].trim();
+                            }
+                        }
+
+                        const sidebarBtn = document.getElementById('sidebar-booking-btn');
+                        if (sidebarBtn) {
+                            sidebarBtn.href = waUrl;
+                        }
+                    }
+
+                    function switchDuration(duration) {
+                        currentDuration = duration;
+                        updateBookingCard();
+                    }
+
+                    function switchRoomType(roomId) {
+                        currentRoomId = roomId;
+                        
+                        document.querySelectorAll('.room-type-tab-btn').forEach(btn => {
+                            if (btn.getAttribute('data-room-id') === roomId) {
+                                btn.classList.add('active');
+                                btn.style.backgroundColor = 'var(--primary-teal)';
+                                btn.style.color = '#ffffff';
+                                btn.style.borderColor = 'var(--primary-teal)';
+                                btn.style.boxShadow = '0 4px 12px rgba(28, 187, 180, 0.2)';
+                            } else {
+                                btn.classList.remove('active');
+                                btn.style.backgroundColor = '#F9F9F9';
+                                btn.style.color = 'var(--charcoal)';
+                                btn.style.borderColor = '#ECECEC';
+                                btn.style.boxShadow = 'none';
+                            }
+                        });
+                        
+                        if (roomTypeData[roomId]) {
+                            for (let i = 0; i < 5; i++) {
+                                const imgEl = document.getElementById('gallery-img-' + i);
+                                if (imgEl) {
+                                    imgEl.src = roomTypeData[roomId].images[i];
+                                    imgEl.alt = roomTypeData[roomId].nama;
+                                }
+                                
+                                const containerEl = document.getElementById('gallery-item-' + i);
+                                if (containerEl) {
+                                    containerEl.setAttribute('onclick', `bukaModalLightbox('${roomTypeData[roomId].images[i]}', '${roomTypeData[roomId].nama}')`);
+                                }
                             }
 
-                            // Preload all room type images in background to prevent loading lag
+                            const gallery = document.querySelector('.lodging-detail-gallery');
+                            if (gallery) {
+                                gallery.scrollLeft = 0;
+                            }
+                        }
+
+                        updateBookingCard();
+                    }
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Set initial duration select value if the element exists
+                        const durSelect = document.getElementById('duration-select');
+                        if (durSelect) {
+                            durSelect.value = currentDuration;
+                        }
+
+                        // Set initial active room tab style
+                        const activeBtn = document.querySelector('.room-type-tab-btn.active');
+                        if (activeBtn) {
+                            activeBtn.style.backgroundColor = 'var(--primary-teal)';
+                            activeBtn.style.color = '#ffffff';
+                            activeBtn.style.borderColor = 'var(--primary-teal)';
+                            activeBtn.style.boxShadow = '0 4px 12px rgba(28, 187, 180, 0.2)';
+                        }
+
+                        // Run initial update to sync with duration
+                        updateBookingCard();
+
+                        // Preload images
+                        if (typeof roomTypeData !== 'undefined') {
                             for (const key in roomTypeData) {
                                 if (roomTypeData.hasOwnProperty(key)) {
                                     roomTypeData[key].images.forEach(src => {
@@ -296,18 +396,18 @@ include_once $base_url . 'header.php';
                                     });
                                 }
                             }
-                        });
-                        </script>
-                        
-                        <style>
-                        /* Styling room type tab buttons hover effect */
-                        .room-type-tab-btn:not(.active):hover {
-                            background-color: rgba(28, 187, 180, 0.05) !important;
-                            border-color: var(--primary-teal) !important;
-                            color: var(--primary-teal) !important;
                         }
-                        </style>
-                    <?php endif; ?>
+                    });
+                    </script>
+
+                    <style>
+                    /* Styling room type tab buttons hover effect */
+                    .room-type-tab-btn:not(.active):hover {
+                        background-color: rgba(28, 187, 180, 0.05) !important;
+                        border-color: var(--primary-teal) !important;
+                        color: var(--primary-teal) !important;
+                    }
+                    </style>
                 </div>
 
 
@@ -731,7 +831,7 @@ include_once $base_url . 'header.php';
                         </div>
                         <div style="display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap;">
                             <span id="sidebar-price" style="font-size: 22px; font-weight: 700; color: var(--primary-teal); line-height: 1.2; letter-spacing: -0.5px;"><?php echo $price_val; ?></span>
-                            <span style="font-size: 13px; color: var(--medium-gray); font-weight: 500;">/ <?php echo $price_unit; ?></span>
+                            <span id="sidebar-price-unit" style="font-size: 13px; color: var(--medium-gray); font-weight: 500;">/ <?php echo $price_unit; ?></span>
                         </div>
                     </div>
                     
@@ -741,9 +841,17 @@ include_once $base_url . 'header.php';
                             <span class="booking-card-detail-label">Lokasi</span>
                             <span class="booking-card-detail-val" style="font-size: 13px;"><?php echo str_replace(', Karimunjawa', '', $penginapan['lokasi']); ?></span>
                         </div>
-                        <div class="booking-card-detail-item">
-                            <span class="booking-card-detail-label">Durasi</span>
-                            <span class="booking-card-detail-val">3D2N / 3 Hari 2 Malam</span>
+                        <div class="booking-card-detail-item" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                            <span class="booking-card-detail-label" style="margin-bottom: 2px;">Pilih Durasi</span>
+                            <div style="position: relative; width: 100%;">
+                                <select id="duration-select" onchange="switchDuration(this.value)" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #ECECEC; background-color: #FFF; font-family: inherit; font-size: 13px; font-weight: 700; color: var(--charcoal); cursor: pointer; outline: none; transition: all 0.2s ease; -webkit-appearance: none; -moz-appearance: none; appearance: none; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                    <option value="3D2N">3D2N / 3 Hari 2 Malam</option>
+                                    <option value="2D1N">2D1N / 2 Hari 1 Malam</option>
+                                    <option value="4D3N">4D3N / 4 Hari 3 Malam</option>
+                                    <option value="HONEYMOON">Honeymoon / Couple</option>
+                                </select>
+                                <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 10px; color: var(--medium-gray);">▼</span>
+                            </div>
                         </div>
                     </div>
 

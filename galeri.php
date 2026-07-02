@@ -65,14 +65,10 @@ if (isset($daftar_penginapan) && is_array($daftar_penginapan)) {
                 $kategori = isset($foto['kategori']) ? $foto['kategori'] : 'destinasi';
                 $tag = isset($foto['tag']) ? $foto['tag'] : 'Wisata';
             ?>
-                <div class="gallery-card" data-category="<?php echo $kategori; ?>" onclick="bukaModalLightbox('<?php echo $base_url . $foto['file']; ?>', '<?php echo $foto['alt']; ?>')">
+                <div class="gallery-card" data-category="<?php echo $kategori; ?>" onclick="bukaModalLightbox('<?php echo $base_url . $foto['file']; ?>', '')">
                     <img src="<?php echo $base_url . $foto['file']; ?>" 
                          alt="<?php echo $foto['alt']; ?>" 
                          style="object-position: <?php echo !empty($foto['posisi']) ? $foto['posisi'] : 'center center'; ?>;">
-                    <div class="gallery-card-info">
-                        <span class="gallery-card-tag"><?php echo $tag; ?></span>
-                        <h3 class="gallery-card-title"><?php echo $foto['alt']; ?></h3>
-                    </div>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
