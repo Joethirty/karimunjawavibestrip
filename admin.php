@@ -2022,47 +2022,49 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                                     <?php endif; ?>
 
                                                     <!-- Form Balas Inline -->
-                                                    <form action="admin.php?action=reviews" method="POST"
-                                                        style="display: flex; gap: 8px; align-items: flex-end; width: 100%;">
+                                                    <form id="form-reply-<?php echo htmlspecialchars($testi['id']); ?>" action="admin.php?action=reviews" method="POST"
+                                                        style="margin: 0; width: 100%;">
                                                         <input type="hidden" name="action" value="reply_review">
                                                         <input type="hidden" name="review_id"
                                                             value="<?php echo htmlspecialchars($testi['id']); ?>">
                                                         <textarea class="form-control" name="balasan"
                                                             placeholder="<?php echo empty($testi['balasan']) ? 'Tulis balasan...' : 'Ubah balasan...'; ?>"
-                                                            style="padding: 8px 12px; font-size: 12.5px; background: rgba(10,20,20,0.3); border-radius: 8px; height: 75px; resize: vertical; flex-grow: 1; border: 1px solid var(--border-color); color: var(--text-light); line-height: 1.4; width: 100%; font-family: inherit;"><?php echo isset($testi['balasan']) ? htmlspecialchars($testi['balasan']) : ''; ?></textarea>
-                                                        <button class="btn-new" type="submit"
-                                                            style="padding: 0 14px; font-size: 12px; height: 34px; border-radius: 8px; flex-shrink: 0; box-shadow: none; margin-bottom: 2px;">
-                                                            Simpan
-                                                        </button>
+                                                            style="padding: 10px 14px; font-size: 13px; background: rgba(10,20,20,0.3); border-radius: 8px; height: 80px; resize: vertical; border: 1px solid var(--border-color); color: var(--text-light); line-height: 1.4; width: 100%; font-family: inherit;"><?php echo isset($testi['balasan']) ? htmlspecialchars($testi['balasan']) : ''; ?></textarea>
                                                     </form>
                                                 </td>
-                                                <td style="text-align: center;">
-                                                    <div style="display: flex; gap: 6px; justify-content: center;">
-                                                        <a href="admin.php?action=reviews_edit&id=<?php echo htmlspecialchars($testi['id']); ?>"
-                                                            class="btn-action" title="Edit Ulasan"
-                                                            style="background: rgba(28,187,180,0.1); color: var(--primary-teal); border: 1px solid rgba(28,187,180,0.2); width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px;">
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round" class="feather feather-edit-2">
-                                                                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
-                                                                </path>
-                                                            </svg>
-                                                        </a>
-                                                        <a href="#"
-                                                            onclick="confirmReviewsDelete('<?php echo htmlspecialchars($testi['id']); ?>', '<?php echo addslashes(htmlspecialchars($testi['nama'])); ?>')"
-                                                            class="btn-action btn-delete" title="Hapus Ulasan"
-                                                            style="background: rgba(255,123,84,0.1); color: var(--accent-orange); border: 1px solid rgba(255,123,84,0.2); width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px;">
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round" class="feather feather-trash-2">
-                                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                                <path
-                                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                                                </path>
-                                                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                            </svg>
-                                                        </a>
+                                                <td style="text-align: center; vertical-align: middle;">
+                                                    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center;">
+                                                        <div style="display: flex; gap: 6px; justify-content: center;">
+                                                            <a href="admin.php?action=reviews_edit&id=<?php echo htmlspecialchars($testi['id']); ?>"
+                                                                class="btn-action" title="Edit Ulasan"
+                                                                style="background: rgba(28,187,180,0.1); color: var(--primary-teal); border: 1px solid rgba(28,187,180,0.2); width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px;">
+                                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                                    stroke-linejoin="round" class="feather feather-edit-2">
+                                                                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+                                                                    </path>
+                                                                </svg>
+                                                            </a>
+                                                            <a href="#"
+                                                                onclick="confirmReviewsDelete('<?php echo htmlspecialchars($testi['id']); ?>', '<?php echo addslashes(htmlspecialchars($testi['nama'])); ?>')"
+                                                                class="btn-action btn-delete" title="Hapus Ulasan"
+                                                                style="background: rgba(255,123,84,0.1); color: var(--accent-orange); border: 1px solid rgba(255,123,84,0.2); width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px;">
+                                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                                                    stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path
+                                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                                    </path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                        <button type="submit" form="form-reply-<?php echo htmlspecialchars($testi['id']); ?>" class="btn-new"
+                                                            style="padding: 0 12px; font-size: 11.5px; height: 30px; border-radius: 6px; flex-shrink: 0; box-shadow: none; width: 70px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin: 0;">
+                                                            Simpan
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
