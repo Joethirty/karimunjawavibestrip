@@ -2,6 +2,54 @@
 // config.php
 $nomor_whatsapp = "62895361870926"; // Ganti dengan nomor WA operasional Anda
 
+if (!function_exists('format_detail_deskripsi')) {
+    function format_detail_deskripsi($text) {
+        if (empty($text)) return '';
+        
+        // Jika teks sudah mengandung HTML (untuk backward compatibility)
+        if (strpos($text, '<br') !== false || strpos($text, '<ol') !== false || strpos($text, '<li') !== false || strpos($text, '<p') !== false) {
+            return $text;
+        }
+        
+        $lines = preg_split('/\r\n|\r|\n/', $text);
+        $formatted = '';
+        $in_list = false;
+        
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+            if (empty($trimmed)) {
+                if ($in_list) {
+                    $formatted .= '</ol>';
+                    $in_list = false;
+                }
+                $formatted .= '<br>';
+                continue;
+            }
+            
+            // Deteksi list angka: e.g. "1. " atau "1) "
+            if (preg_match('/^(\d+)[\.\)]\s+(.*)$/', $trimmed, $matches)) {
+                if (!$in_list) {
+                    $formatted .= '<ol style="margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;">';
+                    $in_list = true;
+                }
+                $formatted .= '<li>' . htmlspecialchars($matches[2]) . '</li>';
+            } else {
+                if ($in_list) {
+                    $formatted .= '</ol>';
+                    $in_list = false;
+                }
+                $formatted .= '<p style="margin-bottom: 8px;">' . htmlspecialchars($trimmed) . '</p>';
+            }
+        }
+        
+        if ($in_list) {
+            $formatted .= '</ol>';
+        }
+        
+        return $formatted;
+    }
+}
+
 $daftar_penginapan = [
     [
         "id" => "puri-karimun",

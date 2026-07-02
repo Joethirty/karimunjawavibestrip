@@ -415,7 +415,7 @@ include_once $base_url . 'header.php';
                 <!-- Tentang Penginapan (Detailed Description) -->
                 <div>
                     <h2 style="font-size: 20px; font-weight: 700; color: var(--dark-gray); border-left: 4px solid var(--primary-teal); padding-left: 12px; margin-bottom: 16px; text-align: left;">Tentang Penginapan</h2>
-                    <div class="detail-desc-text" style="font-size: 15px; color: var(--charcoal); line-height: 25px;"><?php echo $penginapan['detail_deskripsi']; ?></div>
+                    <div class="detail-desc-text" style="font-size: 15px; color: var(--charcoal); line-height: 25px;"><?php echo format_detail_deskripsi($penginapan['detail_deskripsi']); ?></div>
                 </div>
 
                 <!-- Rencana Perjalanan (Itinerary) -->

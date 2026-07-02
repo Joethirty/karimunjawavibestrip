@@ -1733,8 +1733,8 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
 
                         <div class="form-group">
                             <label class="form-label" for="detail_deskripsi">Deskripsi Detail Halaman</label>
-                            <textarea class="form-control" id="detail_deskripsi" name="detail_deskripsi" rows="5"
-                                placeholder="Teks penjelasan lengkap mengenai akomodasi, fasilitas tambahan, dll..."
+                            <textarea class="form-control" id="detail_deskripsi" name="detail_deskripsi" rows="6"
+                                placeholder="Tulis deskripsi detail akomodasi secara normal. Gunakan baris baru untuk membuat paragraf. Untuk membuat daftar/list, cukup tulis angka (contoh: 1. Tipe Kamar A) di baris baru secara langsung tanpa menggunakan tag HTML."
                                 required><?php echo $edit_mode ? $edit_lodging['detail_deskripsi'] : ''; ?></textarea>
                         </div>
 
