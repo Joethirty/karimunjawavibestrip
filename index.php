@@ -160,7 +160,17 @@ include_once $base_url . 'header.php';
                         </div>
                         <div class="meta-divider"></div>
                         <div class="meta-right">
-                             <a href="<?php echo $base_url; ?>detail-page/<?php echo htmlspecialchars(isset($slide['lodging_id']) ? $slide['lodging_id'] : $slide['id']); ?>.php" class="view-detail-btn">
+                            <?php
+                            $lodging_id = isset($slide['lodging_id']) ? $slide['lodging_id'] : '';
+                            if ($lodging_id === 'honeymoon' || $lodging_id === '4d3n' || $lodging_id === '3d2n' || $lodging_id === '2d1n') {
+                                $detail_link = $base_url . 'index.php?durasi=' . ($lodging_id === 'honeymoon' ? 'Honeymoon' : strtoupper($lodging_id)) . '#penginapan';
+                            } elseif (isset($slide['link']) && !empty($slide['link'])) {
+                                $detail_link = $base_url . $slide['link'];
+                            } else {
+                                $detail_link = $base_url . 'detail-page/' . (isset($slide['lodging_id']) ? $slide['lodging_id'] : $slide['id']) . '.php';
+                            }
+                            ?>
+                             <a href="<?php echo htmlspecialchars($detail_link); ?>" class="view-detail-btn">
                                 <span class="arrow-icon">➔</span> View Detail ...
                             </a>
                         </div>
@@ -329,7 +339,9 @@ include_once $base_url . 'header.php';
             </a>
         </div>
     <?php endif; ?>
-    
+
+
+
     <div class="grid-cards">
         <?php if (!empty($filtered_penginapan)): ?>
             <?php 
@@ -441,6 +453,181 @@ include_once $base_url . 'header.php';
                 }
             }
         </script>
+    <?php endif; ?>
+
+    <?php if (strcasecmp($selected_durasi, 'Honeymoon') === 0): ?>
+        <!-- Honeymoon Pricing Tables Section (Placed below lodging cards) -->
+        <div class="honeymoon-pricing-container">
+            <?php
+            if (!function_exists('get_honeymoon_table_data')) {
+                function get_honeymoon_table_data($p) {
+                    $nama = $p['nama'];
+                    $tipe = [];
+                    
+                    // Helper to clean price numbers for printing
+                    $clean_price = function($price_str) {
+                        $num = intval(preg_replace('/[^0-9]/', '', $price_str));
+                        return $num > 0 ? number_format($num, 0, ',', '.') : '';
+                    };
+
+                    if (isset($p['tipe_kamar']) && is_array($p['tipe_kamar']) && !empty($p['tipe_kamar'])) {
+                        foreach ($p['tipe_kamar'] as $rt) {
+                            $rt_h_3d2n = isset($rt['harga_honeymoon']) ? $rt['harga_honeymoon'] : '';
+                            $rt_h_2d1n = isset($rt['harga_honeymoon_2d1n']) ? $rt['harga_honeymoon_2d1n'] : '';
+                            $rt_h_3d2n_smg = isset($rt['harga_honeymoon_3d2n_smg']) ? $rt['harga_honeymoon_3d2n_smg'] : '';
+                            $rt_h_4d3n = isset($rt['harga_honeymoon_4d3n']) ? $rt['harga_honeymoon_4d3n'] : '';
+
+                            if (!empty($rt_h_3d2n) || !empty($rt_h_2d1n) || !empty($rt_h_3d2n_smg) || !empty($rt_h_4d3n)) {
+                                $h_num = intval(preg_replace('/[^0-9]/', '', $rt_h_3d2n));
+                                if ($h_num <= 0) {
+                                    $h_num = intval(preg_replace('/[^0-9]/', '', isset($p['harga_honeymoon']) ? $p['harga_honeymoon'] : ''));
+                                }
+                                if ($h_num <= 0) $h_num = 5000000;
+
+                                $val_3d2n = !empty($rt_h_3d2n) ? $clean_price($rt_h_3d2n) : number_format($h_num, 0, ',', '.');
+                                
+                                if (!empty($rt_h_2d1n)) {
+                                    $val_2d1n = $clean_price($rt_h_2d1n);
+                                } else {
+                                    $calc = $h_num - 2000000;
+                                    if ($calc < 3000000) $calc = $h_num * 0.7;
+                                    $val_2d1n = number_format($calc, 0, ',', '.');
+                                }
+
+                                if (!empty($rt_h_3d2n_smg)) {
+                                    $val_3d2n_smg = $clean_price($rt_h_3d2n_smg);
+                                } else {
+                                    $val_3d2n_smg = number_format($h_num + 200000, 0, ',', '.');
+                                }
+
+                                if (!empty($rt_h_4d3n)) {
+                                    $val_4d3n = $clean_price($rt_h_4d3n);
+                                } else {
+                                    $calc = $h_num + 1950000;
+                                    if ($calc < $h_num + 1000000) $calc = $h_num * 1.3;
+                                    $val_4d3n = number_format($calc, 0, ',', '.');
+                                }
+
+                                $tipe[$rt['nama']] = [
+                                    '2d1n' => $val_2d1n,
+                                    '3d2n' => $val_3d2n,
+                                    '3d2n_smg' => $val_3d2n_smg,
+                                    '4d3n' => $val_4d3n
+                                ];
+                            }
+                        }
+                    }
+
+                    if (empty($tipe)) {
+                        $h_honeymoon_raw = isset($p['harga_honeymoon']) ? $p['harga_honeymoon'] : '';
+                        $h_honeymoon_2d1n = isset($p['harga_honeymoon_2d1n']) ? $p['harga_honeymoon_2d1n'] : '';
+                        $h_honeymoon_3d2n_smg = isset($p['harga_honeymoon_3d2n_smg']) ? $p['harga_honeymoon_3d2n_smg'] : '';
+                        $h_honeymoon_4d3n = isset($p['harga_honeymoon_4d3n']) ? $p['harga_honeymoon_4d3n'] : '';
+
+                        $h_num = intval(preg_replace('/[^0-9]/', '', $h_honeymoon_raw));
+                        if ($h_num <= 0) $h_num = 5000000;
+
+                        $val_3d2n = !empty($h_honeymoon_raw) ? $clean_price($h_honeymoon_raw) : number_format($h_num, 0, ',', '.');
+
+                        if (!empty($h_honeymoon_2d1n)) {
+                            $val_2d1n = $clean_price($h_honeymoon_2d1n);
+                        } else {
+                            $calc = $h_num - 1500000;
+                            if ($calc < 2500000) $calc = $h_num * 0.75;
+                            $val_2d1n = number_format($calc, 0, ',', '.');
+                        }
+
+                        if (!empty($h_honeymoon_3d2n_smg)) {
+                            $val_3d2n_smg = $clean_price($h_honeymoon_3d2n_smg);
+                        } else {
+                            $val_3d2n_smg = number_format($h_num + 200000, 0, ',', '.');
+                        }
+
+                        if (!empty($h_honeymoon_4d3n)) {
+                            $val_4d3n = $clean_price($h_honeymoon_4d3n);
+                        } else {
+                            $calc = $h_num + 1500000;
+                            if ($calc < $h_num + 1000000) $calc = $h_num * 1.25;
+                            $val_4d3n = number_format($calc, 0, ',', '.');
+                        }
+
+                        $room_name = 'Standard AC';
+                        if (stripos($nama, 'Resort') !== false || stripos($nama, 'Cottage') !== false || stripos($nama, 'Vila') !== false) {
+                            $room_name = 'Cottage Room';
+                        } elseif (stripos($nama, 'Hotel') !== false) {
+                            $room_name = 'Superior Room';
+                        }
+
+                        $tipe[$room_name] = [
+                            '2d1n' => $val_2d1n,
+                            '3d2n' => $val_3d2n,
+                            '3d2n_smg' => $val_3d2n_smg,
+                            '4d3n' => $val_4d3n
+                        ];
+                    }
+                    
+                    return [
+                        'nama' => $nama,
+                        'tipe' => $tipe
+                    ];
+                }
+            }
+            
+            // Loop through accommodations that have honeymoon pricing
+            foreach ($filtered_penginapan as $p):
+                if (!isset($p['harga_honeymoon']) || empty($p['harga_honeymoon'])) {
+                    continue;
+                }
+                $t_data = get_honeymoon_table_data($p);
+                $cols = array_keys($t_data['tipe']);
+                if (empty($cols)) continue;
+            ?>
+                <div class="honeymoon-table-card">
+                    <div class="honeymoon-table-header">
+                        <span class="table-tag">PAKET HONEYMOON KARIMUNJAWA</span>
+                        <h3 class="table-title">Penginapan: <?php echo htmlspecialchars_decode($t_data['nama']); ?></h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="honeymoon-table">
+                            <thead>
+                                <tr>
+                                    <th>Tipe Paket</th>
+                                    <?php foreach ($cols as $col_name): ?>
+                                        <th><?php echo htmlspecialchars($col_name); ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2 Hari 1 Malam</td>
+                                    <?php foreach ($cols as $col_name): ?>
+                                        <td><span class="honeymoon-price-text">Rp <?php echo $t_data['tipe'][$col_name]['2d1n']; ?></span> / couple</td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr>
+                                    <td>3 Hari 2 Malam</td>
+                                    <?php foreach ($cols as $col_name): ?>
+                                        <td><span class="honeymoon-price-text">Rp <?php echo $t_data['tipe'][$col_name]['3d2n']; ?></span> / couple</td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr>
+                                    <td>3 Hari 2 Malam dari Semarang</td>
+                                    <?php foreach ($cols as $col_name): ?>
+                                        <td><span class="honeymoon-price-text">Rp <?php echo $t_data['tipe'][$col_name]['3d2n_smg']; ?></span> / couple</td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr>
+                                    <td>4 Hari 3 Malam</td>
+                                    <?php foreach ($cols as $col_name): ?>
+                                        <td><span class="honeymoon-price-text">Rp <?php echo $t_data['tipe'][$col_name]['4d3n']; ?></span> / couple</td>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     <?php endif; ?>
 </section>
 

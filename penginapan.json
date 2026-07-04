@@ -115,7 +115,7 @@
     },
     {
         "id": "dseason",
-        "nama": "Hotel D&#039;Season",
+        "nama": "Hotel D'Season",
         "deskripsi": "Resort bintang tiga mewah dengan fasilitas kolam renang besar di tepi pantai.",
         "harga": "Rp. 1.875.000 / pax",
         "gambar": "assets/images/dseason/dseason.jpg",
@@ -125,6 +125,9 @@
         "show_in_slider": false,
         "lokasi": "Jl. Danang Joyo Jl. Kapuran No.9, Karimunjawa, Kabupaten Jepara, Jawa Tengah 59455",
         "detail_deskripsi": "Sebagai penginapan yang memadukan relaksasi dan kenyamanan standar hotel modern, d'SEASON Hotel menawarkan fasilitas komprehensif mulai dari kolam renang outdoor, restoran, hingga fasilitas spa. Ketersediaan makanan yang mudah didapat di dalam area hotel serta beberapa tipe kamar yang menghadap ke laut menjadikannya opsi premium yang sangat memanjakan tamu di Karimunjawa. kami menyediakan 3 pilihan kelas kamar:<br>\r\n<ol style='margin-top: 10px; margin-left: 20px; padding-left: 0; line-height: 1.8;'>\r\n    <li>Tipe Executive : Rp. 1.875.000 / pax</li>\r\n    <li>Tipe Family : Rp. 1.875.000 / pax</li>\r\n    <li>Tipe Bisnis : Rp. 1.875.000 / pax</li>\r\n</ol>",
+        "fasilitas_paket": "Tiket express bahari pulang pergi sesuai paket yang di pilih\r\nTransportasi selama di karimunjawa ( inova / avanza )\r\nHotel sesuai paket yang di pilih\r\nMakan full board (pagi, siang, malam) sesuai paket yang di pilih\r\nTour leader\r\nAsuransi selama wisata berlangsung\r\nTour darat (mobil inova / avanza )\r\nTour laut privat 1x\r\nSnorkeling equipment & life jacket\r\nGuide HPI lesensi & Guide Karimunjawa journey\r\nWelcome drink kelapa muda\r\nCandle Dinner dari team karimunjawa journey\r\nCamera underwater, gopro hero, dome, sony mirolles, dan drone dji\r\nP3K\r\nBBQ di pulau, dan air mineral\r\nTiket masuk wisata & retribusi\r\nFoto & video dokumentasi",
+        "perlengkapan_dibawa": "Tas daypak (koper tidak disarankan karna harus naik turun kapal)\r\nPakaian ganti secukupnya\r\nBaju mudah kering untuk berenang\r\nSunblok & obat obatan pribadi\r\nFlashdisk untuk copy foto & video dokumentasi (16GB)\r\nLotion anti nyamuk\r\nAlat pancing bila ingin memancing\r\nCash money (dikarimujawa hanya ada BRI/ATM bersama)\r\nKacamata hitam, topi, dll.",
+        "tempat_dikunjungi": "Pulau menjangan kecil\r\nPantai tanjung gelam\r\nBukit love\r\nPantai pancuran ( sunset )\r\nTracking hutan mangrove\r\nBukit anora\r\nPantai tanjung gelam\r\nPulau menjangan kecil\r\nPulau geleyang\r\nPulau cemara kecil\r\nPulau cemara besar\r\nPulau cilik\r\nGosong cemara kecil\r\nGosong tengah",
         "foto_galeri": [
             "assets/images/paket-honeymoon.jpg",
             "assets/images/galeri-1.jpg",
@@ -132,10 +135,13 @@
             "assets/images/galeri-3.jpg",
             "assets/images/galeri-4.jpg"
         ],
+        "harga_2d1n": "Rp. 1.675.000 / pax",
+        "harga_4d3n": "Rp. 2.450.000 / pax",
+        "harga_honeymoon": "Rp. 6.500.000 / couple",
         "tipe_kamar": [
             {
-                "id": "tipe-executive",
-                "nama": "Tipe Executive",
+                "id": "executive-room",
+                "nama": "Executive Room",
                 "harga": "Rp 1.875.000 / pax",
                 "foto_galeri": [
                     "assets/images/dseason/exe1.jpg",
@@ -146,7 +152,10 @@
                 ],
                 "harga_2d1n": "Rp. 1.675.000 / pax",
                 "harga_4d3n": "Rp. 2.450.000 / pax",
-                "harga_honeymoon": "Rp. 6.500.000 / couple"
+                "harga_honeymoon": "Rp.8.700.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.700.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 8.700.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 9.800.000 / couple"
             },
             {
                 "id": "tipe-family",
@@ -164,8 +173,8 @@
                 "harga_honeymoon": "Rp. 6.500.000 / couple"
             },
             {
-                "id": "tipe-bisnis",
-                "nama": "Tipe Bisnis",
+                "id": "business-room",
+                "nama": "Business Room",
                 "harga": "Rp 1.875.000 / pax",
                 "foto_galeri": [
                     "assets/images/dseason/bisnis1.jpg",
@@ -176,12 +185,424 @@
                 ],
                 "harga_2d1n": "Rp. 1.675.000 / pax",
                 "harga_4d3n": "Rp. 2.450.000 / pax",
-                "harga_honeymoon": "Rp. 6.500.000 / couple"
+                "harga_honeymoon": "Rp. 6.500.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.500.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 6.700.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 8.450.000 / couple"
             }
         ],
-        "harga_2d1n": "Rp. 1.675.000 / pax",
-        "harga_4d3n": "Rp. 2.450.000 / pax",
-        "harga_honeymoon": "Rp. 6.500.000 / couple"
+        "itinerary": {
+            "2D1N": [
+                {
+                    "day": 1,
+                    "desc": "Snorkeling & Sunset",
+                    "activities": [
+                        {
+                            "time": "09.30 - 10.30",
+                            "title": "Penjemputan & Check-in",
+                            "desc": "Penjemputan di pelabuhan Karimunjawa dan check-in penginapan."
+                        },
+                        {
+                            "time": "10.30 - 12.30",
+                            "title": "Snorkeling di Terumbu Karang",
+                            "desc": "Menuju spot snorkeling terbaik untuk menikmati keindahan bawah laut."
+                        },
+                        {
+                            "time": "12.30 - 14.00",
+                            "title": "Makan Siang Bakar Ikan",
+                            "desc": "Makan siang dengan hidangan ikan bakar khas di pinggir pantai."
+                        },
+                        {
+                            "time": "14.00 - 16.00",
+                            "title": "Aktivitas Pantai Pasir Putih",
+                            "desc": "Bermain air, berfoto ria, atau bersantai di hamparan pasir putih yang bersih."
+                        },
+                        {
+                            "time": "16.00 - 17.30",
+                            "title": "Sunset Tanjung Gelam",
+                            "desc": "Menikmati matahari terbenam yang eksotis di Pantai Tanjung Gelam."
+                        },
+                        {
+                            "time": "19.00 - 20.00",
+                            "title": "Makan Malam",
+                            "desc": "Kembali ke penginapan untuk makan malam bersama."
+                        },
+                        {
+                            "time": "20.00 - Selesai",
+                            "title": "Acara Bebas Alun-Alun",
+                            "desc": "Acara bebas berjalan-jalan ke pusat kuliner Alun-Alun Karimunjawa."
+                        }
+                    ]
+                },
+                {
+                    "day": 2,
+                    "desc": "Bukit Love & Kepulangan",
+                    "activities": [
+                        {
+                            "time": "07.30 - 08.30",
+                            "title": "Sarapan Pagi",
+                            "desc": "Sarapan pagi di penginapan."
+                        },
+                        {
+                            "time": "08.30 - 10.00",
+                            "title": "Wisata Bukit Love",
+                            "desc": "Menikmati pemandangan perbukitan dan foto di spot ikonik Bukit Love."
+                        },
+                        {
+                            "time": "10.00 - 11.00",
+                            "title": "Packing & Check Out",
+                            "desc": "Persiapan bagasi barang bawaan dan check out penginapan."
+                        },
+                        {
+                            "time": "11.00 - 12.00",
+                            "title": "Transfer ke Pelabuhan",
+                            "desc": "Diantar menuju Pelabuhan Karimunjawa untuk perjalanan pulang."
+                        }
+                    ]
+                }
+            ],
+            "3D2N": [
+                {
+                    "day": 1,
+                    "desc": "Land Tour & Sunset",
+                    "activities": [
+                        {
+                            "time": "11.30 - 12.30",
+                            "title": "Penjemputan & Makan Siang",
+                            "desc": "Penjemputan peserta trip di Hotel atau Homestay tempat menginap, dilanjutkan dengan menikmati makan siang bersama."
+                        },
+                        {
+                            "time": "12.30 - 13.30",
+                            "title": "Persiapan Tour Darat",
+                            "desc": "Briefing singkat bersama pemandu wisata mengenai rute perjalanan dan persiapan kelengkapan tour darat."
+                        },
+                        {
+                            "time": "13.30 - 15.00",
+                            "title": "Destinasi Pertama: Pantai Bobi",
+                            "desc": "Mengunjungi Pantai Bobi, nikmati hamparan pasir putih bersih yang menawan dan pepohonan kelapa yang berjejer rapi di sepanjang pantai."
+                        },
+                        {
+                            "time": "15.00 - 16.30",
+                            "title": "Lanjut ke Bukit Love",
+                            "desc": "Perjalanan dilanjutkan ke Bukit Love untuk berfoto ria di spot instagramable berlatar belakang tulisan \"LOVE\" raksasa dengan panorama laut lepas dari ketinggian."
+                        },
+                        {
+                            "time": "16.30 - 17.30",
+                            "title": "Sunset di Pantai Tanjung Gelam",
+                            "desc": "Menikmati momen matahari terbenam yang eksotis di bawah naungan pohon kelapa miring yang sangat ikonik di Pantai Tanjung Gelam."
+                        },
+                        {
+                            "time": "17.30 - 19.00",
+                            "title": "Kembali ke Penginapan",
+                            "desc": "Kembali ke penginapan/homestay untuk beristirahat, membersihkan diri, dan bersiap-siap."
+                        },
+                        {
+                            "time": "19.00 - 20.00",
+                            "title": "Makan Malam",
+                            "desc": "Menyantap makan malam hangat yang disajikan oleh tim penginapan."
+                        },
+                        {
+                            "time": "20.00 - Selesai",
+                            "title": "Malam Acara Bebas (Alun-Alun)",
+                            "desc": "Acara bebas di malam hari. Peserta dapat berjalan-jalan santai ke Alun-Alun Karimunjawa untuk berburu kuliner ikan bakar segar atau membeli suvenir khas."
+                        }
+                    ]
+                },
+                {
+                    "day": 2,
+                    "desc": "Snorkeling & Marine Tour",
+                    "activities": [
+                        {
+                            "time": "07.30 - 08.30",
+                            "title": "Sarapan Pagi & Persiapan",
+                            "desc": "Sarapan pagi di penginapan dan bersiap untuk berlayar menuju pulau-pulau."
+                        },
+                        {
+                            "time": "08.30 - 10.30",
+                            "title": "Snorkeling Spot Pulau Cemara",
+                            "desc": "Meluncur ke spot terumbu karang indah dekat Pulau Cemara Kecil untuk berenang bersama aneka biota laut."
+                        },
+                        {
+                            "time": "10.30 - 12.30",
+                            "title": "Snorkeling Spot Nemo",
+                            "desc": "Menikmati keindahan bawah laut berfoto bersama ikan badut (Nemo) di spot khusus terumbu karang."
+                        },
+                        {
+                            "time": "12.30 - 14.00",
+                            "title": "Makan Siang Bakar Ikan di Pantai",
+                            "desc": "Menikmati makan siang barbecue ikan segar yang disiapkan tim di pinggir pantai pasir putih Pulau Cemara."
+                        },
+                        {
+                            "time": "14.00 - 15.30",
+                            "title": "Singgah di Pulau Geleang",
+                            "desc": "Bermain air, bersantai, dan berfoto di bentangan pasir putih yang bersih di Pulau Geleang."
+                        },
+                        {
+                            "time": "15.30 - 17.00",
+                            "title": "Kunjungan Penangkaran Hiu",
+                            "desc": "Uji nyali berenang bersama ikan hiu jinak di kolam penangkaran dan berfoto bersama."
+                        },
+                        {
+                            "time": "17.00 - 18.00",
+                            "title": "Perjalanan Kembali & Istirahat",
+                            "desc": "Perjalanan laut kembali menuju Pelabuhan Karimunjawa dan diantar ke penginapan untuk istirahat."
+                        },
+                        {
+                            "time": "19.00 - 20.00",
+                            "title": "Makan Malam",
+                            "desc": "Makan malam hangat bersama di penginapan."
+                        },
+                        {
+                            "time": "20.00 - Selesai",
+                            "title": "Acara Bebas Malam Hari",
+                            "desc": "Acara santai bebas untuk bersiap check out besok pagi."
+                        }
+                    ]
+                },
+                {
+                    "day": 3,
+                    "desc": "Acara Bebas & Check Out",
+                    "activities": [
+                        {
+                            "time": "07.00 - 08.00",
+                            "title": "Sarapan Pagi",
+                            "desc": "Menikmati sarapan pagi terakhir di penginapan."
+                        },
+                        {
+                            "time": "08.00 - 10.00",
+                            "title": "Berburu Oleh-oleh",
+                            "desc": "Membeli suvenir, kaos khas, kerajinan tangan, atau makanan ringan di pusat toko oleh-oleh."
+                        },
+                        {
+                            "time": "10.00 - 11.00",
+                            "title": "Check Out Penginapan",
+                            "desc": "Persiapan bagasi barang bawaan, check-out penginapan, dan persiapan transfer."
+                        },
+                        {
+                            "time": "11.00 - 12.00",
+                            "title": "Transfer ke Pelabuhan",
+                            "desc": "Diantar menuju Pelabuhan Karimunjawa oleh tim kendaraan penjemput."
+                        },
+                        {
+                            "time": "12.00 - Selesai",
+                            "title": "Perjalanan Pulang",
+                            "desc": "Perjalanan kapal kembali menuju pelabuhan asal (Jepara/Semarang). Trip Selesai!"
+                        }
+                    ]
+                }
+            ],
+            "4D3N": [
+                {
+                    "day": 1,
+                    "desc": "Land Tour & Sunset",
+                    "activities": [
+                        {
+                            "time": "11.30 - 12.30",
+                            "title": "Penjemputan & Makan Siang",
+                            "desc": "Penjemputan di pelabuhan/hotel, check-in, dan makan siang bersama."
+                        },
+                        {
+                            "time": "13.30 - 15.00",
+                            "title": "Wisata Pantai Bobi",
+                            "desc": "Menikmati keindahan pasir putih Pantai Bobi."
+                        },
+                        {
+                            "time": "15.00 - 16.30",
+                            "title": "Spot Foto Bukit Love",
+                            "desc": "Berfoto ria berlatar pemandangan perbukitan and laut."
+                        },
+                        {
+                            "time": "16.30 - 17.30",
+                            "title": "Sunset Tanjung Gelam",
+                            "desc": "Melihat sunset indah di Pantai Tanjung Gelam."
+                        },
+                        {
+                            "time": "19.00 - Selesai",
+                            "title": "Makan Malam & Acara Bebas",
+                            "desc": "Makan malam hangat dan acara bebas santai."
+                        }
+                    ]
+                },
+                {
+                    "day": 2,
+                    "desc": "Snorkeling Barat (Spot Cemara)",
+                    "activities": [
+                        {
+                            "time": "07.30 - 08.30",
+                            "title": "Sarapan Pagi",
+                            "desc": "Sarapan pagi di penginapan."
+                        },
+                        {
+                            "time": "08.30 - 12.30",
+                            "title": "Snorkeling Terumbu Karang",
+                            "desc": "Snorkeling di spot terumbu karang indah dekat Pulau Cemara Kecil."
+                        },
+                        {
+                            "time": "12.30 - 14.00",
+                            "title": "Makan Siang Bakar Ikan",
+                            "desc": "Piknik barbecue makan siang di Pulau Cemara Kecil."
+                        },
+                        {
+                            "time": "14.00 - 15.30",
+                            "title": "Pulau Geleang",
+                            "desc": "Bersantai di Pulau Geleang."
+                        },
+                        {
+                            "time": "15.30 - 17.00",
+                            "title": "Penangkaran Hiu",
+                            "desc": "Mengunjungi kolam penangkaran hiu."
+                        },
+                        {
+                            "time": "19.00 - Selesai",
+                            "title": "Makan Malam",
+                            "desc": "Makan malam bersama di penginapan."
+                        }
+                    ]
+                },
+                {
+                    "day": 3,
+                    "desc": "Snorkeling Timur (Spot Cilik)",
+                    "activities": [
+                        {
+                            "time": "07.30 - 08.30",
+                            "title": "Sarapan Pagi",
+                            "desc": "Sarapan pagi di penginapan."
+                        },
+                        {
+                            "time": "08.30 - 12.30",
+                            "title": "Snorkeling Terumbu Karang",
+                            "desc": "Snorkeling di spot terumbu karang indah dekat Pulau Cilik/Tengah."
+                        },
+                        {
+                            "time": "12.30 - 14.00",
+                            "title": "Makan Siang di Pulau Cilik",
+                            "desc": "Piknik makan siang di pantai Pulau Cilik."
+                        },
+                        {
+                            "time": "14.00 - 15.30",
+                            "title": "Pantai Bobby Timur",
+                            "desc": "Menikmati pemandangan pantai timur Karimunjawa."
+                        },
+                        {
+                            "time": "19.00 - Selesai",
+                            "title": "Makan Malam & Barbecue",
+                            "desc": "Makan malam spesial ulasan bersama kru."
+                        }
+                    ]
+                },
+                {
+                    "day": 4,
+                    "desc": "Oleh-oleh & Check Out",
+                    "activities": [
+                        {
+                            "time": "07.00 - 08.00",
+                            "title": "Sarapan Pagi",
+                            "desc": "Sarapan pagi di penginapan."
+                        },
+                        {
+                            "time": "08.00 - 10.00",
+                            "title": "Belanja Oleh-oleh",
+                            "desc": "Berburu suvenir khas Karimunjawa."
+                        },
+                        {
+                            "time": "10.00 - 11.00",
+                            "title": "Check Out & Transfer",
+                            "desc": "Packing barang dan diantar ke pelabuhan."
+                        },
+                        {
+                            "time": "12.00 - Selesai",
+                            "title": "Perjalanan Pulang",
+                            "desc": "Kapal kembali ke Jepara/Semarang. Trip selesai!"
+                        }
+                    ]
+                }
+            ],
+            "HONEYMOON": [
+                {
+                    "day": 1,
+                    "desc": "Arrival & Sunset Romantic",
+                    "activities": [
+                        {
+                            "time": "11.30 - 12.30",
+                            "title": "Penjemputan & Check-in",
+                            "desc": "Penjemputan VIP di pelabuhan dan check-in di penginapan bernuansa romantis."
+                        },
+                        {
+                            "time": "13.30 - 16.00",
+                            "title": "Acara Santai Berdua",
+                            "desc": "Menikmati suasana penginapan and beristirahat."
+                        },
+                        {
+                            "time": "16.00 - 17.30",
+                            "title": "Sunset Romantic Tanjung Gelam",
+                            "desc": "Berfoto romantis di pantai kelapa miring Tanjung Gelam berlatar sunset."
+                        },
+                        {
+                            "time": "19.00 - Selesai",
+                            "title": "Romantic Dinner Setup",
+                            "desc": "Makan malam romantis berdua dengan dekorasi bunga di pinggir laut/resort."
+                        }
+                    ]
+                },
+                {
+                    "day": 2,
+                    "desc": "Private Snorkeling Trip",
+                    "activities": [
+                        {
+                            "time": "07.30 - 08.30",
+                            "title": "Sarapan Pagi",
+                            "desc": "Sarapan pagi di penginapan."
+                        },
+                        {
+                            "time": "08.30 - 12.30",
+                            "title": "Private Boat Snorkeling",
+                            "desc": "Berlayar dengan perahu sewaan khusus berdua menuju spot snorkeling terbaik."
+                        },
+                        {
+                            "time": "12.30 - 14.30",
+                            "title": "Romantic Picnic Lunch",
+                            "desc": "Makan siang piknik privat berdua di pulau terpencil tanpa gangguan pengunjung lain."
+                        },
+                        {
+                            "time": "14.30 - 16.30",
+                            "title": "Singgah Pulau Pasir Putih",
+                            "desc": "Berjalan berdua menyusuri hamparan pasir putih."
+                        },
+                        {
+                            "time": "19.00 - Selesai",
+                            "title": "Makan Malam Rileks",
+                            "desc": "Makan malam hangat di penginapan."
+                        }
+                    ]
+                },
+                {
+                    "day": 3,
+                    "desc": "Souvenir & Check Out",
+                    "activities": [
+                        {
+                            "time": "07.00 - 08.00",
+                            "title": "Sarapan Pagi",
+                            "desc": "Sarapan pagi bersama di penginapan."
+                        },
+                        {
+                            "time": "08.00 - 10.00",
+                            "title": "Bukit Love & Souvenir",
+                            "desc": "Mengunjungi Bukit Love berfoto dan membeli kenang-kenangan suvenir berdua."
+                        },
+                        {
+                            "time": "10.00 - 11.00",
+                            "title": "Packing & Check Out",
+                            "desc": "Check-out penginapan."
+                        },
+                        {
+                            "time": "11.00 - Selesai",
+                            "title": "Transfer & Kepulangan",
+                            "desc": "Diantar ke pelabuhan untuk pulang ke kota asal. Trip selesai!"
+                        }
+                    ]
+                }
+            ]
+        }
     },
     {
         "id": "almare",
@@ -227,7 +648,45 @@
         ],
         "harga_2d1n": "Rp. 1.800.000 / pax",
         "harga_4d3n": "Rp. 2.600.000 / pax",
-        "harga_honeymoon": "Rp. 6.900.000 / couple"
+        "harga_honeymoon": "Rp. 6.900.000 / couple",
+        "tipe_kamar": [
+            {
+                "id": "rumah-kecil",
+                "nama": "Rumah Kecil",
+                "harga": "Rp. 2.150.000 / pax",
+                "harga_2d1n": "Rp. 1.800.000 / pax",
+                "harga_4d3n": "Rp. 2.600.000 / pax",
+                "harga_honeymoon": "Rp. 6.450.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.500.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 6.700.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 8.500.000 / couple",
+                "foto_galeri": [
+                    "assets/images/alchy/1.JPG",
+                    "assets/images/alchy/2.JPG",
+                    "assets/images/alchy/3.JPG",
+                    "assets/images/alchy/4.JPG",
+                    "assets/images/alchy/5.JPG"
+                ]
+            },
+            {
+                "id": "rumah-besar",
+                "nama": "Rumah Besar",
+                "harga": "Rp. 2.500.000 / pax",
+                "harga_2d1n": "Rp. 2.100.000 / pax",
+                "harga_4d3n": "Rp. 3.000.000 / pax",
+                "harga_honeymoon": "Rp. 8.100.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.800.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 8.300.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 9.000.000 / couple",
+                "foto_galeri": [
+                    "assets/images/alchy/1.JPG",
+                    "assets/images/alchy/2.JPG",
+                    "assets/images/alchy/3.JPG",
+                    "assets/images/alchy/4.JPG",
+                    "assets/images/alchy/5.JPG"
+                ]
+            }
+        ]
     },
     {
         "id": "hallo-resort",
@@ -475,7 +934,7 @@
         "tipe_kamar": [
             {
                 "id": "family-p",
-                "nama": "Family (P)",
+                "nama": "Deluxe Class",
                 "harga": "Rp. 2.050.000 / pax",
                 "foto_galeri": [
                     "assets/images/javaparadise/JTF1.JPG",
@@ -486,7 +945,10 @@
                 ],
                 "harga_2d1n": "Rp. 1.725.000 / pax",
                 "harga_4d3n": "Rp. 2.950.000 / pax",
-                "harga_honeymoon": "Rp. 7.500.000 / couple"
+                "harga_honeymoon": "Rp. 6.950.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.700.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 7.150.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 8.950.000 / couple"
             },
             {
                 "id": "superior-class",
@@ -501,7 +963,10 @@
                 ],
                 "harga_2d1n": "Rp. 1.850.000 / pax",
                 "harga_4d3n": "Rp. 3.100.000 / pax",
-                "harga_honeymoon": "Rp. 7.900.000 / couple"
+                "harga_honeymoon": "Rp. 6.850.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.600.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 7.050.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 8.800.000 / couple"
             },
             {
                 "id": "executive-class",
@@ -516,7 +981,10 @@
                 ],
                 "harga_2d1n": "Rp. 2.025.000 / pax",
                 "harga_4d3n": "Rp. 3.350.000 / pax",
-                "harga_honeymoon": "Rp. 8.500.000 / couple"
+                "harga_honeymoon": "Rp. 8.550.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.900.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 8.850.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 9.950.000 / couple"
             }
         ],
         "harga_2d1n": "Mulai Rp. 1.725.000 / pax",
@@ -525,7 +993,7 @@
     },
     {
         "id": "hotel-blue-laguna-inn",
-        "nama": "Hotel Blue Laguna Inn",
+        "nama": "Blue Laguna Inn",
         "deskripsi": "Menghadap langsung ke perairan biru yang menenangkan",
         "harga": "Rp. 1.850.000 / pax",
         "gambar": "assets/images/uploads/1782645099_WhatsApp_Image_2026-06-28_at_18.05.48.jpeg",
@@ -544,7 +1012,45 @@
         ],
         "harga_2d1n": "Rp. 1.650.000 / pax",
         "harga_4d3n": "Rp. 2.150.000 / pax",
-        "harga_honeymoon": "Rp. 5.250.000 / couple"
+        "harga_honeymoon": "Rp. 5.250.000 / couple",
+        "tipe_kamar": [
+            {
+                "id": "stpasangan-suami-istri-ac",
+                "nama": "Stpasangan suami istri AC",
+                "harga": "Rp. 1.850.000 / pax",
+                "harga_2d1n": "Rp. 1.650.000 / pax",
+                "harga_4d3n": "Rp. 2.150.000 / pax",
+                "harga_honeymoon": "Rp. 5.400.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.000.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 5.600.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 6.250.000 / couple",
+                "foto_galeri": [
+                    "assets/images/uploads/1782645099_IMG_1331.JPG",
+                    "assets/images/uploads/1782645099_IMG_1332.JPG",
+                    "assets/images/uploads/1782645099_IMG_1333.JPG",
+                    "assets/images/uploads/1782645099_IMG_1330.JPG",
+                    "assets/images/uploads/1782645099_IMG_1328.JPG"
+                ]
+            },
+            {
+                "id": "suite-ac",
+                "nama": "Suite AC",
+                "harga": "Rp. 2.100.000 / pax",
+                "harga_2d1n": "Rp. 1.850.000 / pax",
+                "harga_4d3n": "Rp. 2.450.000 / pax",
+                "harga_honeymoon": "Rp. 5.550.000 / couple",
+                "harga_honeymoon_2d1n": "Rp. 4.300.000 / couple",
+                "harga_honeymoon_3d2n_smg": "Rp. 5.850.000 / couple",
+                "harga_honeymoon_4d3n": "Rp. 6.500.000 / couple",
+                "foto_galeri": [
+                    "assets/images/uploads/1782645099_IMG_1331.JPG",
+                    "assets/images/uploads/1782645099_IMG_1332.JPG",
+                    "assets/images/uploads/1782645099_IMG_1333.JPG",
+                    "assets/images/uploads/1782645099_IMG_1330.JPG",
+                    "assets/images/uploads/1782645099_IMG_1328.JPG"
+                ]
+            }
+        ]
     },
     {
         "id": "hotel-summer-inn",

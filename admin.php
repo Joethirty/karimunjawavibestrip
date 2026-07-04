@@ -120,6 +120,9 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
         $harga_2d1n = isset($_POST['harga_2d1n']) ? trim(htmlspecialchars($_POST['harga_2d1n'])) : "";
         $harga_4d3n = isset($_POST['harga_4d3n']) ? trim(htmlspecialchars($_POST['harga_4d3n'])) : "";
         $harga_honeymoon = isset($_POST['harga_honeymoon']) ? trim(htmlspecialchars($_POST['harga_honeymoon'])) : "";
+        $harga_honeymoon_2d1n = isset($_POST['harga_honeymoon_2d1n']) ? trim(htmlspecialchars($_POST['harga_honeymoon_2d1n'])) : "";
+        $harga_honeymoon_3d2n_smg = isset($_POST['harga_honeymoon_3d2n_smg']) ? trim(htmlspecialchars($_POST['harga_honeymoon_3d2n_smg'])) : "";
+        $harga_honeymoon_4d3n = isset($_POST['harga_honeymoon_4d3n']) ? trim(htmlspecialchars($_POST['harga_honeymoon_4d3n'])) : "";
         $lokasi = isset($_POST['lokasi']) ? trim(htmlspecialchars($_POST['lokasi'])) : "";
         $badge = isset($_POST['badge']) ? trim(htmlspecialchars($_POST['badge'])) : "";
         $badge_class = isset($_POST['badge_class']) ? trim(htmlspecialchars($_POST['badge_class'])) : "";
@@ -146,6 +149,8 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
         $fasilitas_paket = isset($_POST['fasilitas_paket']) ? trim($_POST['fasilitas_paket']) : "";
         $perlengkapan_dibawa = isset($_POST['perlengkapan_dibawa']) ? trim($_POST['perlengkapan_dibawa']) : "";
         $tempat_dikunjungi = isset($_POST['tempat_dikunjungi']) ? trim($_POST['tempat_dikunjungi']) : "";
+        $itinerary_data_raw = isset($_POST['itinerary_data']) ? $_POST['itinerary_data'] : '';
+        $itinerary_data = json_decode($itinerary_data_raw, true);
 
         // Cek bentrok ID jika create baru atau ID diubah
         if (($action === 'create' || $id !== $old_id) && !empty($daftar_penginapan)) {
@@ -192,6 +197,9 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
                     $rt_price_2d1n = isset($_POST['room_type_price_2d1n'][$idx]) ? trim(htmlspecialchars($_POST['room_type_price_2d1n'][$idx])) : "";
                     $rt_price_4d3n = isset($_POST['room_type_price_4d3n'][$idx]) ? trim(htmlspecialchars($_POST['room_type_price_4d3n'][$idx])) : "";
                     $rt_price_honeymoon = isset($_POST['room_type_price_honeymoon'][$idx]) ? trim(htmlspecialchars($_POST['room_type_price_honeymoon'][$idx])) : "";
+                    $rt_price_honeymoon_2d1n = isset($_POST['room_type_price_honeymoon_2d1n'][$idx]) ? trim(htmlspecialchars($_POST['room_type_price_honeymoon_2d1n'][$idx])) : "";
+                    $rt_price_honeymoon_3d2n_smg = isset($_POST['room_type_price_honeymoon_3d2n_smg'][$idx]) ? trim(htmlspecialchars($_POST['room_type_price_honeymoon_3d2n_smg'][$idx])) : "";
+                    $rt_price_honeymoon_4d3n = isset($_POST['room_type_price_honeymoon_4d3n'][$idx]) ? trim(htmlspecialchars($_POST['room_type_price_honeymoon_4d3n'][$idx])) : "";
 
                     // Kumpulkan galeri foto tipe kamar
                     $rt_gallery = [];
@@ -230,6 +238,15 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
                     if (!empty($rt_price_honeymoon)) {
                         $rt_data["harga_honeymoon"] = $rt_price_honeymoon;
                     }
+                    if (!empty($rt_price_honeymoon_2d1n)) {
+                        $rt_data["harga_honeymoon_2d1n"] = $rt_price_honeymoon_2d1n;
+                    }
+                    if (!empty($rt_price_honeymoon_3d2n_smg)) {
+                        $rt_data["harga_honeymoon_3d2n_smg"] = $rt_price_honeymoon_3d2n_smg;
+                    }
+                    if (!empty($rt_price_honeymoon_4d3n)) {
+                        $rt_data["harga_honeymoon_4d3n"] = $rt_price_honeymoon_4d3n;
+                    }
 
                     $tipe_kamar[] = $rt_data;
                 }
@@ -262,8 +279,24 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
             if (!empty($harga_honeymoon)) {
                 $newData["harga_honeymoon"] = $harga_honeymoon;
             }
+            if (!empty($harga_honeymoon_2d1n)) {
+                $newData["harga_honeymoon_2d1n"] = $harga_honeymoon_2d1n;
+            }
+            if (!empty($harga_honeymoon_3d2n_smg)) {
+                $newData["harga_honeymoon_3d2n_smg"] = $harga_honeymoon_3d2n_smg;
+            }
+            if (!empty($harga_honeymoon_4d3n)) {
+                $newData["harga_honeymoon_4d3n"] = $harga_honeymoon_4d3n;
+            }
             if (!empty($tipe_kamar)) {
                 $newData["tipe_kamar"] = $tipe_kamar;
+            }
+            if (is_array($itinerary_data)) {
+                $newData["itinerary"] = $itinerary_data;
+            } else {
+                if ($action === 'update' && isset($old_lodging['itinerary'])) {
+                    $newData["itinerary"] = $old_lodging['itinerary'];
+                }
             }
 
             // Simpan perubahan ke list global
@@ -1681,10 +1714,32 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                     value="<?php echo $edit_mode ? (isset($edit_lodging['harga_4d3n']) ? $edit_lodging['harga_4d3n'] : '') : ''; ?>">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="harga_honeymoon">Harga Honeymoon</label>
+                                <label class="form-label" for="harga_honeymoon">Harga Honeymoon (3D2N)</label>
                                 <input class="form-control" type="text" id="harga_honeymoon" name="harga_honeymoon"
                                     placeholder="Contoh: Rp. 4.500.000 / couple"
                                     value="<?php echo $edit_mode ? (isset($edit_lodging['harga_honeymoon']) ? $edit_lodging['harga_honeymoon'] : '') : ''; ?>">
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; border-left: 3px solid var(--primary-teal); padding-left: 15px; background: rgba(28, 187, 180, 0.02); padding-top: 10px; padding-bottom: 10px; border-radius: 0 8px 8px 0; margin-bottom: 15px;">
+                            <div style="grid-column: 1 / -1; font-weight: 700; font-size: 13px; color: var(--primary-teal); margin-bottom: 5px;">HONEYMOON PRICING TABLES (DETAIL DURASI LAIN)</div>
+                            <div class="form-group">
+                                <label class="form-label" for="harga_honeymoon_2d1n">Honeymoon 2D1N</label>
+                                <input class="form-control" type="text" id="harga_honeymoon_2d1n" name="harga_honeymoon_2d1n"
+                                    placeholder="Contoh: Rp. 4.000.000 / couple"
+                                    value="<?php echo $edit_mode ? (isset($edit_lodging['harga_honeymoon_2d1n']) ? $edit_lodging['harga_honeymoon_2d1n'] : '') : ''; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="harga_honeymoon_3d2n_smg">Honeymoon 3D2N Semarang</label>
+                                <input class="form-control" type="text" id="harga_honeymoon_3d2n_smg" name="harga_honeymoon_3d2n_smg"
+                                    placeholder="Contoh: Rp. 5.600.000 / couple"
+                                    value="<?php echo $edit_mode ? (isset($edit_lodging['harga_honeymoon_3d2n_smg']) ? $edit_lodging['harga_honeymoon_3d2n_smg'] : '') : ''; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="harga_honeymoon_4d3n">Honeymoon 4D3N</label>
+                                <input class="form-control" type="text" id="harga_honeymoon_4d3n" name="harga_honeymoon_4d3n"
+                                    placeholder="Contoh: Rp. 6.250.000 / couple"
+                                    value="<?php echo $edit_mode ? (isset($edit_lodging['harga_honeymoon_4d3n']) ? $edit_lodging['harga_honeymoon_4d3n'] : '') : ''; ?>">
                             </div>
                         </div>
 
@@ -1840,11 +1895,32 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                                     value="<?php echo isset($rt['harga_4d3n']) ? $rt['harga_4d3n'] : ''; ?>">
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-label">Harga Honeymoon</label>
+                                                <label class="form-label">Harga Honeymoon (3D2N)</label>
                                                 <input class="form-control" type="text"
                                                     name="room_type_price_honeymoon[<?php echo $index; ?>]"
                                                     placeholder="Contoh: Rp 4.500.000 / couple"
                                                     value="<?php echo isset($rt['harga_honeymoon']) ? $rt['harga_honeymoon'] : ''; ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Honeymoon 2D1N</label>
+                                                <input class="form-control" type="text"
+                                                    name="room_type_price_honeymoon_2d1n[<?php echo $index; ?>]"
+                                                    placeholder="Contoh: Rp 4.000.000 / couple"
+                                                    value="<?php echo isset($rt['harga_honeymoon_2d1n']) ? $rt['harga_honeymoon_2d1n'] : ''; ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Honeymoon 3D2N Smg</label>
+                                                <input class="form-control" type="text"
+                                                    name="room_type_price_honeymoon_3d2n_smg[<?php echo $index; ?>]"
+                                                    placeholder="Contoh: Rp 5.600.000 / couple"
+                                                    value="<?php echo isset($rt['harga_honeymoon_3d2n_smg']) ? $rt['harga_honeymoon_3d2n_smg'] : ''; ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Honeymoon 4D3N</label>
+                                                <input class="form-control" type="text"
+                                                    name="room_type_price_honeymoon_4d3n[<?php echo $index; ?>]"
+                                                    placeholder="Contoh: Rp 6.250.000 / couple"
+                                                    value="<?php echo isset($rt['harga_honeymoon_4d3n']) ? $rt['harga_honeymoon_4d3n'] : ''; ?>">
                                             </div>
                                         </div>
 
@@ -1879,6 +1955,40 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                             endif;
                             ?>
                         </div>
+
+                        <!-- SECTION ITINERARY EDITOR -->
+                        <div class="form-section-title" style="margin-top: 30px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">
+                            <span style="font-size: 18px; font-weight: 700; color: var(--primary-teal);">🛄 Kelola Rencana Perjalanan (Itinerary)</span>
+                        </div>
+                        
+                        <div style="background: rgba(10,20,20,0.2); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                            <p style="font-size: 13px; color: var(--medium-gray); margin-bottom: 15px;">
+                                Tentukan rencana perjalanan (itinerary) untuk setiap pilihan durasi paket. Kosongkan jika ingin menggunakan itinerary template bawaan.
+                            </p>
+                            
+                            <!-- Duration Selector Tabs -->
+                            <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; flex-wrap: wrap;">
+                                <button type="button" class="btn-duration-tab" onclick="setItineraryDuration('2D1N')" id="btn-it-2D1N" style="padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.08); cursor: pointer; font-weight: 700; font-size: 12px; transition: all 0.2s; color: #fff;">2D1N</button>
+                                <button type="button" class="btn-duration-tab" onclick="setItineraryDuration('3D2N')" id="btn-it-3D2N" style="padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.08); cursor: pointer; font-weight: 700; font-size: 12px; transition: all 0.2s; color: #fff;">3D2N</button>
+                                <button type="button" class="btn-duration-tab" onclick="setItineraryDuration('4D3N')" id="btn-it-4D3N" style="padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.08); cursor: pointer; font-weight: 700; font-size: 12px; transition: all 0.2s; color: #fff;">4D3N</button>
+                                <button type="button" class="btn-duration-tab" onclick="setItineraryDuration('HONEYMOON_2D1N')" id="btn-it-HONEYMOON_2D1N" style="padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.08); cursor: pointer; font-weight: 700; font-size: 12px; transition: all 0.2s; color: #fff;">Honeymoon 2D1N</button>
+                                <button type="button" class="btn-duration-tab" onclick="setItineraryDuration('HONEYMOON_3D2N')" id="btn-it-HONEYMOON_3D2N" style="padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.08); cursor: pointer; font-weight: 700; font-size: 12px; transition: all 0.2s; color: #fff;">Honeymoon 3D2N</button>
+                                <button type="button" class="btn-duration-tab" onclick="setItineraryDuration('HONEYMOON_3D2N_SMG')" id="btn-it-HONEYMOON_3D2N_SMG" style="padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.08); cursor: pointer; font-weight: 700; font-size: 12px; transition: all 0.2s; color: #fff;">Honeymoon 3D2N Smg</button>
+                                <button type="button" class="btn-duration-tab" onclick="setItineraryDuration('HONEYMOON_4D3N')" id="btn-it-HONEYMOON_4D3N" style="padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.08); cursor: pointer; font-weight: 700; font-size: 12px; transition: all 0.2s; color: #fff;">Honeymoon 4D3N</button>
+                            </div>
+                            
+                            <!-- Day List Container -->
+                            <div id="itinerary-days-container" style="display: flex; flex-direction: column; gap: 20px;">
+                                <!-- Days will be generated by JS -->
+                            </div>
+                            
+                            <!-- Add Day Button -->
+                            <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                <button type="button" class="btn-primary" onclick="addItineraryDay()" style="height: 36px; padding: 0 15px; font-size: 12px; border-radius: 6px; cursor: pointer;">+ Tambah Hari Baru</button>
+                                <button type="button" class="btn-secondary" onclick="resetItineraryToTemplate()" style="height: 36px; padding: 0 15px; font-size: 12px; border-radius: 6px; background-color: #8C1D40; border-color: #8C1D40; cursor: pointer; color: white;">Reset ke Template Default</button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="itinerary_data" id="itinerary_data">
 
                         <!-- SUBMIT -->
                         <div style="margin-top: 40px; display: flex; gap: 15px; justify-content: flex-end;">
@@ -1935,10 +2045,22 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                     <input class="form-control" type="text" name="room_type_price_4d3n[${rtCounter}]" placeholder="Contoh: Rp 2.950.000 / pax">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Harga Honeymoon (Opsional)</label>
-                                    <input class="form-control" type="text" name="room_type_price_honeymoon[${rtCounter}]" placeholder="Contoh: Rp 4.500.000 / couple">
-                                </div>
-                            </div>
+                                     <label class="form-label">Harga Honeymoon (3D2N) (Opsional)</label>
+                                     <input class="form-control" type="text" name="room_type_price_honeymoon[${rtCounter}]" placeholder="Contoh: Rp 4.500.000 / couple">
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="form-label">Honeymoon 2D1N (Opsional)</label>
+                                     <input class="form-control" type="text" name="room_type_price_honeymoon_2d1n[${rtCounter}]" placeholder="Contoh: Rp 4.000.000 / couple">
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="form-label">Honeymoon 3D2N Smg (Opsional)</label>
+                                     <input class="form-control" type="text" name="room_type_price_honeymoon_3d2n_smg[${rtCounter}]" placeholder="Contoh: Rp 5.600.000 / couple">
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="form-label">Honeymoon 4D3N (Opsional)</label>
+                                     <input class="form-control" type="text" name="room_type_price_honeymoon_4d3n[${rtCounter}]" placeholder="Contoh: Rp 6.250.000 / couple">
+                                 </div>
+                             </div>
                             
                             <label class="form-label" style="margin-top: 15px; display: block;">5 Foto Galeri Tipe Kamar</label>
                             ${galleryHTML}
@@ -1954,6 +2076,445 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                 item.remove();
                             }
                         }
+
+                        // ==========================================
+                        // ITINERARY EDITOR LOGIC
+                        // ==========================================
+                        let itineraryEditorData = <?php 
+                            if ($edit_mode && isset($edit_lodging['itinerary']) && is_array($edit_lodging['itinerary'])) {
+                                echo json_encode($edit_lodging['itinerary']);
+                            } else {
+                                echo 'null';
+                            }
+                        ?>;
+                        
+                        const defaultItineraryTemplate = {
+                            "2D1N": [
+                                {
+                                    "day": 1,
+                                    "desc": "Snorkeling & Sunset",
+                                    "activities": [
+                                        {"time": "09.30 - 10.30", "title": "Penjemputan & Check-in", "desc": "Penjemputan di pelabuhan Karimunjawa dan check-in penginapan."},
+                                        {"time": "10.30 - 12.30", "title": "Snorkeling di Terumbu Karang", "desc": "Menuju spot snorkeling terbaik untuk menikmati keindahan bawah laut."},
+                                        {"time": "12.30 - 14.00", "title": "Makan Siang Bakar Ikan", "desc": "Makan siang dengan hidangan ikan bakar khas di pinggir pantai."},
+                                        {"time": "14.00 - 16.00", "title": "Aktivitas Pantai Pasir Putih", "desc": "Bermain air, berfoto ria, atau bersantai di hamparan pasir putih yang bersih."},
+                                        {"time": "16.00 - 17.30", "title": "Sunset Tanjung Gelam", "desc": "Menikmati matahari terbenam yang eksotis di Pantai Tanjung Gelam."},
+                                        {"time": "19.00 - 20.00", "title": "Makan Malam", "desc": "Kembali ke penginapan untuk makan malam bersama."},
+                                        {"time": "20.00 - Selesai", "title": "Acara Bebas Alun-Alun", "desc": "Acara bebas berjalan-jalan ke pusat kuliner Alun-Alun Karimunjawa."}
+                                    ]
+                                },
+                                {
+                                    "day": 2,
+                                    "desc": "Bukit Love & Kepulangan",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi", "desc": "Sarapan pagi di penginapan."},
+                                        {"time": "08.30 - 10.00", "title": "Wisata Bukit Love", "desc": "Menikmati pemandangan perbukitan dan foto di spot ikonik Bukit Love."},
+                                        {"time": "10.00 - 11.00", "title": "Packing & Check Out", "desc": "Persiapan bagasi barang bawaan dan check out penginapan."},
+                                        {"time": "11.00 - 12.00", "title": "Transfer ke Pelabuhan", "desc": "Diantar menuju Pelabuhan Karimunjawa untuk perjalanan pulang."}
+                                    ]
+                                }
+                            ],
+                            "3D2N": [
+                                {
+                                    "day": 1,
+                                    "desc": "Land Tour & Sunset",
+                                    "activities": [
+                                        {"time": "11.30 - 12.30", "title": "Penjemputan & Makan Siang", "desc": "Penjemputan peserta trip di Hotel atau Homestay tempat menginap, dilanjutkan dengan menikmati makan siang bersama."},
+                                        {"time": "12.30 - 13.30", "title": "Persiapan Tour Darat", "desc": "Briefing singkat bersama pemandu wisata mengenai rute perjalanan dan persiapan kelengkapan tour darat."},
+                                        {"time": "13.30 - 15.00", "title": "Destinasi Pertama: Pantai Bobi", "desc": "Mengunjungi Pantai Bobi, nikmati hamparan pasir putih bersih yang menawan dan pepohonan kelapa yang berjejer rapi di sepanjang pantai."},
+                                        {"time": "15.00 - 16.30", "title": "Lanjut ke Bukit Love", "desc": "Perjalanan dilanjutkan ke Bukit Love untuk berfoto ria di spot instagramable berlatar belakang tulisan \"LOVE\" raksasa dengan panorama laut lepas dari ketinggian."},
+                                        {"time": "16.30 - 17.30", "title": "Sunset di Pantai Tanjung Gelam", "desc": "Menikmati momen matahari terbenam yang eksotis di bawah naungan pohon kelapa miring yang sangat ikonik di Pantai Tanjung Gelam."},
+                                        {"time": "17.30 - 19.00", "title": "Kembali ke Penginapan", "desc": "Kembali ke penginapan/homestay untuk beristirahat, membersihkan diri, dan bersiap-siap."},
+                                        {"time": "19.00 - 20.00", "title": "Makan Malam", "desc": "Menyantap makan malam hangat yang disajikan oleh tim penginapan."},
+                                        {"time": "20.00 - Selesai", "title": "Malam Acara Bebas (Alun-Alun)", "desc": "Acara bebas di malam hari. Peserta dapat berjalan-jalan santai ke Alun-Alun Karimunjawa untuk berburu kuliner ikan bakar segar atau membeli suvenir khas."}
+                                    ]
+                                },
+                                {
+                                    "day": 2,
+                                    "desc": "Snorkeling & Marine Tour",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi & Persiapan", "desc": "Sarapan pagi di penginapan dan bersiap untuk berlayar menuju pulau-pulau."},
+                                        {"time": "08.30 - 10.30", "title": "Snorkeling Spot Pulau Cemara", "desc": "Meluncur ke spot terumbu karang indah dekat Pulau Cemara Kecil untuk berenang bersama aneka biota laut."},
+                                        {"time": "10.30 - 12.30", "title": "Snorkeling Spot Nemo", "desc": "Menikmati keindahan bawah laut berfoto bersama ikan badut (Nemo) di spot khusus terumbu karang."},
+                                        {"time": "12.30 - 14.00", "title": "Makan Siang Bakar Ikan di Pantai", "desc": "Menikmati makan siang barbecue ikan segar yang disiapkan tim di pinggir pantai pasir putih Pulau Cemara."},
+                                        {"time": "14.00 - 15.30", "title": "Singgah di Pulau Geleang", "desc": "Bermain air, bersantai, dan berfoto di bentangan pasir putih yang bersih di Pulau Geleang."},
+                                        {"time": "15.30 - 17.00", "title": "Kunjungan Penangkaran Hiu", "desc": "Uji nyali berenang bersama ikan hiu jinak di kolam penangkaran dan berfoto bersama."},
+                                        {"time": "17.00 - 18.00", "title": "Perjalanan Kembali & Istirahat", "desc": "Perjalanan laut kembali menuju Pelabuhan Karimunjawa dan diantar ke penginapan untuk istirahat."},
+                                        {"time": "19.00 - 20.00", "title": "Makan Malam", "desc": "Makan malam hangat bersama di penginapan."},
+                                        {"time": "20.00 - Selesai", "title": "Acara Bebas Malam Hari", "desc": "Acara santai bebas untuk bersiap check out besok pagi."}
+                                    ]
+                                },
+                                {
+                                    "day": 3,
+                                    "desc": "Acara Bebas & Check Out",
+                                    "activities": [
+                                        {"time": "07.00 - 08.00", "title": "Sarapan Pagi", "desc": "Menikmati sarapan pagi terakhir di penginapan."},
+                                        {"time": "08.00 - 10.00", "title": "Berburu Oleh-oleh", "desc": "Membeli suvenir, kaos khas, kerajinan tangan, atau makanan ringan di pusat toko oleh-oleh."},
+                                        {"time": "10.00 - 11.00", "title": "Check Out Penginapan", "desc": "Persiapan bagasi barang bawaan, check-out penginapan, dan persiapan transfer."},
+                                        {"time": "11.00 - 12.00", "title": "Transfer ke Pelabuhan", "desc": "Diantar menuju Pelabuhan Karimunjawa oleh tim kendaraan penjemput."},
+                                        {"time": "12.00 - Selesai", "title": "Perjalanan Pulang", "desc": "Perjalanan kapal kembali menuju pelabuhan asal (Jepara/Semarang). Trip Selesai!"}
+                                    ]
+                                }
+                            ],
+                            "4D3N": [
+                                {
+                                    "day": 1,
+                                    "desc": "Land Tour & Sunset",
+                                    "activities": [
+                                        {"time": "11.30 - 12.30", "title": "Penjemputan & Makan Siang", "desc": "Penjemputan di pelabuhan/hotel, check-in, dan makan siang bersama."},
+                                        {"time": "13.30 - 15.00", "title": "Wisata Pantai Bobi", "desc": "Menikmati keindahan pasir putih Pantai Bobi."},
+                                        {"time": "15.00 - 16.30", "title": "Spot Foto Bukit Love", "desc": "Berfoto ria berlatar pemandangan perbukitan and laut."},
+                                        {"time": "16.30 - 17.30", "title": "Sunset Tanjung Gelam", "desc": "Melihat sunset indah di Pantai Tanjung Gelam."},
+                                        {"time": "19.00 - Selesai", "title": "Makan Malam & Acara Bebas", "desc": "Makan malam hangat dan acara bebas santai."}
+                                    ]
+                                },
+                                {
+                                    "day": 2,
+                                    "desc": "Snorkeling Barat (Spot Cemara)",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi", "desc": "Sarapan pagi di penginapan."},
+                                        {"time": "08.30 - 12.30", "title": "Snorkeling Terumbu Karang", "desc": "Snorkeling di spot terumbu karang indah dekat Pulau Cemara Kecil."},
+                                        {"time": "12.30 - 14.00", "title": "Makan Siang Bakar Ikan", "desc": "Piknik barbecue makan siang di Pulau Cemara Kecil."},
+                                        {"time": "14.00 - 15.30", "title": "Pulau Geleang", "desc": "Bersantai di Pulau Geleang."},
+                                        {"time": "15.30 - 17.00", "title": "Penangkaran Hiu", "desc": "Mengunjungi kolam penangkaran hiu."},
+                                        {"time": "19.00 - Selesai", "title": "Makan Malam", "desc": "Makan malam bersama di penginapan."}
+                                    ]
+                                },
+                                {
+                                    "day": 3,
+                                    "desc": "Snorkeling Timur (Spot Cilik)",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi", "desc": "Sarapan pagi di penginapan."},
+                                        {"time": "08.30 - 12.30", "title": "Snorkeling Terumbu Karang", "desc": "Snorkeling di spot terumbu karang indah dekat Pulau Cilik/Tengah."},
+                                        {"time": "12.30 - 14.00", "title": "Makan Siang di Pulau Cilik", "desc": "Piknik makan siang di pantai Pulau Cilik."},
+                                        {"time": "14.00 - 15.30", "title": "Pantai Bobby Timur", "desc": "Menikmati pemandangan pantai timur Karimunjawa."},
+                                        {"time": "19.00 - Selesai", "title": "Makan Malam & Barbecue", "desc": "Makan malam spesial ulasan bersama kru."}
+                                    ]
+                                },
+                                {
+                                    "day": 4,
+                                    "desc": "Oleh-oleh & Check Out",
+                                    "activities": [
+                                        {"time": "07.00 - 08.00", "title": "Sarapan Pagi", "desc": "Sarapan pagi di penginapan."},
+                                        {"time": "08.00 - 10.00", "title": "Belanja Oleh-oleh", "desc": "Berburu suvenir khas Karimunjawa."},
+                                        {"time": "10.00 - 11.00", "title": "Check Out & Transfer", "desc": "Packing barang dan diantar ke pelabuhan."},
+                                        {"time": "12.00 - Selesai", "title": "Perjalanan Pulang", "desc": "Kapal kembali ke Jepara/Semarang. Trip selesai!"}
+                                    ]
+                                }
+                            ],
+                            "HONEYMOON_2D1N": [
+                                {
+                                    "day": 1,
+                                    "desc": "Arrival & Sunset Romantic",
+                                    "activities": [
+                                        {"time": "11.30 - 12.30", "title": "Penjemputan & Check-in", "desc": "Penjemputan VIP di pelabuhan dan check-in di penginapan bernuansa romantis."},
+                                        {"time": "13.30 - 16.00", "title": "Acara Santai Berdua", "desc": "Menikmati suasana penginapan dan beristirahat."},
+                                        {"time": "16.00 - 17.30", "title": "Sunset Romantic Tanjung Gelam", "desc": "Berfoto romantis di pantai kelapa miring Tanjung Gelam berlatar sunset."},
+                                        {"time": "19.00 - Selesai", "title": "Romantic Dinner Setup", "desc": "Makan malam romantis berdua dengan dekorasi bunga di pinggir laut/resort."}
+                                    ]
+                                },
+                                {
+                                    "day": 2,
+                                    "desc": "Private Snorkeling Trip & Check Out",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi", "desc": "Sarapan pagi di penginapan."},
+                                        {"time": "08.30 - 11.30", "title": "Private Boat Snorkeling", "desc": "Berlayar dengan perahu sewaan khusus berdua menuju spot snorkeling terbaik."},
+                                        {"time": "11.30 - 12.30", "title": "Packing & Check Out", "desc": "Kembali ke penginapan, packing barang bawaan dan check out."},
+                                        {"time": "12.30 - Selesai", "title": "Transfer & Kepulangan", "desc": "Diantar ke pelabuhan untuk pulang ke kota asal. Trip selesai!"}
+                                    ]
+                                }
+                            ],
+                            "HONEYMOON_3D2N": [
+                                {
+                                    "day": 1,
+                                    "desc": "Arrival & Sunset Romantic",
+                                    "activities": [
+                                        {"time": "11.30 - 12.30", "title": "Penjemputan & Check-in", "desc": "Penjemputan VIP di pelabuhan dan check-in di penginapan bernuansa romantis."},
+                                        {"time": "13.30 - 16.00", "title": "Acara Santai Berdua", "desc": "Menikmati suasana penginapan dan beristirahat."},
+                                        {"time": "16.00 - 17.30", "title": "Sunset Romantic Tanjung Gelam", "desc": "Berfoto romantis di pantai kelapa miring Tanjung Gelam berlatar sunset."},
+                                        {"time": "19.00 - Selesai", "title": "Romantic Dinner Setup", "desc": "Makan malam romantis berdua dengan dekorasi bunga di pinggir laut/resort."}
+                                    ]
+                                },
+                                {
+                                    "day": 2,
+                                    "desc": "Private Snorkeling Trip",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi", "desc": "Sarapan pagi di penginapan."},
+                                        {"time": "08.30 - 12.30", "title": "Private Boat Snorkeling", "desc": "Berlayar dengan perahu sewaan khusus berdua menuju spot snorkeling terbaik."},
+                                        {"time": "12.30 - 14.30", "title": "Romantic Picnic Lunch", "desc": "Makan siang piknik privat berdua di pulau terpencil tanpa gangguan pengunjung lain."},
+                                        {"time": "14.30 - 16.30", "title": "Singgah Pulau Pasir Putih", "desc": "Berjalan berdua menyusuri hamparan pasir putih."},
+                                        {"time": "19.00 - Selesai", "title": "Makan Malam Rileks", "desc": "Makan malam hangat di penginapan."}
+                                    ]
+                                },
+                                {
+                                    "day": 3,
+                                    "desc": "Souvenir & Check Out",
+                                    "activities": [
+                                        {"time": "07.00 - 08.00", "title": "Sarapan Pagi", "desc": "Sarapan pagi bersama di penginapan."},
+                                        {"time": "08.00 - 10.00", "title": "Bukit Love & Souvenir", "desc": "Mengunjungi Bukit Love berfoto dan membeli kenang-kenangan suvenir berdua."},
+                                        {"time": "10.00 - 11.00", "title": "Packing & Check Out", "desc": "Check-out penginapan."},
+                                        {"time": "11.00 - Selesai", "title": "Transfer & Kepulangan", "desc": "Diantar ke pelabuhan untuk pulang ke kota asal. Trip selesai!"}
+                                    ]
+                                }
+                            ],
+                            "HONEYMOON_3D2N_SMG": [
+                                {
+                                    "day": 1,
+                                    "desc": "Arrival & Sunset Romantic",
+                                    "activities": [
+                                        {"time": "11.30 - 12.30", "title": "Penjemputan & Check-in", "desc": "Penjemputan VIP di pelabuhan dan check-in di penginapan bernuansa romantis."},
+                                        {"time": "13.30 - 16.00", "title": "Acara Santai Berdua", "desc": "Menikmati suasana penginapan dan beristirahat."},
+                                        {"time": "16.00 - 17.30", "title": "Sunset Romantic Tanjung Gelam", "desc": "Berfoto romantis di pantai kelapa miring Tanjung Gelam berlatar sunset."},
+                                        {"time": "19.00 - Selesai", "title": "Romantic Dinner Setup", "desc": "Makan malam romantis berdua dengan dekorasi bunga di pinggir laut/resort."}
+                                    ]
+                                },
+                                {
+                                    "day": 2,
+                                    "desc": "Private Snorkeling Trip",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi", "desc": "Sarapan pagi di penginapan."},
+                                        {"time": "08.30 - 12.30", "title": "Private Boat Snorkeling", "desc": "Berlayar dengan perahu sewaan khusus berdua menuju spot snorkeling terbaik."},
+                                        {"time": "12.30 - 14.30", "title": "Romantic Picnic Lunch", "desc": "Makan siang piknik privat berdua di pulau terpencil tanpa gangguan pengunjung lain."},
+                                        {"time": "14.30 - 16.30", "title": "Singgah Pulau Pasir Putih", "desc": "Berjalan berdua menyusuri hamparan pasir putih."},
+                                        {"time": "19.00 - Selesai", "title": "Makan Malam Rileks", "desc": "Makan malam hangat di penginapan."}
+                                    ]
+                                },
+                                {
+                                    "day": 3,
+                                    "desc": "Souvenir & Check Out (Semarang)",
+                                    "activities": [
+                                        {"time": "07.00 - 08.00", "title": "Sarapan Pagi", "desc": "Sarapan pagi bersama di penginapan."},
+                                        {"time": "08.00 - 10.00", "title": "Bukit Love & Souvenir", "desc": "Mengunjungi Bukit Love berfoto dan membeli kenang-kenangan suvenir berdua."},
+                                        {"time": "10.00 - 11.00", "title": "Packing & Check Out", "desc": "Check-out penginapan."},
+                                        {"time": "11.00 - Selesai", "title": "Transfer & Kepulangan (Semarang)", "desc": "Diantar ke pelabuhan untuk pulang menggunakan kapal cepat menuju Semarang. Trip selesai!"}
+                                    ]
+                                }
+                            ],
+                            "HONEYMOON_4D3N": [
+                                {
+                                    "day": 1,
+                                    "desc": "Arrival & Sunset Romantic",
+                                    "activities": [
+                                        {"time": "11.30 - 12.30", "title": "Penjemputan & Check-in", "desc": "Penjemputan VIP di pelabuhan dan check-in di penginapan bernuansa romantis."},
+                                        {"time": "13.30 - 16.00", "title": "Acara Santai Berdua", "desc": "Menikmati suasana penginapan dan beristirahat."},
+                                        {"time": "16.00 - 17.30", "title": "Sunset Romantic Tanjung Gelam", "desc": "Berfoto romantis di pantai kelapa miring Tanjung Gelam berlatar sunset."},
+                                        {"time": "19.00 - Selesai", "title": "Romantic Dinner Setup", "desc": "Makan malam romantis berdua dengan dekorasi bunga di pinggir laut/resort."}
+                                    ]
+                                },
+                                {
+                                    "day": 2,
+                                    "desc": "Private Snorkeling Trip",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi", "desc": "Sarapan pagi di penginapan."},
+                                        {"time": "08.30 - 12.30", "title": "Private Boat Snorkeling", "desc": "Berlayar dengan perahu sewaan khusus berdua menuju spot snorkeling terbaik."},
+                                        {"time": "12.30 - 14.30", "title": "Romantic Picnic Lunch", "desc": "Makan siang piknik privat berdua di pulau terpencil tanpa gangguan pengunjung lain."},
+                                        {"time": "14.30 - 16.30", "title": "Singgah Pulau Pasir Putih", "desc": "Berjalan berdua menyusuri hamparan pasir putih."},
+                                        {"time": "19.00 - Selesai", "title": "Makan Malam Rileks", "desc": "Makan malam hangat di penginapan."}
+                                    ]
+                                },
+                                {
+                                    "day": 3,
+                                    "desc": "Mangrove Forest & Sunset",
+                                    "activities": [
+                                        {"time": "07.30 - 08.30", "title": "Sarapan Pagi", "desc": "Sarapan pagi bersama di penginapan."},
+                                        {"time": "09.00 - 12.00", "title": "Tracking Mangrove Forest", "desc": "Berjalan santai menyusuri jembatan kayu di dalam hutan mangrove yang sejuk dan asri."},
+                                        {"time": "12.00 - 14.00", "title": "Makan Siang Romantis", "desc": "Makan siang santai bersama pasangan di restoran lokal pilihan."},
+                                        {"time": "15.00 - 17.30", "title": "Sunset Spot Bukit Anora", "desc": "Menikmati pemandangan senja yang menakjubkan dari puncak Bukit Anora berdua."},
+                                        {"time": "19.00 - Selesai", "title": "Makan Malam & Acara Bebas", "desc": "Makan malam di penginapan dan menikmati malam terakhir Karimunjawa."}
+                                    ]
+                                },
+                                {
+                                    "day": 4,
+                                    "desc": "Souvenir & Check Out",
+                                    "activities": [
+                                        {"time": "07.00 - 08.00", "title": "Sarapan Pagi", "desc": "Sarapan pagi bersama di penginapan."},
+                                        {"time": "08.00 - 10.00", "title": "Bukit Love & Souvenir", "desc": "Mengunjungi Bukit Love berfoto dan membeli suvenir khas berdua."},
+                                        {"time": "10.00 - 11.00", "title": "Packing & Check Out", "desc": "Check-out penginapan."},
+                                        {"time": "11.00 - Selesai", "title": "Transfer & Kepulangan", "desc": "Diantar ke pelabuhan untuk pulang ke kota asal. Trip selesai!"}
+                                    ]
+                                }
+                            ]
+                        };
+
+                        if (!itineraryEditorData) {
+                            itineraryEditorData = {};
+                        }
+                        
+                        // Ensure all 7 keys exist in itineraryEditorData
+                        const itKeys = ['2D1N', '3D2N', '4D3N', 'HONEYMOON_2D1N', 'HONEYMOON_3D2N', 'HONEYMOON_3D2N_SMG', 'HONEYMOON_4D3N'];
+                        itKeys.forEach(k => {
+                            if (!itineraryEditorData[k] || !Array.isArray(itineraryEditorData[k])) {
+                                itineraryEditorData[k] = JSON.parse(JSON.stringify(defaultItineraryTemplate[k] || []));
+                            }
+                        });
+
+                        let activeItineraryDuration = '3D2N';
+
+                        function setItineraryDuration(dur) {
+                            activeItineraryDuration = dur;
+                            
+                            document.querySelectorAll('.btn-duration-tab').forEach(btn => {
+                                btn.style.background = 'rgba(255,255,255,0.08)';
+                                btn.style.color = '#fff';
+                                btn.style.borderColor = 'var(--border-color)';
+                            });
+                            
+                            const activeBtn = document.getElementById('btn-it-' + dur);
+                            if (activeBtn) {
+                                activeBtn.style.background = 'var(--primary-teal)';
+                                activeBtn.style.color = '#fff';
+                                activeBtn.style.borderColor = 'var(--primary-teal)';
+                            }
+                            
+                            renderItineraryEditor();
+                        }
+
+                        function renderItineraryEditor() {
+                            const container = document.getElementById('itinerary-days-container');
+                            if (!container) return;
+                            container.innerHTML = '';
+                            
+                            const days = itineraryEditorData[activeItineraryDuration] || [];
+                            
+                            if (days.length === 0) {
+                                container.innerHTML = '<div style="text-align:center; color:var(--medium-gray); font-size:13px; padding:20px 0;">Belum ada rencana perjalanan untuk durasi ini. Silakan klik "+ Tambah Hari Baru" atau "Reset ke Template Default".</div>';
+                                updateItineraryHiddenField();
+                                return;
+                            }
+                            
+                            days.forEach((dayData, dayIdx) => {
+                                dayData.day = dayIdx + 1;
+                                
+                                const dayCard = document.createElement('div');
+                                dayCard.style.background = 'rgba(255,255,255,0.02)';
+                                dayCard.style.border = '1px solid var(--border-color)';
+                                dayCard.style.borderRadius = '8px';
+                                dayCard.style.padding = '15px';
+                                dayCard.style.position = 'relative';
+                                dayCard.style.marginBottom = '15px';
+                                
+                                let activitiesHTML = '';
+                                const activities = dayData.activities || [];
+                                
+                                activities.forEach((act, actIdx) => {
+                                    activitiesHTML += `
+                                    <div style="display: grid; grid-template-columns: 150px 200px 1fr 40px; gap: 10px; margin-bottom: 8px; align-items: start;">
+                                        <input type="text" class="form-control" style="height:32px; font-size:12px; color:var(--charcoal);" placeholder="Waktu (e.g. 11.30 - 12.30)" value="${escapeHTML(act.time || '')}" onchange="updateItineraryActivity(${dayIdx}, ${actIdx}, 'time', this.value)">
+                                        <input type="text" class="form-control" style="height:32px; font-size:12px; color:var(--charcoal);" placeholder="Judul Kegiatan" value="${escapeHTML(act.title || '')}" onchange="updateItineraryActivity(${dayIdx}, ${actIdx}, 'title', this.value)">
+                                        <textarea class="form-control" style="height:32px; min-height:32px; font-size:12px; padding:6px 10px; resize:vertical; color:var(--charcoal);" placeholder="Keterangan Deskripsi" onchange="updateItineraryActivity(${dayIdx}, ${actIdx}, 'desc', this.value)">${escapeHTML(act.desc || '')}</textarea>
+                                        <button type="button" class="btn-remove-rt" onclick="deleteItineraryActivity(${dayIdx}, ${actIdx})" style="height:32px; width:100%; border-radius:6px; display:flex; align-items:center; justify-content:center; padding:0; margin:0; cursor:pointer;">✕</button>
+                                    </div>
+                                    `;
+                                });
+                                
+                                dayCard.innerHTML = `
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px dashed var(--border-color); padding-bottom:8px;">
+                                    <span style="font-weight:700; font-size:14px; color:var(--primary-teal);">HARI ${dayData.day}</span>
+                                    <button type="button" class="btn-remove-rt" onclick="deleteItineraryDay(${dayIdx})" style="height:26px; padding:0 8px; font-size:11px; border-radius:4px; cursor:pointer;">✕ Hapus Hari</button>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 12px;">
+                                    <label class="form-label" style="font-size:11px;">Deskripsi Singkat Hari (e.g. Land Tour & Sunset)</label>
+                                    <input type="text" class="form-control" style="height:34px; font-size:13px; color:var(--charcoal);" value="${escapeHTML(dayData.desc || '')}" onchange="updateItineraryDayDesc(${dayIdx}, this.value)">
+                                </div>
+                                
+                                <div style="margin-top: 10px;">
+                                    <label class="form-label" style="font-size:11px; font-weight:700;">Daftar Kegiatan:</label>
+                                    <div id="activities-container-${dayIdx}">
+                                        ${activitiesHTML}
+                                    </div>
+                                    <button type="button" class="btn-secondary" onclick="addItineraryActivity(${dayIdx})" style="height:28px; padding:0 12px; font-size:11px; border-radius:4px; margin-top:8px; cursor:pointer; color:var(--charcoal);">+ Tambah Kegiatan</button>
+                                </div>
+                                `;
+                                
+                                container.appendChild(dayCard);
+                            });
+                            
+                            updateItineraryHiddenField();
+                        }
+
+                        function escapeHTML(str) {
+                            if (!str) return '';
+                            return str
+                                .replace(/&/g, "&amp;")
+                                .replace(/</g, "&lt;")
+                                .replace(/>/g, "&gt;")
+                                .replace(/"/g, "&quot;")
+                                .replace(/'/g, "&#039;");
+                        }
+
+                        function updateItineraryDayDesc(dayIdx, value) {
+                            if (itineraryEditorData[activeItineraryDuration][dayIdx]) {
+                                itineraryEditorData[activeItineraryDuration][dayIdx].desc = value;
+                                updateItineraryHiddenField();
+                            }
+                        }
+
+                        function updateItineraryActivity(dayIdx, actIdx, field, value) {
+                            if (itineraryEditorData[activeItineraryDuration][dayIdx] && 
+                                itineraryEditorData[activeItineraryDuration][dayIdx].activities[actIdx]) {
+                                itineraryEditorData[activeItineraryDuration][dayIdx].activities[actIdx][field] = value;
+                                updateItineraryHiddenField();
+                            }
+                        }
+
+                        function addItineraryDay() {
+                            const durDays = itineraryEditorData[activeItineraryDuration] || [];
+                            const newDayNum = durDays.length + 1;
+                            durDays.push({
+                                "day": newDayNum,
+                                "desc": "Hari Baru",
+                                "activities": []
+                            });
+                            renderItineraryEditor();
+                        }
+
+                        function deleteItineraryDay(dayIdx) {
+                            if (confirm("Apakah Anda yakin ingin menghapus Hari " + (dayIdx + 1) + " beserta seluruh kegiatannya?")) {
+                                itineraryEditorData[activeItineraryDuration].splice(dayIdx, 1);
+                                renderItineraryEditor();
+                            }
+                        }
+
+                        function addItineraryActivity(dayIdx) {
+                            if (itineraryEditorData[activeItineraryDuration][dayIdx]) {
+                                if (!itineraryEditorData[activeItineraryDuration][dayIdx].activities) {
+                                    itineraryEditorData[activeItineraryDuration][dayIdx].activities = [];
+                                }
+                                itineraryEditorData[activeItineraryDuration][dayIdx].activities.push({
+                                    "time": "00.00 - 00.00",
+                                    "title": "Kegiatan Baru",
+                                    "desc": "Detail keterangan..."
+                                });
+                                renderItineraryEditor();
+                            }
+                        }
+
+                        function deleteItineraryActivity(dayIdx, actIdx) {
+                            if (itineraryEditorData[activeItineraryDuration][dayIdx] && 
+                                itineraryEditorData[activeItineraryDuration][dayIdx].activities) {
+                                itineraryEditorData[activeItineraryDuration][dayIdx].activities.splice(actIdx, 1);
+                                renderItineraryEditor();
+                            }
+                        }
+
+                        function resetItineraryToTemplate() {
+                            if (confirm("Apakah Anda yakin ingin me-reset itinerary durasi \"" + activeItineraryDuration + "\" ini ke template bawaan sistem? Perubahan kustom yang belum disimpan akan hilang.")) {
+                                itineraryEditorData[activeItineraryDuration] = JSON.parse(JSON.stringify(defaultItineraryTemplate[activeItineraryDuration]));
+                                renderItineraryEditor();
+                            }
+                        }
+
+                        function updateItineraryHiddenField() {
+                            const inputEl = document.getElementById('itinerary_data');
+                            if (inputEl) {
+                                inputEl.value = JSON.stringify(itineraryEditorData);
+                            }
+                        }
+
+                        // Load initial duration tab
+                        document.addEventListener("DOMContentLoaded", function() {
+                            setItineraryDuration('3D2N');
+                        });
                     </script>
 
 
