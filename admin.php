@@ -143,6 +143,9 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
         }
 
         $detail_deskripsi = isset($_POST['detail_deskripsi']) ? trim($_POST['detail_deskripsi']) : ""; // Boleh ada tag HTML
+        $fasilitas_paket = isset($_POST['fasilitas_paket']) ? trim($_POST['fasilitas_paket']) : "";
+        $perlengkapan_dibawa = isset($_POST['perlengkapan_dibawa']) ? trim($_POST['perlengkapan_dibawa']) : "";
+        $tempat_dikunjungi = isset($_POST['tempat_dikunjungi']) ? trim($_POST['tempat_dikunjungi']) : "";
 
         // Cek bentrok ID jika create baru atau ID diubah
         if (($action === 'create' || $id !== $old_id) && !empty($daftar_penginapan)) {
@@ -245,6 +248,9 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
                 "show_in_slider" => $show_in_slider,
                 "lokasi" => $lokasi,
                 "detail_deskripsi" => $detail_deskripsi,
+                "fasilitas_paket" => $fasilitas_paket,
+                "perlengkapan_dibawa" => $perlengkapan_dibawa,
+                "tempat_dikunjungi" => $tempat_dikunjungi,
                 "foto_galeri" => $foto_galeri
             ];
             if (!empty($harga_2d1n)) {
@@ -454,49 +460,32 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'edit' && iss
 // HANDLER SLIDER HERO PIN / UNPIN / UPDATE (DECOUPLED FROM CATALOG)
 // ==========================================
 
-// Handler POST Pin ke Slider
-if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'slider_pin') {
-    $pin_id = isset($_POST['lodging_id']) ? $_POST['lodging_id'] : '';
-    if (!empty($pin_id)) {
-        // Cari data penginapan asal
-        $source_lodging = null;
-        foreach ($daftar_penginapan as $p) {
-            if ($p['id'] === $pin_id) {
-                $source_lodging = $p;
-                break;
-            }
-        }
-
-        if ($source_lodging !== null) {
-            // Cek apakah sudah ada di slider_data
-            $already_exists = false;
-            foreach ($slider_data as $s) {
-                if (isset($s['lodging_id']) && $s['lodging_id'] === $pin_id) {
-                    $already_exists = true;
-                    break;
-                }
-            }
-
-            if (!$already_exists) {
-                $new_slide = [
-                    "id" => uniqid() . '-slide', // ID slide yang unik dan mandiri
-                    "lodging_id" => $source_lodging['id'],
-                    "nama" => $source_lodging['nama'],
-                    "judul_slider" => isset($source_lodging['judul_slider']) ? $source_lodging['judul_slider'] : '',
-                    "durasi" => isset($source_lodging['durasi']) ? $source_lodging['durasi'] : '3D2N',
-                    "harga" => $source_lodging['harga'],
-                    "gambar" => $source_lodging['gambar']
-                ];
-                $slider_data[] = $new_slide;
-                file_put_contents(__DIR__ . '/slider.json', json_encode($slider_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                $_SESSION['success_message'] = "Paket '" . $source_lodging['nama'] . "' berhasil disematkan ke Slider Hero secara mandiri!";
-            } else {
-                $_SESSION['error_message'] = "Error: Paket ini sudah berada di slider!";
-            }
-        } else {
-            $_SESSION['error_message'] = "Error: Paket penginapan tidak ditemukan!";
-        }
+// Handler POST Tambah Slide Baru
+if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'slider_add') {
+    $judul_slider = isset($_POST['judul_slider']) ? trim(htmlspecialchars($_POST['judul_slider'])) : "";
+    $nama = isset($_POST['nama']) ? trim(htmlspecialchars($_POST['nama'])) : "";
+    $durasi = isset($_POST['durasi']) ? trim(htmlspecialchars($_POST['durasi'])) : "";
+    $harga = isset($_POST['harga']) ? trim(htmlspecialchars($_POST['harga'])) : "";
+    
+    $gambar_path = "assets/images/paket-snorkeling.jpg";
+    if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
+        $gambar_path = handleImageUpload('gambar');
     }
+
+    $new_slide = [
+        "id" => uniqid() . '-slide',
+        "lodging_id" => 'custom-' . uniqid(),
+        "nama" => $nama,
+        "judul_slider" => $judul_slider,
+        "durasi" => $durasi,
+        "harga" => $harga,
+        "gambar" => $gambar_path
+    ];
+    
+    $slider_data[] = $new_slide;
+    file_put_contents(__DIR__ . '/slider.json', json_encode($slider_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    $_SESSION['success_message'] = "Slide baru '" . $nama . "' berhasil ditambahkan ke Slider Hero!";
+
     header("Location: admin.php?action=manage_slider");
     exit;
 }
@@ -1738,6 +1727,30 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                 required><?php echo $edit_mode ? $edit_lodging['detail_deskripsi'] : ''; ?></textarea>
                         </div>
 
+                        <?php
+                        $default_fasilitas = "Tiket express bahari pulang pergi sesuai paket yang di pilih\nTransportasi selama di karimunjawa ( inova / avanza )\nHotel sesuai paket yang di pilih\nMakan full board (pagi, siang, malam) sesuai paket yang di pilih\nTour leader\nAsuransi selama wisata berlangsung\nTour darat (mobil inova / avanza )\nTour laut privat 1x\nSnorkeling equipment & life jacket\nGuide HPI lesensi & Guide Karimunjawa journey\nWelcome drink kelapa muda\nCandle Dinner dari team karimunjawa journey\nCamera underwater, gopro hero, dome, sony mirolles, dan drone dji\nP3K\nBBQ di pulau, dan air mineral\nTiket masuk wisata & retribusi\nFoto & video dokumentasi";
+                        $default_perlengkapan = "Tas daypak (koper tidak disarankan karna harus naik turun kapal)\nPakaian ganti secukupnya\nBaju mudah kering untuk berenang\nSunblok & obat obatan pribadi\nFlashdisk untuk copy foto & video dokumentasi (16GB)\nLotion anti nyamuk\nAlat pancing bila ingin memancing\nCash money (dikarimujawa hanya ada BRI/ATM bersama)\nKacamata hitam, topi, dll.";
+                        $default_tempat = "Pulau menjangan kecil\nPantai tanjung gelam\nBukit love\nPantai pancuran ( sunset )\nTracking hutan mangrove\nBukit anora\nPantai tanjung gelam\nPulau menjangan kecil\nPulau geleyang\nPulau cemara kecil\nPulau cemara besar\nPulau cilik\nGosong cemara kecil\nGosong tengah";
+                        
+                        $val_fasilitas = ($edit_mode && isset($edit_lodging['fasilitas_paket']) && !empty($edit_lodging['fasilitas_paket'])) ? $edit_lodging['fasilitas_paket'] : $default_fasilitas;
+                        $val_perlengkapan = ($edit_mode && isset($edit_lodging['perlengkapan_dibawa']) && !empty($edit_lodging['perlengkapan_dibawa'])) ? $edit_lodging['perlengkapan_dibawa'] : $default_perlengkapan;
+                        $val_tempat = ($edit_mode && isset($edit_lodging['tempat_dikunjungi']) && !empty($edit_lodging['tempat_dikunjungi'])) ? $edit_lodging['tempat_dikunjungi'] : $default_tempat;
+                        ?>
+
+                        <div class="card-subtitle-divider" style="margin-top:20px;"><span>INFORMASI TAMBAHAN PAKET</span></div>
+                        <div class="form-group">
+                            <label class="form-label" for="fasilitas_paket">Fasilitas yang Didapat</label>
+                            <textarea class="form-control" id="fasilitas_paket" name="fasilitas_paket" rows="8"><?php echo htmlspecialchars($val_fasilitas); ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="perlengkapan_dibawa">Perlengkapan yang Harus Dibawa</label>
+                            <textarea class="form-control" id="perlengkapan_dibawa" name="perlengkapan_dibawa" rows="6"><?php echo htmlspecialchars($val_perlengkapan); ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="tempat_dikunjungi">Tempat yang Dikunjungi</label>
+                            <textarea class="form-control" id="tempat_dikunjungi" name="tempat_dikunjungi" rows="8"><?php echo htmlspecialchars($val_tempat); ?></textarea>
+                        </div>
+
                         <!-- FOTO UTAMA DAN GALERI -->
                         <div class="card-subtitle-divider"><span>FOTO UTAMA & THUMBNAIL</span></div>
                         <div class="form-group">
@@ -2251,58 +2264,41 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                     <!-- Layout Grid 2 Kolom untuk Pinning & Listing -->
                     <div style="display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px;">
 
-                        <!-- Panel Sematkan / Pin Penginapan Baru -->
+                        <!-- Panel Tambah Slide Baru -->
                         <div class="table-card" style="padding: 20px;">
-                            <h3 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 15px;">Sematkan Paket ke
-                                Slider</h3>
-                            <?php
-                            // Ambil daftar penginapan yang belum berada di slider_data
-                            $available_to_pin = [];
-                            foreach ($daftar_penginapan as $p) {
-                                $is_pinned = false;
-                                foreach ($slider_data as $s) {
-                                    if (isset($s['lodging_id']) && $s['lodging_id'] === $p['id']) {
-                                        $is_pinned = true;
-                                        break;
-                                    }
-                                }
-                                if (!$is_pinned) {
-                                    $available_to_pin[] = $p;
-                                }
-                            }
-                            ?>
-                            <?php if (!empty($available_to_pin)): ?>
-                                <form action="admin.php?action=manage_slider" method="POST"
-                                    style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                                    <div class="form-group" style="margin: 0; min-width: 280px; flex: 1;">
-                                        <select class="form-control" name="lodging_id" required
-                                            style="background-color: #172425; color: #fff;">
-                                            <option value="">-- Pilih Paket Penginapan --</option>
-                                            <?php foreach ($available_to_pin as $ap): ?>
-                                                <option value="<?php echo $ap['id']; ?>">
-                                                    <?php echo htmlspecialchars($ap['nama']); ?>
-                                                    (<?php echo htmlspecialchars($ap['harga']); ?>)
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
+                            <h3 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 15px;">Tambah Slide Baru</h3>
+                            <form action="admin.php?action=manage_slider" method="POST" enctype="multipart/form-data">
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <label class="form-label" for="new_judul_slider">Judul Slider (Teks Bercetak Tebal di Halaman Utama)</label>
+                                    <input class="form-control" type="text" id="new_judul_slider" name="judul_slider" placeholder="Contoh: Paket Karimunjawa 3 Hari 2 Malam" style="background-color: #172425; color: #fff;">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 1; min-width: 250px;">
+                                        <label class="form-label" for="new_nama">Nama Paket (Teks Abu-abu/Nama Penginapan)</label>
+                                        <input class="form-control" type="text" id="new_nama" name="nama" required style="background-color: #172425; color: #fff;">
                                     </div>
-                                    <button type="submit" name="action" value="slider_pin" class="btn-new"
-                                        style="margin: 0; border: none; height: 42px; cursor: pointer;">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-plus">
+                                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                                        <label class="form-label" for="new_durasi">Durasi Paket</label>
+                                        <input class="form-control" type="text" id="new_durasi" name="durasi" placeholder="Contoh: 3D2N atau 3 Hari 2 Malam" style="background-color: #172425; color: #fff;">
+                                    </div>
+                                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                                        <label class="form-label" for="new_harga">Harga Terendah</label>
+                                        <input class="form-control" type="text" id="new_harga" name="harga" required style="background-color: #172425; color: #fff;">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 15px;">
+                                    <label class="form-label" for="new_gambar">Foto Thumbnail Slide</label>
+                                    <input class="form-control" type="file" id="new_gambar" name="gambar" accept="image/*" style="background-color: #172425; color: #fff;" required>
+                                </div>
+                                <div class="form-actions" style="margin-top: 20px; display: flex; justify-content: flex-end;">
+                                    <button type="submit" name="action" value="slider_add" class="btn-new" style="margin: 0; border: none; height: auto; cursor: pointer; padding: 10px 20px; border-radius: 6px;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus" style="margin-right: 8px;">
                                             <line x1="12" y1="5" x2="12" y2="19"></line>
                                             <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        </svg>
-                                        Sematkan ke Slider
+                                        </svg>Tambah Slide
                                     </button>
-                                </form>
-                            <?php else: ?>
-                                <div
-                                    style="color: var(--text-muted); font-size: 14px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1); border-radius: 6px; padding: 15px; text-align: center;">
-                                    Semua paket penginapan yang tersedia sudah disematkan ke slider utama.
                                 </div>
-                            <?php endif; ?>
+                            </form>
                         </div>
 
                         <!-- Tabel Paket Aktif di Slider -->

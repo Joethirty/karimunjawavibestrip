@@ -640,6 +640,80 @@ include_once $base_url . 'header.php';
                 }
                 </script>
 
+                <!-- Info Tambahan Paket -->
+                <div class="lodging-features-card" style="margin-top: 30px;">
+                    <div class="lodging-features-title" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                        <span>Informasi Tambahan Paket</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="font-size: 16px; font-weight: 700; color: var(--dark-gray); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Fasilitas yang di dapat paket honeymoon:
+                        </h3>
+                        <ul style="list-style-type: disc; margin-left: 20px; color: var(--charcoal); font-size: 14.5px; line-height: 1.8;">
+                            <li>Tiket express bahari pulang pergi sesuai paket yang di pilih</li>
+                            <li>Transportasi selama di karimunjawa ( inova / avanza )</li>
+                            <li>Hotel sesuai paket yang di pilih</li>
+                            <li>Makan full board (pagi, siang, malam) sesuai paket yang di pilih</li>
+                            <li>Tour leader</li>
+                            <li>Asuransi selama wisata berlangsung</li>
+                            <li>Tour darat (mobil inova / avanza )</li>
+                            <li>Tour laut privat 1x</li>
+                            <li>Snorkeling equipment & life jacket</li>
+                            <li>Guide HPI lesensi & Guide Karimunjawa journey</li>
+                            <li>Welcome drink kelapa muda</li>
+                            <li>Candle Dinner dari team karimunjawa journey</li>
+                            <li>Camera underwater, gopro hero, dome, sony mirolles, dan drone dji</li>
+                            <li>P3K</li>
+                            <li>BBQ di pulau, dan air mineral</li>
+                            <li>Tiket masuk wisata & retribusi</li>
+                            <li>Foto & video dokumentasi</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="font-size: 16px; font-weight: 700; color: var(--dark-gray); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            Perlengkapan yang harus dibawa di Karimunjawa:
+                        </h3>
+                        <ul style="list-style-type: disc; margin-left: 20px; color: var(--charcoal); font-size: 14.5px; line-height: 1.8;">
+                            <li>Tas daypak (koper tidak disarankan karna harus naik turun kapal)</li>
+                            <li>Pakaian ganti secukupnya</li>
+                            <li>Baju mudah kering untuk berenang</li>
+                            <li>Sunblok & obat obatan pribadi</li>
+                            <li>Flashdisk untuk copy foto & video dokumentasi (16GB)</li>
+                            <li>Lotion anti nyamuk</li>
+                            <li>Alat pancing bila ingin memancing</li>
+                            <li>Cash money (dikarimujawa hanya ada BRI/ATM bersama)</li>
+                            <li>Kacamata hitam, topi, dll.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 style="font-size: 16px; font-weight: 700; color: var(--dark-gray); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            PAKET HONEYMOON KARIMUNJAWA – TEMPAT YANG DI KUNJUNGI
+                        </h3>
+                        <ul style="list-style-type: disc; margin-left: 20px; color: var(--charcoal); font-size: 14.5px; line-height: 1.8;">
+                            <li>Pulau menjangan kecil</li>
+                            <li>Pantai tanjung gelam</li>
+                            <li>Bukit love</li>
+                            <li>Pantai pancuran ( sunset )</li>
+                            <li>Tracking hutan mangrove</li>
+                            <li>Bukit anora</li>
+                            <li>Pantai tanjung gelam</li>
+                            <li>Pulau menjangan kecil</li>
+                            <li>Pulau geleyang</li>
+                            <li>Pulau cemara kecil</li>
+                            <li>Pulau cemara besar</li>
+                            <li>Pulau cilik</li>
+                            <li>Gosong cemara kecil</li>
+                            <li>Gosong tengah</li>
+                        </ul>
+                    </div>
+                </div>
+
                 <!-- Testimoni & Ulasan Section -->
                 <div class="lodging-features-card" id="testimoni-paket" style="margin-top: 30px;">
                     <div class="lodging-features-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
