@@ -485,7 +485,7 @@ a:hover {
     justify-content: center;
     width: 26px;
     height: 26px;
-    background-color: var(--vibrant-orange);
+    background-color: var(--primary-teal);
     color: #fff;
     border-radius: 50%;
     margin-right: 10px;
@@ -496,7 +496,7 @@ a:hover {
 
 .hero-slider .view-detail-btn:hover .arrow-icon {
     background-color: #fff;
-    color: var(--vibrant-orange);
+    color: var(--primary-teal);
 }
 
 .hero-slider .slider-arrow {
