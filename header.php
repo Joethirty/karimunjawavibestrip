@@ -17,14 +17,14 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/style.css?v=<?php echo filemtime(__DIR__ . '/assets/css/style.css'); ?>">
-    <link rel="icon" type="image/png" href="<?php echo $base_url; ?>assets/images/logo.png">
+    <link rel="icon" type="image/png" href="<?php echo get_logo_url($base_url); ?>">
 </head>
 <body>
 
     <nav class="header-nav <?php echo $is_home ? 'transparent-header' : 'solid-header'; ?>" id="headerNav">
         <div class="nav-container">
             <div class="logo" style="cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="window.location.href='<?php echo $base_url; ?>index.php';">
-                <img src="<?php echo $base_url; ?>assets/images/logo.png" alt="KarimunJawa Vibes Trip Logo" class="logo-img">
+                <img src="<?php echo get_logo_url($base_url); ?>" alt="KarimunJawa Vibes Trip Logo" class="logo-img">
                 <span class="logo-text">KarimunJawa Vibes Trip</span>
             </div>
             

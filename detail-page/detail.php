@@ -122,7 +122,7 @@ include_once $base_url . 'header.php';
 
 <?php if ($penginapan): ?>
     <!-- Main Container -->
-    <main class="container" style="padding-top: 80px; max-width: 1200px; margin: 0 auto;">
+    <main class="container" style="padding-top: 120px; max-width: 1200px; margin: 0 auto;">
         
         <!-- Tombol Kembali di Pojok Kiri Atas di atas Gambar -->
         <div style="margin-bottom: 20px; text-align: left;">

@@ -10,7 +10,8 @@ $page_title = "Galeri Wisata & Penginapan Karimunjawa - Karimunjawa Vibes Strip"
 include_once $base_url . 'header.php';
 
 // Gabungkan galeri foto umum dengan foto utama dari setiap penginapan
-$semua_foto_galeri = $galeri_foto;
+global $galeri_foto;
+$semua_foto_galeri = isset($galeri_foto) && is_array($galeri_foto) ? $galeri_foto : [];
 if (isset($daftar_penginapan) && is_array($daftar_penginapan)) {
     foreach ($daftar_penginapan as $p) {
         $tag = "Resort";
@@ -34,7 +35,7 @@ if (isset($daftar_penginapan) && is_array($daftar_penginapan)) {
 ?>
 
 <!-- Main Gallery Section -->
-<main class="container" style="padding-top: 80px;">
+<main class="container" style="padding-top: 120px;">
     <!-- Tombol Kembali di Pojok Kiri Atas -->
     <div style="margin-bottom: 20px; text-align: left;">
         <a href="<?php echo $base_url; ?>index.php" class="btn-back">

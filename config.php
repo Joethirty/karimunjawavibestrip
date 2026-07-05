@@ -869,4 +869,21 @@ if (file_exists($slider_file)) {
     }
     file_put_contents($slider_file, json_encode($slider_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 }
+
+// HELPER DYNAMIC LOGO GETTER
+if (!function_exists('get_logo_url')) {
+    function get_logo_url($base_url = './') {
+        $settings_file = __DIR__ . '/settings.json';
+        $logo = 'assets/images/logo.png';
+        if (file_exists($settings_file)) {
+            $settings = json_decode(file_get_contents($settings_file), true);
+            if (!empty($settings['logo_path'])) {
+                $logo = $settings['logo_path'];
+            }
+        }
+        $full_path = __DIR__ . '/' . $logo;
+        $version = file_exists($full_path) ? filemtime($full_path) : time();
+        return $base_url . $logo . '?v=' . $version;
+    }
+}
 ?>

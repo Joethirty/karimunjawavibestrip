@@ -460,7 +460,7 @@ include_once $base_url . 'header.php';
         <div class="honeymoon-pricing-container">
             <?php
             if (!function_exists('get_honeymoon_table_data')) {
-                function get_honeymoon_table_data($p) {
+                function get_honeymoon_table_data(array $p) {
                     $nama = $p['nama'];
                     $tipe = [];
                     

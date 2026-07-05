@@ -490,6 +490,80 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'edit' && iss
 }
 
 // ==========================================
+// HANDLER UPDATE LOGO & RESET
+// ==========================================
+
+// Handler POST Update Logo
+if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'logo_update') {
+    if (isset($_FILES['logo_file']) && $_FILES['logo_file']['error'] === UPLOAD_ERR_OK) {
+        $file_tmp = $_FILES['logo_file']['tmp_name'];
+        $file_ext = strtolower(pathinfo($_FILES['logo_file']['name'], PATHINFO_EXTENSION));
+        
+        $allowed_exts = ['png', 'jpg', 'jpeg', 'svg', 'webp'];
+        if (in_array($file_ext, $allowed_exts)) {
+            // Tentukan nama file baru
+            $logo_filename = 'logo_current.' . $file_ext;
+            $dest_path = __DIR__ . '/assets/images/' . $logo_filename;
+            
+            if (move_uploaded_file($file_tmp, $dest_path)) {
+                // Simpan path ke settings.json
+                $settings_file = __DIR__ . '/settings.json';
+                $settings = [];
+                if (file_exists($settings_file)) {
+                    $settings = json_decode(file_get_contents($settings_file), true);
+                    if (!is_array($settings)) {
+                        $settings = [];
+                    }
+                }
+                
+                // Hapus file logo kustom lama jika namanya berbeda
+                if (isset($settings['logo_path']) && $settings['logo_path'] !== 'assets/images/' . $logo_filename && $settings['logo_path'] !== 'assets/images/logo.png') {
+                    $old_logo_file = __DIR__ . '/' . $settings['logo_path'];
+                    if (file_exists($old_logo_file)) {
+                        @unlink($old_logo_file);
+                    }
+                }
+                
+                $settings['logo_path'] = 'assets/images/' . $logo_filename;
+                file_put_contents($settings_file, json_encode($settings, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+                
+                $_SESSION['success_message'] = "Logo berhasil diperbarui!";
+            } else {
+                $_SESSION['error_message'] = "Gagal memindahkan file logo yang diunggah.";
+            }
+        } else {
+            $_SESSION['error_message'] = "Format file tidak didukung. Harap unggah file gambar (png, jpg, jpeg, svg, webp).";
+        }
+    } else {
+        $_SESSION['error_message'] = "Gagal mengunggah file logo.";
+    }
+    header("Location: admin.php?action=manage_logo");
+    exit;
+}
+
+// Handler GET Reset Logo
+if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'logo_reset') {
+    $settings_file = __DIR__ . '/settings.json';
+    if (file_exists($settings_file)) {
+        $settings = json_decode(file_get_contents($settings_file), true);
+        if (is_array($settings)) {
+            // Hapus file logo kustom yang diunggah untuk menghemat storage
+            if (isset($settings['logo_path']) && $settings['logo_path'] !== 'assets/images/logo.png') {
+                $old_logo_file = __DIR__ . '/' . $settings['logo_path'];
+                if (file_exists($old_logo_file)) {
+                    @unlink($old_logo_file);
+                }
+            }
+            unset($settings['logo_path']);
+            file_put_contents($settings_file, json_encode($settings, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        }
+    }
+    $_SESSION['success_message'] = "Logo berhasil dikembalikan ke default!";
+    header("Location: admin.php?action=manage_logo");
+    exit;
+}
+
+// ==========================================
 // HANDLER SLIDER HERO PIN / UNPIN / UPDATE (DECOUPLED FROM CATALOG)
 // ==========================================
 
@@ -721,7 +795,7 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Karimunjawa Vibes Trip</title>
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="icon" type="image/png" href="<?php echo get_logo_url(); ?>">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1529,7 +1603,7 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
             <div class="login-card">
                 <div class="login-logo"
                     style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px;">
-                    <img src="assets/images/logo.png" alt="Logo" style="height: 36px; object-fit: contain;">
+                    <img src="<?php echo get_logo_url(); ?>" alt="Logo" style="height: 52px; object-fit: contain;">
                     <span>KVIBESTRIP <span style="color: var(--primary-teal);">ADMIN</span></span>
                 </div>
                 <div class="login-subtitle">Dashboard Pengelolaan Penginapan</div>
@@ -1561,7 +1635,7 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
         <div class="mobile-nav-header">
             <div class="sidebar-brand"
                 style="margin-bottom: 0; padding-left: 0; font-size: 18px; display: flex; align-items: center; gap: 8px;">
-                <img src="assets/images/logo.png" alt="Logo" style="height: 28px; object-fit: contain;">
+                <img src="<?php echo get_logo_url(); ?>" alt="Logo" style="height: 36px; object-fit: contain;">
                 <span>KVIBESTRIP <span>ADMIN</span></span>
             </div>
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
@@ -1578,7 +1652,7 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
             <aside class="sidebar">
                 <div class="sidebar-brand"
                     style="display: flex; align-items: center; gap: 8px; margin-bottom: 30px; padding-left: 0;">
-                    <img src="assets/images/logo.png" alt="Logo" style="height: 32px; object-fit: contain;">
+                    <img src="<?php echo get_logo_url(); ?>" alt="Logo" style="height: 44px; object-fit: contain;">
                     <span>KVIBESTRIP <span>ADMIN</span></span>
                 </div>
                 <ul class="sidebar-menu">
@@ -1650,6 +1724,18 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                 <polyline points="21 15 16 10 5 21"></polyline>
                             </svg>
                             Kelola Galeri
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin.php?action=manage_logo"
+                            class="sidebar-link <?php echo (isset($_GET['action']) && $_GET['action'] === 'manage_logo') ? 'active' : ''; ?>">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-settings">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                            Kelola Logo
                         </a>
                     </li>
                 </ul>
@@ -3156,6 +3242,121 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                 style="line-height: 38px; display: inline-block; text-align: center; text-decoration: none;">Batal</a>
                         </div>
                     </form>
+
+                <?php elseif (isset($_GET['action']) && $_GET['action'] === 'manage_logo'): ?>
+                    <!-- KELOLA DATA LOGO -->
+                    <?php
+                    $is_custom_logo = false;
+                    $settings_file = __DIR__ . '/settings.json';
+                    $logo_file_path = 'assets/images/logo.png';
+                    if (file_exists($settings_file)) {
+                        $settings = json_decode(file_get_contents($settings_file), true);
+                        if (!empty($settings['logo_path'])) {
+                            $logo_file_path = $settings['logo_path'];
+                            if ($logo_file_path !== 'assets/images/logo.png') {
+                                $is_custom_logo = true;
+                            }
+                        }
+                    }
+                    ?>
+                    <div class="header-row">
+                        <div>
+                            <h1 class="page-title">Kelola Logo Website</h1>
+                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Ubah identitas visual logo website Karimunjawa Vibes Trip secara realtime</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; margin-top: 20px;">
+                        <!-- Kolom Form Upload -->
+                        <div class="form-card" style="margin-bottom: 0;">
+                            <h3 style="font-size: 18px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload-cloud"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
+                                Upload Logo Baru
+                            </h3>
+                            
+                            <form action="admin.php" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="action" value="logo_update">
+                                
+                                <div class="form-group" style="margin-bottom: 24px;">
+                                    <label class="form-label" style="display: block; margin-bottom: 8px;">Pilih File Gambar Logo</label>
+                                    <div class="file-drop-area" style="border: 2px dashed rgba(28, 187, 180, 0.3); padding: 30px; border-radius: 12px; text-align: center; background: rgba(28, 187, 180, 0.02); transition: all 0.3s ease; position: relative; cursor: pointer;">
+                                        <input type="file" name="logo_file" accept="image/*" required style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;" onchange="previewLogoFile(this)">
+                                        <div style="font-size: 14px; color: var(--text-muted);">
+                                            <p style="font-size: 16px; color: var(--primary-teal); font-weight: 600; margin-bottom: 6px;">Klik atau Tarik file ke sini</p>
+                                            <p style="font-size: 12px;">Format yang didukung: PNG, JPG, JPEG, SVG, WEBP</p>
+                                            <p style="font-size: 12px; margin-top: 4px; color: var(--accent-orange);">Rekomendasi: Gambar transparan (PNG/SVG) landscape dengan rasio proporsional</p>
+                                        </div>
+                                    </div>
+                                    <div id="selected-file-info" style="margin-top: 10px; font-size: 13px; color: var(--primary-teal); font-weight: 600; display: none;">
+                                        File terpilih: <span id="file-name-text"></span>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; gap: 12px; margin-top: 30px;">
+                                    <button type="submit" class="btn-new" style="border: none; cursor: pointer; padding: 12px 28px;">
+                                        Simpan Logo
+                                    </button>
+                                    <?php if ($is_custom_logo): ?>
+                                        <a href="admin.php?action=logo_reset" class="btn-secondary" style="line-height: 40px; display: inline-block; text-align: center; text-decoration: none; padding: 0 20px; border: 1px solid var(--border-color); border-radius: 12px; color: var(--accent-orange); background: rgba(255, 123, 84, 0.05); font-weight: 600;" onclick="return confirm('Apakah Anda yakin ingin mengembalikan logo ke default?')">
+                                            Kembalikan ke Default
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Kolom Preview -->
+                        <div class="form-card" style="margin-bottom: 0;">
+                            <h3 style="font-size: 18px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Pratinjau Logo Saat Ini
+                            </h3>
+                            
+                            <!-- Light background preview -->
+                            <div style="margin-bottom: 20px;">
+                                <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Pada Latar Terang (Header Solid/Scrolled):</span>
+                                <div style="background-color: #F8F9FA; padding: 24px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; min-height: 100px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <img id="logo-preview-light" src="<?php echo get_logo_url(); ?>" alt="Pratinjau Terang" style="height: 58px; object-fit: contain;">
+                                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 600; color: #1e293b;">KarimunJawa Vibes Trip</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dark background preview -->
+                            <div>
+                                <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Pada Latar Gelap (Header Transparent/Hero):</span>
+                                <div style="background: linear-gradient(135deg, #0b1717 0%, #152d2d 100%); padding: 24px; border-radius: 12px; display: flex; align-items: center; justify-content: center; min-height: 100px; border: 1px solid rgba(255,255,255,0.05);">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <img id="logo-preview-dark" src="<?php echo get_logo_url(); ?>" alt="Pratinjau Gelap" style="height: 58px; object-fit: contain;">
+                                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 600; color: #f8fafc;">KarimunJawa Vibes Trip</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function previewLogoFile(input) {
+                            const infoDiv = document.getElementById('selected-file-info');
+                            const nameText = document.getElementById('file-name-text');
+                            const previewLight = document.getElementById('logo-preview-light');
+                            const previewDark = document.getElementById('logo-preview-dark');
+                            
+                            if (input.files && input.files[0]) {
+                                const file = input.files[0];
+                                nameText.innerText = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+                                infoDiv.style.display = 'block';
+                                
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    if(previewLight) previewLight.src = e.target.result;
+                                    if(previewDark) previewDark.src = e.target.result;
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    </script>
 
                 <?php else: ?>
                     <!-- TABEL DAFTAR PENGINAPAN -->
