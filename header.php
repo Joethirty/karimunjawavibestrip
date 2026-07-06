@@ -11,7 +11,7 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($page_title) ? $page_title : 'KarimunJawa Vibes Trip'; ?></title>
+    <title><?php echo isset($page_title) ? $page_title : htmlspecialchars(get_website_title()); ?></title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,8 +24,8 @@ $is_detail_page = (strpos($_SERVER['SCRIPT_NAME'], '/detail-page/') !== false ||
     <nav class="header-nav <?php echo $is_home ? 'transparent-header' : 'solid-header'; ?>" id="headerNav">
         <div class="nav-container">
             <div class="logo" style="cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="window.location.href='<?php echo $base_url; ?>index.php';">
-                <img src="<?php echo get_logo_url($base_url); ?>" alt="KarimunJawa Vibes Trip Logo" class="logo-img">
-                <span class="logo-text">KarimunJawa Vibes Trip</span>
+                <img src="<?php echo get_logo_url($base_url); ?>" alt="<?php echo htmlspecialchars(get_website_title()); ?> Logo" class="logo-img">
+                <span class="logo-text"><?php echo htmlspecialchars(get_website_title()); ?></span>
             </div>
             
             <ul class="nav-menu">

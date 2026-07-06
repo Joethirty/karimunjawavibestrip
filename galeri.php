@@ -4,7 +4,7 @@ $base_url = './';
 require_once $base_url . 'config.php';
 
 // Judul halaman dinamis untuk SEO
-$page_title = "Galeri Wisata & Penginapan Karimunjawa - Karimunjawa Vibes Strip";
+$page_title = "Galeri Wisata & Penginapan Karimunjawa - " . get_website_title();
 
 // Muat komponen header visual
 include_once $base_url . 'header.php';

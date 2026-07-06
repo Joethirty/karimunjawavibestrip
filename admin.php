@@ -493,50 +493,70 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'edit' && iss
 // HANDLER UPDATE LOGO & RESET
 // ==========================================
 
-// Handler POST Update Logo
+// Handler POST Update Logo & Website Title
 if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'logo_update') {
-    if (isset($_FILES['logo_file']) && $_FILES['logo_file']['error'] === UPLOAD_ERR_OK) {
-        $file_tmp = $_FILES['logo_file']['tmp_name'];
-        $file_ext = strtolower(pathinfo($_FILES['logo_file']['name'], PATHINFO_EXTENSION));
-        
-        $allowed_exts = ['png', 'jpg', 'jpeg', 'svg', 'webp'];
-        if (in_array($file_ext, $allowed_exts)) {
-            // Tentukan nama file baru
-            $logo_filename = 'logo_current.' . $file_ext;
-            $dest_path = __DIR__ . '/assets/images/' . $logo_filename;
+    $settings_file = __DIR__ . '/settings.json';
+    $settings = [];
+    if (file_exists($settings_file)) {
+        $settings = json_decode(file_get_contents($settings_file), true);
+        if (!is_array($settings)) {
+            $settings = [];
+        }
+    }
+    
+    // Simpan Judul Website
+    $website_title = isset($_POST['website_title']) ? trim(htmlspecialchars($_POST['website_title'])) : 'KarimunJawa Vibes Trip';
+    if (!empty($website_title)) {
+        $settings['website_title'] = $website_title;
+    }
+    
+    $logo_updated = false;
+    $has_logo_file = isset($_FILES['logo_file']) && $_FILES['logo_file']['error'] !== UPLOAD_ERR_NO_FILE;
+    
+    if ($has_logo_file) {
+        if ($_FILES['logo_file']['error'] === UPLOAD_ERR_OK) {
+            $file_tmp = $_FILES['logo_file']['tmp_name'];
+            $file_ext = strtolower(pathinfo($_FILES['logo_file']['name'], PATHINFO_EXTENSION));
             
-            if (move_uploaded_file($file_tmp, $dest_path)) {
-                // Simpan path ke settings.json
-                $settings_file = __DIR__ . '/settings.json';
-                $settings = [];
-                if (file_exists($settings_file)) {
-                    $settings = json_decode(file_get_contents($settings_file), true);
-                    if (!is_array($settings)) {
-                        $settings = [];
+            $allowed_exts = ['png', 'jpg', 'jpeg', 'svg', 'webp'];
+            if (in_array($file_ext, $allowed_exts)) {
+                // Tentukan nama file baru
+                $logo_filename = 'logo_current.' . $file_ext;
+                $dest_path = __DIR__ . '/assets/images/' . $logo_filename;
+                
+                if (move_uploaded_file($file_tmp, $dest_path)) {
+                    // Hapus file logo kustom lama jika namanya berbeda
+                    if (isset($settings['logo_path']) && $settings['logo_path'] !== 'assets/images/' . $logo_filename && $settings['logo_path'] !== 'assets/images/logo.png') {
+                        $old_logo_file = __DIR__ . '/' . $settings['logo_path'];
+                        if (file_exists($old_logo_file)) {
+                            @unlink($old_logo_file);
+                        }
                     }
+                    
+                    $settings['logo_path'] = 'assets/images/' . $logo_filename;
+                    $logo_updated = true;
+                } else {
+                    $_SESSION['error_message'] = "Gagal memindahkan file logo yang diunggah.";
                 }
-                
-                // Hapus file logo kustom lama jika namanya berbeda
-                if (isset($settings['logo_path']) && $settings['logo_path'] !== 'assets/images/' . $logo_filename && $settings['logo_path'] !== 'assets/images/logo.png') {
-                    $old_logo_file = __DIR__ . '/' . $settings['logo_path'];
-                    if (file_exists($old_logo_file)) {
-                        @unlink($old_logo_file);
-                    }
-                }
-                
-                $settings['logo_path'] = 'assets/images/' . $logo_filename;
-                file_put_contents($settings_file, json_encode($settings, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                
-                $_SESSION['success_message'] = "Logo berhasil diperbarui!";
             } else {
-                $_SESSION['error_message'] = "Gagal memindahkan file logo yang diunggah.";
+                $_SESSION['error_message'] = "Format file tidak didukung. Harap unggah file gambar (png, jpg, jpeg, svg, webp).";
             }
         } else {
-            $_SESSION['error_message'] = "Format file tidak didukung. Harap unggah file gambar (png, jpg, jpeg, svg, webp).";
+            $_SESSION['error_message'] = "Gagal mengunggah file logo.";
         }
-    } else {
-        $_SESSION['error_message'] = "Gagal mengunggah file logo.";
     }
+    
+    // Simpan ke file settings.json
+    file_put_contents($settings_file, json_encode($settings, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if (!isset($_SESSION['error_message'])) {
+        if ($logo_updated) {
+            $_SESSION['success_message'] = "Logo dan Judul Website berhasil diperbarui!";
+        } else {
+            $_SESSION['success_message'] = "Judul Website berhasil diperbarui!";
+        }
+    }
+    
     header("Location: admin.php?action=manage_logo");
     exit;
 }
@@ -794,7 +814,7 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Karimunjawa Vibes Trip</title>
+    <title>Admin Dashboard - <?php echo htmlspecialchars(get_website_title()); ?></title>
     <link rel="icon" type="image/png" href="<?php echo get_logo_url(); ?>">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3244,7 +3264,7 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                     </form>
 
                 <?php elseif (isset($_GET['action']) && $_GET['action'] === 'manage_logo'): ?>
-                    <!-- KELOLA DATA LOGO -->
+                    <!-- KELOLA DATA LOGO & JUDUL WEBSITE -->
                     <?php
                     $is_custom_logo = false;
                     $settings_file = __DIR__ . '/settings.json';
@@ -3261,26 +3281,31 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                     ?>
                     <div class="header-row">
                         <div>
-                            <h1 class="page-title">Kelola Logo Website</h1>
-                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Ubah identitas visual logo website Karimunjawa Vibes Trip secara realtime</p>
+                            <h1 class="page-title">Kelola Logo & Judul Website</h1>
+                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Ubah identitas visual logo & judul website secara realtime</p>
                         </div>
                     </div>
 
                     <div class="form-row" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; margin-top: 20px;">
                         <!-- Kolom Form Upload -->
-                        <div class="form-card" style="margin-bottom: 0;">
-                            <h3 style="font-size: 18px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload-cloud"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
-                                Upload Logo Baru
+                        <div class="form-card" style="margin-bottom: 0; padding: 25px;">
+                            <h3 style="font-size: 18px; color: var(--text-light); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                Identitas Website
                             </h3>
                             
                             <form action="admin.php" method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="action" value="logo_update">
                                 
                                 <div class="form-group" style="margin-bottom: 24px;">
-                                    <label class="form-label" style="display: block; margin-bottom: 8px;">Pilih File Gambar Logo</label>
+                                    <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; color: var(--text-muted);">Judul Website</label>
+                                    <input type="text" name="website_title" class="form-control" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-light); font-size: 14px;" value="<?php echo htmlspecialchars(get_website_title()); ?>" required placeholder="Masukkan judul website...">
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 24px;">
+                                    <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; color: var(--text-muted);">Upload Logo Baru (Opsional)</label>
                                     <div class="file-drop-area" style="border: 2px dashed rgba(28, 187, 180, 0.3); padding: 30px; border-radius: 12px; text-align: center; background: rgba(28, 187, 180, 0.02); transition: all 0.3s ease; position: relative; cursor: pointer;">
-                                        <input type="file" name="logo_file" accept="image/*" required style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;" onchange="previewLogoFile(this)">
+                                        <input type="file" name="logo_file" accept="image/*" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;" onchange="previewLogoFile(this)">
                                         <div style="font-size: 14px; color: var(--text-muted);">
                                             <p style="font-size: 16px; color: var(--primary-teal); font-weight: 600; margin-bottom: 6px;">Klik atau Tarik file ke sini</p>
                                             <p style="font-size: 12px;">Format yang didukung: PNG, JPG, JPEG, SVG, WEBP</p>
@@ -3292,12 +3317,14 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                     </div>
                                 </div>
                                 
-                                <div style="display: flex; gap: 12px; margin-top: 30px;">
-                                    <button type="submit" class="btn-new" style="border: none; cursor: pointer; padding: 12px 28px;">
-                                        Simpan Logo
+                                <div style="display: flex; gap: 12px; margin-top: 30px; width: 100%;">
+                                    <button type="submit" class="btn-new" style="flex: 1; border: none; cursor: pointer; padding: 12px 24px; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; border-radius: 10px; gap: 8px; line-height: 1.2;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                                        Simpan Perubahan
                                     </button>
                                     <?php if ($is_custom_logo): ?>
-                                        <a href="admin.php?action=logo_reset" class="btn-secondary" style="line-height: 40px; display: inline-block; text-align: center; text-decoration: none; padding: 0 20px; border: 1px solid var(--border-color); border-radius: 12px; color: var(--accent-orange); background: rgba(255, 123, 84, 0.05); font-weight: 600;" onclick="return confirm('Apakah Anda yakin ingin mengembalikan logo ke default?')">
+                                        <a href="admin.php?action=logo_reset" class="btn-secondary" style="flex: 1; padding: 12px 20px; border: 1px solid rgba(255, 123, 84, 0.2); border-radius: 10px; color: var(--accent-orange); background: rgba(255, 123, 84, 0.05); font-weight: 600; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease; gap: 8px; line-height: 1.2;" onclick="return confirm('Apakah Anda yakin ingin mengembalikan logo ke default?')">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-ccw"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                                             Kembalikan ke Default
                                         </a>
                                     <?php endif; ?>
@@ -3306,30 +3333,30 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                         </div>
 
                         <!-- Kolom Preview -->
-                        <div class="form-card" style="margin-bottom: 0;">
-                            <h3 style="font-size: 18px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        <div class="form-card" style="margin-bottom: 0; padding: 25px;">
+                            <h3 style="font-size: 18px; color: var(--text-light); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 Pratinjau Logo Saat Ini
                             </h3>
                             
                             <!-- Light background preview -->
-                            <div style="margin-bottom: 20px;">
-                                <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Pada Latar Terang (Header Solid/Scrolled):</span>
-                                <div style="background-color: #F8F9FA; padding: 24px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; min-height: 100px;">
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <img id="logo-preview-light" src="<?php echo get_logo_url(); ?>" alt="Pratinjau Terang" style="height: 58px; object-fit: contain;">
-                                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 600; color: #1e293b;">KarimunJawa Vibes Trip</span>
+                            <div style="margin-bottom: 24px;">
+                                <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Pada Latar Terang (Header Solid/Scrolled):</span>
+                                <div style="background-color: #ffffff; padding: 18px 24px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; min-height: 90px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                                    <div style="display: flex; align-items: center; gap: 12px; max-width: 100%;">
+                                        <img id="logo-preview-light" src="<?php echo get_logo_url(); ?>" alt="Pratinjau Terang" style="height: 38px; max-width: 120px; object-fit: contain; flex-shrink: 0;">
+                                        <span id="logo-text-preview-light" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: #0f2d2e; letter-spacing: -0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px;"><?php echo htmlspecialchars(get_website_title()); ?></span>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- Dark background preview -->
                             <div>
-                                <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Pada Latar Gelap (Header Transparent/Hero):</span>
-                                <div style="background: linear-gradient(135deg, #0b1717 0%, #152d2d 100%); padding: 24px; border-radius: 12px; display: flex; align-items: center; justify-content: center; min-height: 100px; border: 1px solid rgba(255,255,255,0.05);">
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <img id="logo-preview-dark" src="<?php echo get_logo_url(); ?>" alt="Pratinjau Gelap" style="height: 58px; object-fit: contain;">
-                                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 600; color: #f8fafc;">KarimunJawa Vibes Trip</span>
+                                <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Pada Latar Gelap (Header Transparent/Hero):</span>
+                                <div style="background: linear-gradient(135deg, #0b1717 0%, #152d2d 100%); padding: 18px 24px; border-radius: 12px; display: flex; align-items: center; justify-content: center; min-height: 90px; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 0 20px rgba(0,0,0,0.2);">
+                                    <div style="display: flex; align-items: center; gap: 12px; max-width: 100%;">
+                                        <img id="logo-preview-dark" src="<?php echo get_logo_url(); ?>" alt="Pratinjau Gelap" style="height: 38px; max-width: 120px; object-fit: contain; flex-shrink: 0;">
+                                        <span id="logo-text-preview-dark" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: #ffffff; letter-spacing: -0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px;"><?php echo htmlspecialchars(get_website_title()); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -3356,6 +3383,20 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                 reader.readAsDataURL(file);
                             }
                         }
+
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const titleInput = document.querySelector('input[name="website_title"]');
+                            const textPreviewLight = document.getElementById('logo-text-preview-light');
+                            const textPreviewDark = document.getElementById('logo-text-preview-dark');
+                            
+                            if (titleInput) {
+                                titleInput.addEventListener('input', function() {
+                                    const val = this.value.trim() || 'KarimunJawa Vibes Trip';
+                                    if (textPreviewLight) textPreviewLight.textContent = val;
+                                    if (textPreviewDark) textPreviewDark.textContent = val;
+                                });
+                            }
+                        });
                     </script>
 
                 <?php else: ?>

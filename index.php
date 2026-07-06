@@ -203,7 +203,7 @@ include_once $base_url . 'header.php';
 <!-- Mengapa Memilih Kami Section -->
 <section id="mengapa-kami" style="background-color: #0c2d2e; padding: 80px 16px; color: var(--off-white); border-bottom: 1px solid rgba(255,255,255,0.1);">
     <div class="container" style="padding: 0; max-width: 1200px;">
-        <h2 style="color: var(--off-white); text-transform: uppercase; font-size: 28px; letter-spacing: 1px; margin-bottom: 8px; text-align: center;">KENAPA MENGGUNAKAN JASA KARIMUNJAWA VIBES TRIP ?</h2>
+        <h2 style="color: var(--off-white); text-transform: uppercase; font-size: 28px; letter-spacing: 1px; margin-bottom: 8px; text-align: center;">KENAPA MENGGUNAKAN JASA <?php echo strtoupper(get_website_title()); ?> ?</h2>
         <div style="width: 50px; height: 3px; background-color: var(--primary-teal); margin: 0 auto 50px auto; border-radius: 2px;"></div>
         
         <div class="why-us-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">

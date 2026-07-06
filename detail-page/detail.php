@@ -114,7 +114,7 @@ $default_rating = isset($default_ratings_map[$penginapan['id']]) ? $default_rati
 $rating_rata_rata = $jumlah_ulasan > 0 ? round($total_bintang / $jumlah_ulasan, 1) : $default_rating;
 
 // Judul halaman dinamis untuk SEO
-$page_title = $penginapan ? $penginapan['nama'] . " - Penginapan Karimunjawa" : "Penginapan Tidak Ditemukan - KarimunJawa Vibes Trip";
+$page_title = $penginapan ? $penginapan['nama'] . " - Penginapan Karimunjawa" : "Penginapan Tidak Ditemukan - " . get_website_title();
 
 // Muat komponen header visual
 include_once $base_url . 'header.php';
@@ -244,14 +244,14 @@ include_once $base_url . 'header.php';
                             $harga_h_3d2n_smg = isset($tipe['harga_honeymoon_3d2n_smg']) && !empty($tipe['harga_honeymoon_3d2n_smg']) ? $tipe['harga_honeymoon_3d2n_smg'] : (isset($tipe['harga_honeymoon']) ? $tipe['harga_honeymoon'] : (isset($penginapan['harga_honeymoon_3d2n_smg']) ? $penginapan['harga_honeymoon_3d2n_smg'] : ''));
                             $harga_h_4d3n = isset($tipe['harga_honeymoon_4d3n']) && !empty($tipe['harga_honeymoon_4d3n']) ? $tipe['harga_honeymoon_4d3n'] : (isset($tipe['harga_honeymoon']) ? $tipe['harga_honeymoon'] : (isset($penginapan['harga_honeymoon_4d3n']) ? $penginapan['harga_honeymoon_4d3n'] : ''));
                             
-                            $pesan_wa_3d2n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
-                            $pesan_wa_2d1n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
-                            $pesan_wa_4d3n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_3d2n = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_2d1n = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_4d3n = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk paket *4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
                             
-                            $pesan_wa_h_2d1n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon 2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
-                            $pesan_wa_h_3d2n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon 3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
-                            $pesan_wa_h_3d2n_smg = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon 3 Hari 2 Malam Semarang*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
-                            $pesan_wa_h_4d3n = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon 4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_h_2d1n = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon 2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_h_3d2n = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon 3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_h_3d2n_smg = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon 3 Hari 2 Malam Semarang*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                            $pesan_wa_h_4d3n = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $tipe['nama'] . "* untuk *Paket Honeymoon 4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
                         ?>
                         '<?php echo $tipe['id']; ?>': {
                             nama: '<?php echo $tipe['nama']; ?>',
@@ -287,31 +287,31 @@ include_once $base_url . 'header.php';
                     const lodgingPriceData = {
                         '3D2N': {
                             price: '<?php echo $penginapan['harga']; ?>',
-                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
                         },
                         '2D1N': {
                             price: '<?php echo isset($penginapan['harga_2d1n']) ? $penginapan['harga_2d1n'] : $penginapan['harga']; ?>',
-                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
                         },
                         '4D3N': {
                             price: '<?php echo isset($penginapan['harga_4d3n']) ? $penginapan['harga_4d3n'] : $penginapan['harga']; ?>',
-                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk paket *4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
                         },
                         'HONEYMOON_2D1N': {
                             price: '<?php echo isset($penginapan['harga_honeymoon_2d1n']) && !empty($penginapan['harga_honeymoon_2d1n']) ? $penginapan['harga_honeymoon_2d1n'] : (isset($penginapan['harga_honeymoon']) ? $penginapan['harga_honeymoon'] : ''); ?>',
-                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon 2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon 2 Hari 1 Malam (2D1N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
                         },
                         'HONEYMOON_3D2N': {
                             price: '<?php echo isset($penginapan['harga_honeymoon']) ? $penginapan['harga_honeymoon'] : ''; ?>',
-                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon 3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon 3 Hari 2 Malam (3D2N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
                         },
                         'HONEYMOON_3D2N_SMG': {
                             price: '<?php echo isset($penginapan['harga_honeymoon_3d2n_smg']) && !empty($penginapan['harga_honeymoon_3d2n_smg']) ? $penginapan['harga_honeymoon_3d2n_smg'] : (isset($penginapan['harga_honeymoon']) ? $penginapan['harga_honeymoon'] : ''); ?>',
-                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon 3 Hari 2 Malam Semarang*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon 3 Hari 2 Malam Semarang*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
                         },
                         'HONEYMOON_4D3N': {
                             price: '<?php echo isset($penginapan['harga_honeymoon_4d3n']) && !empty($penginapan['harga_honeymoon_4d3n']) ? $penginapan['harga_honeymoon_4d3n'] : (isset($penginapan['harga_honeymoon']) ? $penginapan['harga_honeymoon'] : ''); ?>',
-                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon 4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
+                            waUrl: 'https://api.whatsapp.com/send?phone=<?php echo $nomor_whatsapp; ?>&text=<?php echo urlencode("Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* untuk *Paket Honeymoon 4 Hari 3 Malam (4D3N)*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!"); ?>'
                         }
                     };
                     <?php endif; ?>
@@ -1127,9 +1127,9 @@ include_once $base_url . 'header.php';
 
                     <?php
                     // Bikin pesan custom WA terenkripsi yang estetik
-                    $pesan_wa = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "*.%0A%0AMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                    $pesan_wa = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "*.%0A%0AMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
                     if (!empty($penginapan['tipe_kamar'])) {
-                        $pesan_wa = "Halo KarimunJawa Vibes Trip, saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $penginapan['tipe_kamar'][0]['nama'] . "*.\n\nMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
+                        $pesan_wa = "Halo " . get_website_title() . ", saya ingin menanyakan ketersediaan penginapan *" . $penginapan['nama'] . "* khusus dengan pilihan *" . $penginapan['tipe_kamar'][0]['nama'] . "*.%0A%0AMohon info ketersediaan slot tanggal stay, cara booking, dan fasilitas lainnya. Terima kasih!";
                         $pesan_wa = urlencode($pesan_wa);
                     }
                     ?>

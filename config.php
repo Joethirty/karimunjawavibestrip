@@ -886,4 +886,19 @@ if (!function_exists('get_logo_url')) {
         return $base_url . $logo . '?v=' . $version;
     }
 }
+
+// HELPER DYNAMIC WEBSITE TITLE GETTER
+if (!function_exists('get_website_title')) {
+    function get_website_title() {
+        $settings_file = __DIR__ . '/settings.json';
+        $title = 'KarimunJawa Vibes Trip';
+        if (file_exists($settings_file)) {
+            $settings = json_decode(file_get_contents($settings_file), true);
+            if (!empty($settings['website_title'])) {
+                $title = $settings['website_title'];
+            }
+        }
+        return $title;
+    }
+}
 ?>

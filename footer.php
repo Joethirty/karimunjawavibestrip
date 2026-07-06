@@ -16,7 +16,7 @@ if (!isset($base_url)) {
     <div class="container footer-content-grid">
         <!-- Brand Info -->
         <div class="footer-column brand-col">
-            <div class="footer-logo">KarimunJawa Vibes Trip</div>
+            <div class="footer-logo"><?php echo htmlspecialchars(get_website_title()); ?></div>
             <p class="brand-description">Penyedia reservasi penginapan, resort, homestay, dan villa resmi di Kepulauan
                 Karimunjawa. Kami menghadirkan kenyamanan menginap terbaik untuk liburan Anda dan keluarga.</p>
             <div class="social-links-wrapper">
@@ -151,7 +151,7 @@ if (!isset($base_url)) {
         }
 
         // Membangun teks draf pesan terenkripsi yang estetik untuk WhatsApp
-        const pesan = `Halo KarimunJawa Vibes Trip Guide, saya ingin konsultasi penginapan.%0A%0A` +
+        const pesan = `Halo <?php echo rawurlencode(get_website_title()); ?> Guide, saya ingin konsultasi penginapan.%0A%0A` +
             `*Nama:* ${encodeURIComponent(nama)}%0A` +
             `*Penginapan:* ${encodeURIComponent(paket)}%0A%0A` +
             `Mohon informasi ketersediaan slot dan jadwal keberangkatan terdekat. Terima kasih!`;
