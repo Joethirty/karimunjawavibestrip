@@ -2,6 +2,7 @@
 if (!isset($base_url)) {
     $base_url = './';
 }
+global $nomor_hp, $nomor_whatsapp, $email_kontak, $instagram_url, $facebook_url;
 ?>
 <footer class="site-footer">
     <!-- Wavy Top Divider -->
@@ -20,7 +21,8 @@ if (!isset($base_url)) {
             <p class="brand-description">Penyedia reservasi penginapan, resort, homestay, dan villa resmi di Kepulauan
                 Karimunjawa. Kami menghadirkan kenyamanan menginap terbaik untuk liburan Anda dan keluarga.</p>
             <div class="social-links-wrapper">
-                <a href="https://www.instagram.com/indrakarimunjawavibestrip?igsh=MWx2MHE3YXVvMXhuaw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-icon-link"
+                <?php if (!empty($instagram_url)): ?>
+                <a href="<?php echo htmlspecialchars($instagram_url); ?>" target="_blank" rel="noopener noreferrer" class="social-icon-link"
                     aria-label="Instagram">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -29,20 +31,25 @@ if (!isset($base_url)) {
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                     </svg>
                 </a>
-                <a href="https://www.facebook.com/share/1Ax7RDr9x6/" target="_blank" rel="noopener noreferrer" class="social-icon-link"
+                <?php endif; ?>
+                <?php if (!empty($facebook_url)): ?>
+                <a href="<?php echo htmlspecialchars($facebook_url); ?>" target="_blank" rel="noopener noreferrer" class="social-icon-link"
                     aria-label="Facebook">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                     </svg>
                 </a>
-                <a href="https://wa.me/6282229055694" target="_blank" rel="noopener noreferrer"
+                <?php endif; ?>
+                <?php if (!empty($nomor_whatsapp)): ?>
+                <a href="https://wa.me/<?php echo htmlspecialchars($nomor_whatsapp); ?>" target="_blank" rel="noopener noreferrer"
                     class="social-icon-link" aria-label="WhatsApp">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path
                             d="M12.004 2C6.516 2 2.006 6.51 2.006 12c0 1.76.46 3.42 1.27 4.9L2 22l5.25-1.38c1.44.79 3.08 1.21 4.75 1.21 5.48 0 9.99-4.51 9.99-10S17.49 2 12.004 2zm3.87 13.88c-.22.61-1.28 1.2-1.77 1.25-.48.06-.97.11-3.09-.76-2.71-1.12-4.46-3.89-4.6-4.07-.13-.18-1.1-1.46-1.1-2.79 0-1.33.7-1.99.95-2.25.26-.26.56-.33.74-.33.19 0 .37.01.53.02.17.01.4.06.61.53.22.49.74 1.81.81 1.95.07.14.12.31.02.49-.09.18-.17.3-.35.5-.18.21-.37.37-.53.56-.17.18-.35.38-.15.72.2.34.88 1.45 1.88 2.34 1.29 1.15 2.38 1.5 2.72 1.67.34.17.54.14.74-.09.2-.23.87-1.01 1.1-1.35.23-.34.46-.29.78-.17.32.12 2.05 1.01 2.4 1.18.35.17.58.26.67.41.09.15.09.87-.13 1.48z" />
                     </svg>
                 </a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -81,6 +88,7 @@ if (!isset($base_url)) {
         <div class="footer-column contact-col">
             <h4 class="footer-title">Kontak</h4>
             <ul class="footer-contact-info">
+                <?php if (!empty($nomor_hp)): ?>
                 <li>
                     <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -88,16 +96,19 @@ if (!isset($base_url)) {
                             d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
                         </path>
                     </svg>
-                    <span>+62 822-2905-5694</span>
+                    <span><?php echo htmlspecialchars($nomor_hp); ?></span>
                 </li>
+                <?php endif; ?>
+                <?php if (!empty($email_kontak)): ?>
                 <li>
                     <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                         <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
-                    <span>krimunjawavibestrip@gmail.com</span>
+                    <span><?php echo htmlspecialchars($email_kontak); ?></span>
                 </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

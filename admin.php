@@ -509,6 +509,22 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
     if (!empty($website_title)) {
         $settings['website_title'] = $website_title;
     }
+
+    // Simpan Informasi Kontak
+    $settings['phone_number'] = isset($_POST['phone_number']) ? trim(htmlspecialchars($_POST['phone_number'])) : '';
+    
+    // Sanitasi WhatsApp: hapus semua karakter non-angka
+    $whatsapp_input = isset($_POST['whatsapp_number']) ? trim($_POST['whatsapp_number']) : '';
+    $whatsapp_sanitized = preg_replace('/[^0-9]/', '', $whatsapp_input);
+    // Jika diawali angka 0, ubah ke format internasional (62)
+    if (strpos($whatsapp_sanitized, '0') === 0) {
+        $whatsapp_sanitized = '62' . substr($whatsapp_sanitized, 1);
+    }
+    $settings['whatsapp_number'] = $whatsapp_sanitized;
+    
+    $settings['email'] = isset($_POST['email']) ? trim(htmlspecialchars($_POST['email'])) : '';
+    $settings['instagram'] = isset($_POST['instagram']) ? trim($_POST['instagram']) : '';
+    $settings['facebook'] = isset($_POST['facebook']) ? trim($_POST['facebook']) : '';
     
     $logo_updated = false;
     $has_logo_file = isset($_FILES['logo_file']) && $_FILES['logo_file']['error'] !== UPLOAD_ERR_NO_FILE;
@@ -551,9 +567,9 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acti
     
     if (!isset($_SESSION['error_message'])) {
         if ($logo_updated) {
-            $_SESSION['success_message'] = "Logo dan Judul Website berhasil diperbarui!";
+            $_SESSION['success_message'] = "Logo, Identitas, dan Kontak Website berhasil diperbarui!";
         } else {
-            $_SESSION['success_message'] = "Judul Website berhasil diperbarui!";
+            $_SESSION['success_message'] = "Identitas dan Kontak Website berhasil diperbarui!";
         }
     }
     
@@ -1755,7 +1771,7 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                 <circle cx="12" cy="12" r="3"></circle>
                                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                             </svg>
-                            Kelola Logo
+                            Kelola Logo & Kontak
                         </a>
                     </li>
                 </ul>
@@ -3281,8 +3297,8 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                     ?>
                     <div class="header-row">
                         <div>
-                            <h1 class="page-title">Kelola Logo & Judul Website</h1>
-                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Ubah identitas visual logo & judul website secara realtime</p>
+                            <h1 class="page-title">Kelola Identitas & Kontak Website</h1>
+                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Ubah identitas visual logo, judul, dan informasi kontak website secara realtime</p>
                         </div>
                     </div>
 
@@ -3291,7 +3307,7 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                         <div class="form-card" style="margin-bottom: 0; padding: 25px;">
                             <h3 style="font-size: 18px; color: var(--text-light); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                                Identitas Website
+                                Identitas & Kontak Website
                             </h3>
                             
                             <form action="admin.php" method="POST" enctype="multipart/form-data">
@@ -3315,6 +3331,38 @@ if ($is_logged_in && isset($_GET['action']) && $_GET['action'] === 'reviews_edit
                                     <div id="selected-file-info" style="margin-top: 10px; font-size: 13px; color: var(--primary-teal); font-weight: 600; display: none;">
                                         File terpilih: <span id="file-name-text"></span>
                                     </div>
+                                </div>
+
+                                <!-- Separator / Subtitle -->
+                                <div class="card-subtitle-divider" style="margin-top: 30px; margin-bottom: 20px; font-size: 15px; font-weight: 700; color: var(--primary-teal); border-bottom: 1px solid rgba(28, 187, 180, 0.15); padding-bottom: 8px;">
+                                    Informasi Kontak Website
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; color: var(--text-muted);">Nomor HP / Telepon (Tampilan Footer)</label>
+                                    <input type="text" name="phone_number" class="form-control" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-light); font-size: 14px;" value="<?php echo htmlspecialchars($nomor_hp); ?>" placeholder="Contoh: +62 822-2905-5694">
+                                    <span style="font-size: 12px; color: var(--text-muted); display: block; margin-top: 4px;">Format tampilan nomor telepon bebas, ditampilkan di footer website.</span>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; color: var(--text-muted);">Nomor WhatsApp (Booking/Pemesanan)</label>
+                                    <input type="text" name="whatsapp_number" class="form-control" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-light); font-size: 14px;" value="<?php echo htmlspecialchars($nomor_whatsapp); ?>" placeholder="Contoh: 62895361870926">
+                                    <span style="font-size: 12px; color: var(--text-muted); display: block; margin-top: 4px;">Hanya angka saja diawali kode negara (62). Digunakan sebagai tujuan chat pemesanan.</span>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; color: var(--text-muted);">Alamat Email</label>
+                                    <input type="email" name="email" class="form-control" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-light); font-size: 14px;" value="<?php echo htmlspecialchars($email_kontak); ?>" placeholder="Contoh: krimunjawavibestrip@gmail.com">
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; color: var(--text-muted);">Tautan/Link Instagram</label>
+                                    <input type="url" name="instagram" class="form-control" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-light); font-size: 14px;" value="<?php echo htmlspecialchars($instagram_url); ?>" placeholder="Contoh: https://www.instagram.com/akun-anda">
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 24px;">
+                                    <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; color: var(--text-muted);">Tautan/Link Facebook</label>
+                                    <input type="url" name="facebook" class="form-control" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-light); font-size: 14px;" value="<?php echo htmlspecialchars($facebook_url); ?>" placeholder="Contoh: https://www.facebook.com/halaman-anda">
                                 </div>
                                 
                                 <div style="display: flex; gap: 12px; margin-top: 30px; width: 100%;">

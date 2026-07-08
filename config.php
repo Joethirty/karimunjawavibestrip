@@ -1,6 +1,21 @@
 <?php
-// config.php
-$nomor_whatsapp = "62895361870926"; // Ganti dengan nomor WA operasional Anda
+// Load dynamic settings from settings.json
+$settings_file = __DIR__ . '/settings.json';
+$settings = [];
+if (file_exists($settings_file)) {
+    $settings = json_decode(file_get_contents($settings_file), true);
+    if (!is_array($settings)) {
+        $settings = [];
+    }
+}
+
+// Global dynamic contact variables
+$nomor_whatsapp = isset($settings['whatsapp_number']) ? $settings['whatsapp_number'] : "62895361870926"; // WhatsApp booking (numeric)
+$nomor_hp = isset($settings['phone_number']) ? $settings['phone_number'] : "+62 822-2905-5694"; // Display phone number
+$email_kontak = isset($settings['email']) ? $settings['email'] : "krimunjawavibestrip@gmail.com"; // Contact email
+$instagram_url = isset($settings['instagram']) ? $settings['instagram'] : "https://www.instagram.com/indrakarimunjawavibestrip?igsh=MWx2MHE3YXVvMXhuaw%3D%3D&utm_source=qr"; // Instagram link
+$facebook_url = isset($settings['facebook']) ? $settings['facebook'] : "https://www.facebook.com/share/1Ax7RDr9x6/"; // Facebook link
+
 
 if (!function_exists('format_detail_deskripsi')) {
     function format_detail_deskripsi($text) {
